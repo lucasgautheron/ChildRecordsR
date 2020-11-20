@@ -29,20 +29,20 @@ CR = ChildRecordings(ChildRecordingsPath)
 rez = extractDataCR("textgrid_m1",CR) 
 rez = rez[rez$child_id=="aiku",]
 rez = rez[rez$date_iso=="2016-07-15",]
-
+head(rez)
 ### Function to convert the file in to long format
 # Usefull to futur ratter relaibility 
-long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset))
-
+long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),1)
+head(long)
 ### Find ratter of a wave file 
-#if no time is specify it will only retur at table with all ratter
+#if no time is specify it will only return at table with all ratter
 ratting = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav")
 table = ratting$table
-
+head(table)
 # if time code are provided the function extract the data and could use some method 
 ratting = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27000,27300,cut = 1)
 ratting$table
-plot(ratting)
+plot(ratting) # Print 5 graph  open it in a widows to better view
 
 # the function will find all the data who will overlap the time code 
 # here same file with different time code 
@@ -51,11 +51,14 @@ ratting$table
 plot(ratting)
 
 # by default the longer of segment is 0.100 seconde but you can change it 
-ratting = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27555,cut=0.100)
+ratting = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27175,27240,cut=0.100)
 ratting$table
 plot(ratting)
 
+
+# some reliability test
 data = ratting$ratting_by_comp$composit
 data = t(data[,-1])
 library(irr)
 a = kripp.alpha(data, method="nominal")
+a
