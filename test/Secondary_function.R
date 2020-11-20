@@ -143,13 +143,13 @@ data_to_OneHotEnc <- function(data){
 
 
 library(gridExtra)
-setClass("RatterCompCR")
+setClass("raterCompCR")
 setGeneric("plot")
 setMethod(
-  "plot",signature = "RatterCompCR",
+  "plot",signature = "raterCompCR",
   
   function(x){
-    data <- x$ratting_by_comp
+    data <- x$rating_by_comp
     compo.names <- names(data)
     
     for ( compo in 1:length(data)){

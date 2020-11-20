@@ -104,7 +104,7 @@ extractDataCR <- function(set.type, ChildRecordings) {
 
 
 ####################################################
-#### find ratter from a specific file wav file #####
+#### find rater from a specific file wav file #####
 ####################################################
 
 
@@ -132,7 +132,7 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
     
   }
   
-  ### Converting CSV to long ratting format
+  ### Converting CSV to long rating format
   
   ratings <- list()
   
@@ -160,20 +160,20 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
   if (!is.null(range_from) & !is.null(range_to)){
     listOfRating <- names(ratings$long_cut[[1]])
     listOfRating <- listOfRating[-1]
-    for (ratting in listOfRating) {
+    for (rating in listOfRating) {
       rat <-data.frame("time.seq"=ratings$long_cut[[1]]$time.seq)
       
-      for (ratter in 1:length(ratings$long_cut)){
+      for (rater in 1:length(ratings$long_cut)){
         
-        ratter_name <-names(ratings$long_cut)[ratter]
-        rat <- cbind(rat,ratings$long_cut[[ratter]][,ratting])
-        names(rat)[length(rat)] <- paste0(ratter_name,"_",ratting)
+        rater_name <-names(ratings$long_cut)[rater]
+        rat <- cbind(rat,ratings$long_cut[[rater]][,rating])
+        names(rat)[length(rat)] <- paste0(rater_name,"_",rating)
         
       }
       
       
       # print(rat)
-      ratings_comp[[ratting]] <- rat
+      ratings_comp[[rating]] <- rat
       
     }
     
@@ -188,10 +188,10 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
                       range_from=range_from,
                       range_to=range_to),
       table = tbl,
-      ratting_data = ratings,
-      ratting_by_comp = ratings_comp
+      rating_data = ratings,
+      rating_by_comp = ratings_comp
     )
-  attr(value, "class") <- "RatterCompCR"
+  attr(value, "class") <- "raterCompCR"
   value
 }
 

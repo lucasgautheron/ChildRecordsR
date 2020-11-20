@@ -1,7 +1,13 @@
 # ChildRecordsR
 R package for ChildRecordsData
 
-Welcome
+## Getting started
+
+1. Make sure you have installed [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation) 
+1. Make sure you have some data within that format -- more info in the [ChildRecordsData doc](https://github.com/LAAC-LSCP/ChildRecordsData#data-formatting-and-structure)
+ may need annex
+1. If you are in the team, you can import a dataset https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#installing-a-dataset
+- get annotation
 
 If you want to test the firsts functions please use the testbench.R fil, do not change this file. Use playground.R to test what you want. 
 

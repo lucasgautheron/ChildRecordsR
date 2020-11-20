@@ -1,63 +1,66 @@
 #' Hello all 
-#' here is the test file to see what the scrip can do
+#' here is a test file to see what the functions in this package can do
 #' I put some comments to guide you 
-#' I hope this will be usefull
-#' Do not change this file.
+#' I hope this will be useful
+#' Do not change this file except for adapting the following path
+# ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+ChildRecordingsPath = "/Users/acristia/Documents/gitrepos/namibia-data/" # change the path
 
 ### Import the function 
 source("test/Secondary_function.R")
 source("test/ChildRecordings.R")
 
 ### Create a ChildRecordings class
-# Here you will create a classe by specifing the root folder of the ChildRecorging
-# The classe provide basic control such as missing files or unreferenced files in the meta data 
-# Try to add, misplace or erase some files to see if it work
-# All other function or plus will be based on the class to mitigate problem as much as possible
+# Here you will create a class by specifing the root folder of the ChildRecording
+# The class provides basic control such as missing files or unreferenced files in the meta data 
+# Try to add, misplace or erase some files to see if it works
+# All other functions will be based on the class to mitigate problems as much as possible
 
-# ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
-ChildRecordingsPath = "/Users/alejandrinacristia/Dropbox/namidia-data/" # change the path
 CR = ChildRecordings(ChildRecordingsPath)
 
 ### Find some ratings
-# this function will extract data from the set variable in metadata 
-# Here the set is textgrid_m1 and will extract all ratting from M1 ratter
-# the onset and offset will be modify to reflect there true value 
-# in regard to the wave file if time_seek is provides
-# Date and hours of the reccording will me compute is start_time and date_iso of the recording are provided 
-# will raise a message if a file is empty (no ratting)
+# this function will extract data from the "set" variable in metadata. 
+# In this example, the set is textgrid_m1 and will extract all ratings by the rater M1.
+# In this example, files had been annotated from clips extracted from the longer audiofile.
+# Therefore, onset and offset of annotations referred to the clip, rather than the longer audiofile.
+# To fix this, the onset and offset will be modified to reflect their true value
+# with respect to the original longer audiofile.
+# This is only done if time_seek is provided.
+# Date and hours of the recording will me computed if start_time and date_iso of the recording are provided. 
+# This procedure will raise a message if a file is empty (no annotation).
 
 rez = extractDataCR("textgrid_m1",CR) 
 rez = rez[rez$child_id=="aiku",]
 rez = rez[rez$date_iso=="2016-07-15",]
 head(rez)
-### Function to convert the file in to long format
-# Usefull to futur ratter relaibility 
+### Function to convert the file into long format (ie adapt onset times to the long-form audio)
+# Useful to future rater reliability 
 long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),1)
 head(long)
-### Find ratter of a wave file 
-#if no time is specify it will only return at table with all ratter
-ratting = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav")
-table = ratting$table
+### Find rater of a wave file 
+#if no time is specify it will only return at table with all rater
+rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav")
+table = rating$table
 head(table)
 # if time code are provided the function extract the data and could use some method 
-ratting = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27000,27300,cut = 1)
-ratting$table
-plot(ratting) # Print 5 graph  open it in a widows to better view
+rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27000,27300,cut = 1)
+rating$table
+plot(rating) # This prints 5 graphs. You can open them in a window for a better view
 
-# the function will find all the data who will overlap the time code 
-# here same file with different time code 
-ratting = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300)
-ratting$table
-plot(ratting)
+# this function will find all the data that overlaps with the time range provided 
+# here is another example of the same file with different time code 
+rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300)
+rating$table
+plot(rating)
 
 # by default the longer of segment is 0.100 seconde but you can change it 
-ratting = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27175,27240,cut=0.100)
-ratting$table
-plot(ratting)
+rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27175,27240,cut=0.100)
+rating$table
+plot(rating)
 
 
 # some reliability test
-data = ratting$ratting_by_comp$composit
+data = rating$rating_by_comp$composit
 data = t(data[,-1])
 library(irr)
 a = kripp.alpha(data, method="nominal")
