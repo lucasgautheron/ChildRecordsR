@@ -26,7 +26,7 @@ CR = ChildRecordings(ChildRecordingsPath)
 # To fix this, the onset and offset will be modified to reflect their true value
 # with respect to the original longer audiofile.
 # This is only done if time_seek is provided.
-# Date and hours of the recording will me computed if start_time and date_iso of the recording are provided. 
+# Date and hours of the recording will be computed if start_time and date_iso of the recording are provided. 
 # This procedure will raise a message if a file is empty (no annotation).
 
 rez = extractDataCR("textgrid_m1",CR) 
@@ -46,7 +46,7 @@ head(table)
 # overlaps with the time range provided. For instance,  
 rating_27000 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27000,27300)
 rating_27000$table
-plot(rating_27000)
+plot(rating_27000) # This prints 5 graphs. You can open them in a window for a better view
 # here is another example of the same file with different time code 
 rating_27200 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300)
 rating_27200$table
@@ -56,8 +56,8 @@ plot(rating_27200)
 # and formats it into a table where each line represents a cut-second slice of the annotation
 # by default the length of the "cut" variable is 0.100 seconde but you can change it like this
 rating_27200_cut1 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300,cut=1)
-rating$table
-plot(rating) # This prints 5 graphs. You can open them in a window for a better view
+rating_27200_cut1$table
+plot(rating_27200_cut1) 
 
 
 
