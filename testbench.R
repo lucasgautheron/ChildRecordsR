@@ -4,11 +4,13 @@
 #' I hope this will be useful
 #' Do not change this file except for adapting the following path
 # ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
-ChildRecordingsPath = "/Users/acristia/Documents/gitrepos/namibia-data/" # change the path
+# ChildRecordingsPath = "/Users/acristia/Documents/gitrepos/namibia-data/" # change the path
+ChildRecordingsPath = "/Users/alejandrinacristia/Dropbox/namidia-data/"
 
 ### Import the function 
 source("test/Secondary_function.R")
 source("test/ChildRecordings.R")
+source("test/Methods.R")
 
 ### Create a ChildRecordings class
 # Here you will create a class by specifing the root folder of the ChildRecording
@@ -56,13 +58,13 @@ plot(rating_27200)
 # and formats it into a table where each line represents a cut-second slice of the annotation
 # by default the length of the "cut" variable is 0.100 seconde but you can change it like this
 rating_27200_cut1 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300,cut=1)
-rating$table
-plot(rating) # This prints 5 graphs. You can open them in a window for a better view
+rating_27200_cut1$table
+plot(rating_27200_cut1) # This prints 5 graphs. You can open them in a window for a better view
 
 
 
 # some reliability test
-data = rating$rating_by_comp$composit
+data = rating_27200_cut1$rating_by_comp$composit
 data = t(data[,-1])
 library(irr)
 a = kripp.alpha(data, method="nominal")
