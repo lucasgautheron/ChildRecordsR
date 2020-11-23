@@ -4,9 +4,8 @@ R package for ChildRecordsData
 ## Getting started
 
 1. Make sure you have installed [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation) 
-1. Make sure you have some data within that format -- more info in the [ChildRecordsData doc](https://github.com/LAAC-LSCP/ChildRecordsData#data-formatting-and-structure)
- may need annex
-1. If you are in the team, you can import a dataset https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#installing-a-dataset
+1. Make sure you have some data within the ChildRecordsData format. More information about this format can be found in the [ChildRecordsData docs](https://github.com/LAAC-LSCP/ChildRecordsData#data-formatting-and-structure)
+1. If you are in the LAAC team, you can import a dataset that has already been formatted. See Appendix for details. 
 - get annotation
 
 If you want to test the firsts functions please use the testbench.R fil, do not change this file. Use playground.R to test what you want. 
@@ -21,7 +20,7 @@ If you want to test the firsts functions please use the testbench.R fil, do not 
 
 ## Need to implementation 
 
- - Currently, research function lack of flexibility 
+ - Currently, research functions lack  flexibility 
  - Function do not know how to handle empty ratting file
  - A summary method to provide reliability of ratter is not implemented
  - The code could be refine.
@@ -32,5 +31,14 @@ If you want to test the firsts functions please use the testbench.R fil, do not 
 
 - Create a new branch from *develop* and a merge request on develop i will handle the merge. 
  
+ ## Appendix: getting a LAAC dataset that has already been formatted.
  
- 
+You can find the list of formatted LAAC datasets as well as instructions to get them [here](https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#list-of-available-projects)
+
+All you need to do these analyses are the contents of annotations/. So typically, you'll need to:
+
+- [Install datalad](https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#installing-datalad)
+- [install the dataset you want](https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#installing-a-dataset). Note that this just installs the structure of the dataset, but not the contents.
+- Get the contents of annotations/ by doing, from within your local copy of the dataset, `datalad get annotations/`.
+
+If any issues arise, feel free to post them [here](https://github.com/LAAC-LSCP/ChildRecordsData/issues)

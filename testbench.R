@@ -38,25 +38,27 @@ head(rez)
 long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),1)
 head(long)
 ### Find rater of a wave file 
-#if no time is specify it will only return at table with all rater
+#if no time range is specified, this function will only return at table with all raters
 rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav")
 table = rating$table
 head(table)
-# if time code are provided the function extract the data and could use some method 
-rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27000,27300,cut = 1)
+# However, if a time range is provided, this function will find all the data that 
+# overlaps with the time range provided. For instance,  
+rating_27000 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27000,27300)
+rating_27000$table
+plot(rating_27000)
+# here is another example of the same file with different time code 
+rating_27200 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300)
+rating_27200$table
+plot(rating_27200)
+
+# When a time range is provided, the function also extracts the actual data, 
+# and formats it into a table where each line represents a cut-second slice of the annotation
+# by default the length of the "cut" variable is 0.100 seconde but you can change it like this
+rating_27200_cut1 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300,cut=1)
 rating$table
 plot(rating) # This prints 5 graphs. You can open them in a window for a better view
 
-# this function will find all the data that overlaps with the time range provided 
-# here is another example of the same file with different time code 
-rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300)
-rating$table
-plot(rating)
-
-# by default the longer of segment is 0.100 seconde but you can change it 
-rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27175,27240,cut=0.100)
-rating$table
-plot(rating)
 
 
 # some reliability test
@@ -65,3 +67,4 @@ data = t(data[,-1])
 library(irr)
 a = kripp.alpha(data, method="nominal")
 a
+
