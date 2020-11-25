@@ -71,11 +71,7 @@ plot(rating_27200_cut1) # This prints 5 graphs. You can open them in a window fo
 summary(rating_27200_cut1)
 
 # detail information can be found here 
-names(rating_27200_cut1$reliability$`Krippendorff's alpha`)
-rating_27200_cut1$reliability$`Krippendorff's alpha`
-
-names(rating_27200_cut1$reliability$`Fleiss' Kappa for m Raters`)
-rating_27200_cut1$reliability$`Fleiss' Kappa for m Raters`
-
-
+rating_27200_cut1$reliability$`Krippendorff's Alpha`
+rating_27200_cut1$reliability$`Fleiss' Kappa`
+rating_27200_cut1$reliability$AC1
 
