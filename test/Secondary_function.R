@@ -103,7 +103,8 @@ data_to_OneHotEnc <- function(data){
       trez=0
     }else{
       if(rowSums(data[row,-1])>1) {
-        trez =NA
+        # trez = NA
+        trez = 5
       }else{
         if(data[row,]$CHI>=1) trez = 1
         if(data[row,]$FEM>=1) trez = 2
@@ -111,7 +112,7 @@ data_to_OneHotEnc <- function(data){
         if(data[row,]$OCH>=1) trez = 4
       }
     }
-    row =row +1
+    # row =row +1
     rez <- c(rez,trez)
   }
   
