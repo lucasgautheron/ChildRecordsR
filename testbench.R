@@ -3,9 +3,9 @@
 #' I put some comments to guide you 
 #' I hope this will be useful
 #' Do not change this file except for adapting the following path
-# ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
 # ChildRecordingsPath = "/Users/acristia/Documents/gitrepos/namibia-data/" # change the path
-ChildRecordingsPath = "/Users/alejandrinacristia/Dropbox/namidia-data/"
+# ChildRecordingsPath = "/Users/alejandrinacristia/Dropbox/namidia-data/"
 
 ### Import the function 
 source("test/Secondary_function.R")
@@ -39,16 +39,19 @@ head(rez)
 # Useful to future rater reliability 
 long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),1)
 head(long)
+
 ### Find rater of a wave file 
 #if no time range is specified, this function will only return at table with all raters
 rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav")
 table = rating$table
 head(table)
+
 # However, if a time range is provided, this function will find all the data that 
 # overlaps with the time range provided. For instance,  
 rating_27000 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27000,27300)
 rating_27000$table
 plot(rating_27000) # This prints 5 graphs. You can open them in a window for a better view
+
 # here is another example of the same file with different time code 
 rating_27200 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300)
 rating_27200$table
@@ -59,18 +62,20 @@ plot(rating_27200)
 # by default the length of the "cut" variable is 0.100 seconde but you can change it like this
 rating_27200_cut1 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300,cut=1)
 rating_27200_cut1$table
-<<<<<<< HEAD
+
 plot(rating_27200_cut1) # This prints 5 graphs. You can open them in a window for a better view
-=======
-plot(rating_27200_cut1) 
->>>>>>> f73823eb44cb12d9e20e598a3357fccb5e4c5c5e
 
 
+### reliability in raterCompCR class 
+# you can extract reliability using the summary method
+summary(rating_27200_cut1)
 
-# some reliability test
-data = rating_27200_cut1$rating_by_comp$composit
-data = t(data[,-1])
-library(irr)
-a = kripp.alpha(data, method="nominal")
-a
+# detail information can be found here 
+names(rating_27200_cut1$reliability$`Krippendorff's alpha`)
+rating_27200_cut1$reliability$`Krippendorff's alpha`
+
+names(rating_27200_cut1$reliability$`Fleiss' Kappa for m Raters`)
+rating_27200_cut1$reliability$`Fleiss' Kappa for m Raters`
+
+
 
