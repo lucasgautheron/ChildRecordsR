@@ -64,9 +64,9 @@ setMethod(
     # rat1 <- ratti$reliability$`Krippendorff's alpha`
     # rat2 <- object$reliability$`Fleiss' Kappa for m Raters`
     
-    rat1 <- ratting$reliability[[1]]$est
-    rat2 <- ratting$reliability[[2]]$est
-    rat3 <- ratting$reliability[[3]]$est
+    rat1 <- object$reliability[[1]]$est
+    rat2 <- object$reliability[[2]]$est
+    rat3 <- object$reliability[[3]]$est
     
     
     
