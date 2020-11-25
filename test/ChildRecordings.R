@@ -1,6 +1,6 @@
 library(lubridate)
 library(irr)
-
+library(irrCAC)
 
 ####################################################
 ######### Building childrecordings class ###########
@@ -173,10 +173,21 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
   
   reliability <- list()
   if (!is.null(range_from) & !is.null(range_to)){
-    a = kripp.alpha(t(ratings_comp[["composit"]][,-1]), method="nominal")
-    reliability[[a$method]] <- a
-    k = kappam.fleiss(ratings_comp[["composit"]][,-1])
-    reliability[[k$method]] <- k
+    # a = kripp.alpha(t(ratings_comp[["composit"]][,-1]), method="nominal")
+    # reliability[[a$method]] <- a
+    # k = kappam.fleiss(ratings_comp[["composit"]][,-1])
+    # reliability[[k$method]] <- k
+    # ac1 <- gwet.ac1.raw(ratings_comp[["composit"]][,-1])
+    # reliability[["ac1"]] <- ac1
+    
+    a = krippen.alpha.raw(ratings_comp[["composit"]][,-1])
+    reliability[[as.character(a$est$coeff.name)]] <- a
+    k = fleiss.kappa.raw(ratings_comp[["composit"]][,-1])
+    reliability[[as.character(k$est$coeff.name)]] <- k
+    ac1 = gwet.ac1.raw(ratings_comp[["composit"]][,-1])
+    reliability[[as.character(ac1$est$coeff.name)]] <- ac1
+    
+    
   }
   
   

@@ -61,17 +61,21 @@ setMethod(
     
     
     ## reliability summary
-    rat1 <- object$reliability$`Krippendorff's alpha`
-    rat2 <- object$reliability$`Fleiss' Kappa for m Raters`
+    # rat1 <- ratti$reliability$`Krippendorff's alpha`
+    # rat2 <- object$reliability$`Fleiss' Kappa for m Raters`
+    
+    rat1 <- ratting$reliability[[1]]$est
+    rat2 <- ratting$reliability[[2]]$est
+    rat3 <- ratting$reliability[[3]]$est
+    
     
     
     cat("\n\n### Reliability indicators ###\n")
+    # cat("INFO : number of subect could be diffrent depending of the indactor and how it handle overlap\n\n")
     
-    cat("INFO : number off subect could be diffrent depending of the indactor and how it handle overlap\n\n")
-    
-    print(rat1)
-    cat("\n ### \n \n")
-    print(rat2)
+    print(rbind(rat1,rat2,rat3))
+    # cat("\n ### \n \n")
+    # print(rat2)
     
     
   })
