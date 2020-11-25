@@ -1,5 +1,5 @@
 library(lubridate)
-
+library(irr)
 
 
 ####################################################
@@ -138,21 +138,18 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
   
   if (!is.null(range_from) & !is.null(range_to)){
     for (row in 1:nrow(tbl)){
-      # print(tbl[row,])
       
       temps.data <- file.openner(tbl[row, ],ChildRecordings)
       ratings$annotations[[as.character(tbl[row,]$set)]] <- temps.data
-      
-      
+    
       # long format and composit
       temps.data2 <- convertor_long_cut(temps.data,range_from,range_to,cut=cut)
       temps.data2 <- data_to_OneHotEnc(temps.data2)
-      # print(head(temps.data2))
       
       ratings$long_cut[[as.character(tbl[row,]$set)]] <- temps.data2
-      
     }
   }
+  
   ### Formating data to analyses
   
   ratings_comp <- list()
@@ -164,20 +161,26 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
       rat <-data.frame("time.seq"=ratings$long_cut[[1]]$time.seq)
       
       for (rater in 1:length(ratings$long_cut)){
-        
         rater_name <-names(ratings$long_cut)[rater]
         rat <- cbind(rat,ratings$long_cut[[rater]][,rating])
         names(rat)[length(rat)] <- paste0(rater_name,"_",rating)
-        
       }
-      
-      
-      # print(rat)
       ratings_comp[[rating]] <- rat
-      
     }
-    
   }
+  
+  ### Compute reliability 
+  
+  reliability <- list()
+  if (!is.null(range_from) & !is.null(range_to)){
+    a = kripp.alpha(t(ratings_comp[["composit"]][,-1]), method="nominal")
+    reliability[[a$method]] <- a
+    k = kappam.fleiss(ratings_comp[["composit"]][,-1])
+    reliability[[k$method]] <- k
+  }
+  
+  
+  
   
   
   ### Formating return
@@ -186,13 +189,16 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
       variable = list(ChildRecordings=ChildRecordings,
                       file=file,
                       range_from=range_from,
-                      range_to=range_to),
+                      range_to=range_to,
+                      seg=cut),
       table = tbl,
       rating_data = ratings,
-      rating_by_comp = ratings_comp
+      rating_by_comp = ratings_comp,
+      reliability = reliability
     )
   attr(value, "class") <- "raterCompCR"
   value
+  
 }
 
 
