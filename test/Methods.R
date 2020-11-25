@@ -44,4 +44,40 @@ setMethod(
 
 
 
+setClass("ratterCompCR")
+setGeneric("summary")
+setMethod(
+  "summary",
+  signature = "raterCompCR",
+  # c(object = "ratterCompCR"),
+  function(object){
+    
+    ### General info
+    
+    cat("### General summary ### \n\n")
+    cat("Data come from",object$variable$file,"csv ratters related files\n")
+    cat("they range from ",object$variable$range_from,"to",object$variable$range_to,"seconds\n" )
+    cat("lenght of the segmentation for reliability was set to ", object$variable$seg,"second\n")
+    
+    
+    ## reliability summary
+    rat1 <- object$reliability$`Krippendorff's alpha`
+    rat2 <- object$reliability$`Fleiss' Kappa for m Raters`
+    
+    
+    cat("\n\n### Reliability indicators ###\n")
+    
+    cat("INFO : number off subect could be diffrent depending of the indactor and how it handle overlap\n\n")
+    
+    print(rat1)
+    cat("\n ### \n \n")
+    print(rat2)
+    
+    
+  })
+
+
+
+
+
 
