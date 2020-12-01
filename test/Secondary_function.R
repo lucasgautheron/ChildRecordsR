@@ -10,7 +10,7 @@ file.openner <- function(meta_row,ChildRecordings){
   
   if (nrow(temps.data) == 0) {
     print(paste("no row (i.e., no annotated speech) in ", path))
-    return(NULL)
+    return(temps.data)
   }
   
   # Child metadata 
@@ -100,16 +100,16 @@ data_to_OneHotEnc <- function(data){
     # print(data[row,])
     
     if (rowSums(data[row,-1])==0){ 
-      trez=0
+      trez= "silence"
     }else{
       if(rowSums(data[row,-1])>1) {
         # trez = NA
-        trez = 5
+        trez = "overlap"
       }else{
-        if(data[row,]$CHI>=1) trez = 1
-        if(data[row,]$FEM>=1) trez = 2
-        if(data[row,]$MAL>=1) trez = 3
-        if(data[row,]$OCH>=1) trez = 4
+        if(data[row,]$CHI>=1) trez = "CHI"
+        if(data[row,]$FEM>=1) trez = "FEM"
+        if(data[row,]$MAL>=1) trez = "MAL"
+        if(data[row,]$OCH>=1) trez = "OCH"
       }
     }
     # row =row +1
@@ -120,3 +120,20 @@ data_to_OneHotEnc <- function(data){
   data
 }
 
+
+
+true_time_seg_finder <- function(range_from,range_to,all.meta.table){
+  
+  larger = all.meta.table$true_onset<range_from & all.meta.table$true_offset>range_to
+  displaceleft =  all.meta.table$true_onset < range_from &  all.meta.table$true_offset <= range_to & all.meta.table$true_offset > range_from
+  displaceright = all.meta.table$true_onset >= range_from &  all.meta.table$true_offset > range_to & all.meta.table$true_onset < range_to
+  smaller = all.meta.table$true_onset>=range_from & all.meta.table$true_offset<=range_to
+  # same = all.meta.table$true_onset==range_from & all.meta.table$true_offset==range_to
+  
+  
+  # print(larger)
+  # print(displaceleft)
+  # print(displaceright)
+  # print(smaller)
+  return(larger | displaceleft | displaceright | smaller)
+}
