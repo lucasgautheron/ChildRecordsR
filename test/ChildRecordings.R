@@ -220,3 +220,161 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
 
 
 
+
+
+find.ratting.segment <- function(CR,filename,ratters){
+  tbl <- CR$all.meta
+  tbl <- tbl[tbl$filename==filename,]
+  tbl <- tbl[tbl$set %in% ratters,]
+  
+  ### True time from time seek 
+  
+  tbl$true_onset <- tbl$time_seek + tbl$range_onset
+  tbl$true_offset <- tbl$time_seek + tbl$range_offset
+  
+  # print(tbl)
+  ### Find segment of ratter common segment
+  
+  find_time_code_data<-data.frame(time_seg= seq( min(tbl$true_onset)-1, max(tbl$true_offset),1))
+  rater_nbr <- c()
+  for (time in find_time_code_data$time_seg){
+    rater_nbr <- c(rater_nbr,sum(time>=tbl$true_onset & time<=tbl$true_offset))
+  }
+  
+  find_time_code_data$rater_nbr <- rater_nbr
+  find_time_code_data
+  
+  find_time_code_data$segments <- as.numeric(find_time_code_data$rater_nbr==length(ratters))
+  
+  time_code <- find_time_code_data$time_seg[which(diff(find_time_code_data$segments)!=0)]
+  
+  if(length(time_code)%%2!=0){time_code<-c(time_code,max(tbl$true_offset))}
+  
+  time_code <- as.data.frame(matrix(time_code,ncol=2,byrow = T))
+  names(time_code) <- c("true_onset","true_offset")
+  
+  
+  # print(time_code)
+  
+  rez <- data.frame()
+  for( row in 1:nrow(time_code)) {
+    true_onset= time_code[row,]$true_onset
+    true_offset = time_code[row,]$true_offset
+    tmp <- true_time_seg_finder(true_onset,true_offset,tbl)
+    # print(tmp)
+    
+    
+    tmp <- data.frame( filename=tbl[tmp,]$filename,
+                       set= tbl[tmp,]$set, 
+                       annotation_filename = tbl[tmp,]$annotation_filename)
+    
+    
+    tmp$true_onset <- true_onset+1
+    tmp$true_offset <- true_offset
+    
+    rez <- rbind(rez,tmp)
+    
+  }
+  rez
+}
+
+
+
+
+aggregate.rating <- function(data,ChildRecordings,cut=0.1){
+  attach(data)
+  data <- data[order(filename,set,true_onset),]
+  detach(data)
+  all.meta <- ChildRecordings$all.meta
+  ratersID <- as.character(unique(data$set))
+  
+  rater <- list()
+  
+  for(rat in ratersID){
+    tmp.data <- data[data$set==rat,]
+    # print(tmp.data)
+    raw_files <- data.frame()
+    long_files <- data.frame()
+    
+    
+    for (row in 1:nrow(tmp.data)){
+      row <- tmp.data[row,]
+      annotation_filename <- row$annotation_filename
+      true_onset <- row$true_onset
+      true_offset <- row$true_offset
+      # print(row)
+      
+      meta.row <- all.meta[all.meta$annotation_filename==annotation_filename,]
+      
+      
+      raw_file <- file.openner(meta.row,ChildRecordings)
+      long_file <- convertor_long_cut(raw_file,true_onset,true_offset,cut=cut)
+      long_file <- data_to_OneHotEnc(long_file)
+      
+      raw_files<-rbind(raw_files,raw_file)
+      long_files <- rbind(long_files,long_file)
+      
+    }
+    # print(head(raw_files))
+    # print(head(long_files))
+    rater[[rat]]$raw_file <- raw_files
+    rater[[rat]]$long_file <- long_files
+    
+  }
+  
+  
+  value <- list(
+    rater= rater, 
+    args = list(ratersID = ratersID,
+                cut = cut)
+  )
+  attr(value, "class") <- "raterData"
+  return(value)
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
