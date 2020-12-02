@@ -147,7 +147,10 @@ SDT.raterData <- function(raterData,raters){
   rater1 <- raterData$rater[[raters[1]]]$long_file
   rater2 <- raterData$rater[[raters[2]]]$long_file
   
-  cof_mat <- confusionMatrix(as.factor(rater1$composit),as.factor(rater2$composit), dnn = raters)
+  cof_mat <- confusionMatrix(
+    factor(rater1$composit,levels =levels ),
+    factor(rater2$composit,levels =levels), 
+    dnn = raters)
   conf_tab=cof_mat$table
   # Precision & recall confusion matrix graphs
   colsums=colSums(conf_tab)
@@ -207,15 +210,15 @@ SDT.raterData <- function(raterData,raters){
   
   tbl <- data.frame(t(cof_mat[["byClass"]]))
   
-  macro.recall <- sum(tbl["Recall",])/length(tbl["Recall",])
-  macro.precision <- sum(tbl["Precision",])/length(tbl["Precision",])
-  macro.f1 <- sum(tbl["F1",])/length(tbl["F1",])
+  macro.recall <- sum(tbl["Recall",],na.rm=T)/length(tbl["Recall",])
+  macro.precision <- sum(tbl["Precision",],na.rm=T)/length(tbl["Precision",])
+  macro.f1 <- sum(tbl["F1",],na.rm=T)/length(tbl["F1",])
   unweigth <- c(macro.recall,macro.precision,macro.f1)
   
   
-  macro.recall.w <- sum(tbl["Recall",]*colsums)/sum(colsums)
-  macro.precision.w <- sum(tbl["Precision",]*colsums)/sum(colsums)
-  macro.f1.w <- sum(tbl["F1",]*colsums)/sum(colsums)
+  macro.recall.w <- sum(tbl["Recall",]*colsums,na.rm=T)/sum(colsums)
+  macro.precision.w <- sum(tbl["Precision",]*colsums,na.rm=T)/sum(colsums)
+  macro.f1.w <- sum(tbl["F1",]*colsums,na.rm=T)/sum(colsums)
   weigth <- c(macro.recall.w,macro.precision.w,macro.f1.w)
   
   type <- c("Recall","Precision","F1")
