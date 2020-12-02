@@ -202,8 +202,29 @@ SDT.raterData <- function(raterData,raters){
     xlab(raters[2]) + ylab(raters[1]) +
     ggtitle("Recall")+ theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
   
-  print(prec_plot)
-  print(rec_plot)
+  
+  print(grid.arrange(prec_plot,rec_plot))
+  
+  tbl <- data.frame(t(cof_mat[["byClass"]]))
+  
+  macro.recall <- sum(tbl["Recall",])/length(tbl["Recall",])
+  macro.precision <- sum(tbl["Precision",])/length(tbl["Precision",])
+  macro.f1 <- sum(tbl["F1",])/length(tbl["F1",])
+  unweigth <- c(macro.recall,macro.precision,macro.f1)
+  
+  
+  macro.recall.w <- sum(tbl["Recall",]*colsums)/sum(colsums)
+  macro.precision.w <- sum(tbl["Precision",]*colsums)/sum(colsums)
+  macro.f1.w <- sum(tbl["F1",]*colsums)/sum(colsums)
+  weigth <- c(macro.recall.w,macro.precision.w,macro.f1.w)
+  
+  type <- c("Recall","Precision","F1")
+  
+  macro <- data.frame(type, unweigth, weigth)
+  
+  
+  return(list("confusion_mat" = cof_mat,
+              "macro" = macro)) 
   
 }
 
