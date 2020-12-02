@@ -123,12 +123,15 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
   
   if (!is.null(range_from) & !is.null(range_to)){
     
-    larger = tbl$true_onset<=range_from & tbl$true_offset>=range_to
-    displaceleft =  tbl$true_onset <= range_from &  tbl$true_offset <= range_to & tbl$true_offset > range_from
-    displaceright = tbl$true_onset >= range_from &  tbl$true_offset >= range_to & tbl$true_onset < range_to
-    smaller = tbl$true_onset>=range_from & tbl$true_offset<=range_to
+    # larger = tbl$true_onset<=range_from & tbl$true_offset>=range_to
+    # displaceleft =  tbl$true_onset <= range_from &  tbl$true_offset <= range_to & tbl$true_offset > range_from
+    # displaceright = tbl$true_onset >= range_from &  tbl$true_offset >= range_to & tbl$true_onset < range_to
+    # smaller = tbl$true_onset>=range_from & tbl$true_offset<=range_to
+    # 
+    # tbl <- tbl[larger | smaller | displaceleft | displaceright,]
     
-    tbl <- tbl[larger | smaller | displaceleft | displaceright,]
+    tbl <- tbl[true_time_seg_finder(range_from,range_to,tbl),]
+    
     
   }
   
@@ -222,46 +225,59 @@ find_raters_wav <- function(ChildRecordings,file,range_from=NULL,range_to=NULL,c
 
 
 
-find.ratting.segment <- function(CR,filename,ratters){
+find.ratting.segment <- function(CR,filename,ratters=NULL,range_from=NULL,range_to=NULL){
   tbl <- CR$all.meta
   tbl <- tbl[tbl$filename==filename,]
-  tbl <- tbl[tbl$set %in% ratters,]
-  
+ 
   ### True time from time seek 
   
   tbl$true_onset <- tbl$time_seek + tbl$range_onset
   tbl$true_offset <- tbl$time_seek + tbl$range_offset
   
+  
+  if(!is.null(range_from) & !is.null(range_to)){
+    tbl <- tbl[true_time_seg_finder(range_from,range_to,tbl),]
+  }
+  
+  if (is.null(ratters)){
+    ratters <- unique(tbl$set)
+  } else {
+    tbl <- tbl[tbl$set %in% ratters,]
+  }
+  # print(ratters)
   # print(tbl)
+  
+  
   ### Find segment of ratter common segment
   
   find_time_code_data<-data.frame(time_seg= seq( min(tbl$true_onset)-1, max(tbl$true_offset),1))
   rater_nbr <- c()
   for (time in find_time_code_data$time_seg){
-    rater_nbr <- c(rater_nbr,sum(time>=tbl$true_onset & time<=tbl$true_offset))
+    rater_nbr <- c(rater_nbr,sum(time>=tbl$true_onset & time<=tbl$true_offset & tbl$true_onset!=tbl$true_offset))
   }
   
   find_time_code_data$rater_nbr <- rater_nbr
-  find_time_code_data
-  
   find_time_code_data$segments <- as.numeric(find_time_code_data$rater_nbr==length(ratters))
   
+  # if no ratting segment find
+  if( sum(find_time_code_data$segments) == 0 ){return(NULL)}
+
+  
   time_code <- find_time_code_data$time_seg[which(diff(find_time_code_data$segments)!=0)]
+
   
   if(length(time_code)%%2!=0){time_code<-c(time_code,max(tbl$true_offset))}
   
   time_code <- as.data.frame(matrix(time_code,ncol=2,byrow = T))
   names(time_code) <- c("true_onset","true_offset")
-  
-  
-  # print(time_code)
+
   
   rez <- data.frame()
   for( row in 1:nrow(time_code)) {
     true_onset= time_code[row,]$true_onset
     true_offset = time_code[row,]$true_offset
     tmp <- true_time_seg_finder(true_onset,true_offset,tbl)
-    # print(tmp)
+
     
     
     tmp <- data.frame( filename=tbl[tmp,]$filename,
