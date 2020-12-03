@@ -37,7 +37,7 @@ CR = ChildRecordings(ChildRecordingsPath)
 # Date and hours of the recording will be computed if start_time and date_iso of the recording are provided. 
 # This procedure will raise a message if a file is empty (no annotation).
 
-rez = extractDataCR("textgrid_m1",CR) 
+rez = extractDataCR(CR, "textgrid_m1") 
 rez = rez[rez$child_id=="aiku",]
 rez = rez[rez$date_iso=="2016-07-15",]
 head(rez)
@@ -53,14 +53,16 @@ head(long)
 ###############################################
 
 ### Search function for ratting segment
-# Changing one error in metadata for function to work (no range_offset)
+# Changing one error in metadata for function to work (no range_offset for VTC)
 CR$all.meta[CR$all.meta$annotation_filename=="vtc/aiku/namibie_aiku_20160715_1_0_0.csv",]$range_offset<-53551
 
-#if no time range is specified, this function will only return at table with all raters
+# if no time windows is specified, this function will only return at table for all the know raters 
+# All the rater need to ratter any segment find
 find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 
-# However, if a time range is provided, this function will find all the data that 
-# overlaps with the time range provided. For instance,  
+# However, if a time windows is provided, this function will find all the data that 
+# overlaps with the time windows provided. 
+# For instance, you can shift the window it will give you the same result  
 find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
 find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27250)
 find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
@@ -69,7 +71,7 @@ find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, r
 raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
 find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",ratters)
 
-# finding segments on wav file for the designated range in second and rater
+# finding segments on wav file for the designated windows in second and rater
 search <- find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
 
 
@@ -79,7 +81,7 @@ search <- find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, ra
 #                                             #
 ###############################################
 raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
-ratting1  = aggregate.rating(search ,CR,0.1)
+ratting1  = aggregate.rating(CR,search,0.1)
 rez = analyse(ratting1)
 raters.comp <- c("textgrid_ak","textgrid_mm")
 SDT = SDT.raterData(ratting1,raters.comp)
@@ -102,7 +104,7 @@ for (file in wave_file[1:40]){
   search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
 }
 # analyze all the result
-ratting2  = aggregate.rating(search2 ,CR,0.1)
+ratting2  = aggregate.rating(CR,search2,0.1)
 rez = analyse(ratting2)
 # composit Alpha = 0.41 Kappa = 0.41 ACI = 0.64
 
@@ -121,7 +123,7 @@ search3 <- data.frame()
 for (file in wave_file[1:40]){ 
   search3 <- rbind(search3, find.ratting.segment(CR, file, ratters))
 }
-ratting3  = aggregate.rating(search3 ,CR,0.1)
+ratting3  = aggregate.rating(CR, search3, 0.1)
 rez = analyse(ratting3)
 # composit Alpha = 0.55 Kappa = 0.55 ACI = 0.74 obviously that seem "better"
 

@@ -79,7 +79,7 @@ ChildRecordings <- function(path) {
 ## import CSV files from a child recoding project ##
 ####################################################
 
-extractDataCR <- function(set.type, ChildRecordings) {
+extractDataCR <- function(ChildRecordings,set.type) {
   
   path = ChildRecordings$path
   all.meta = ChildRecordings$all.meta
@@ -297,7 +297,7 @@ find.ratting.segment <- function(CR,filename,ratters=NULL,range_from=NULL,range_
 
 
 
-aggregate.rating <- function(data,ChildRecordings,cut=0.1){
+aggregate.rating <- function(ChildRecordings, data, cut=0.100){
   attach(data)
   data <- data[order(filename,set,true_onset),]
   detach(data)
