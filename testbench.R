@@ -20,6 +20,12 @@ source("test/Methods.R")
 
 CR = ChildRecordings(ChildRecordingsPath)
 
+
+###############################################
+#                                             #
+#                Basic function               #
+#                                             #
+###############################################
 ### Find some ratings
 # this function will extract data from the "set" variable in metadata. 
 # In this example, the set is textgrid_m1 and will extract all ratings by the rater M1.
@@ -40,98 +46,197 @@ head(rez)
 long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),1)
 head(long)
 
-### Find rater of a wave file segment ###
+###############################################
+#                                             #
+#               Search function               #
+#                                             #
+###############################################
+
+### Search function for ratting segment
+# Changing one error in metadata for function to work (no range_offset)
+CR$all.meta[CR$all.meta$annotation_filename=="vtc/aiku/namibie_aiku_20160715_1_0_0.csv",]$range_offset<-53551
 
 #if no time range is specified, this function will only return at table with all raters
-rating = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav")
-table = rating$table
-head(table)
+find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 
 # However, if a time range is provided, this function will find all the data that 
 # overlaps with the time range provided. For instance,  
-rating_27000 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27000,27300)
-rating_27000$table
-plot(rating_27000) # This prints 5 graphs. You can open them in a window for a better view
+find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
+find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27250)
+find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
 
-# here is another example of the same file with different time code 
-rating_27200 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300)
-rating_27200$table
-plot(rating_27200)
+# finding segments on wav file for designated rater
+raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
+find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",ratters)
 
-# When a time range is provided, the function also extracts the actual data, 
-# and formats it into a table where each line represents a cut-second slice of the annotation
-# by default the length of the "cut" variable is 0.100 seconde but you can change it like this
-rating_27200_cut1 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300,cut=1)
-rating_27200_cut1$table
-
-plot(rating_27200_cut1) # This prints 5 graphs. You can open them in a window for a better view
+# finding segments on wav file for the designated range in second and rater
+search <- find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
 
 
-### reliability in raterCompCR class 
-# you can extract reliability using the summary method
-summary(rating_27200_cut1)
-
-# detail information can be found here 
-rating_27200_cut1$reliability$`Krippendorff's Alpha`
-rating_27200_cut1$reliability$`Fleiss' Kappa`
-rating_27200_cut1$reliability$AC1
-
-### Find ratting segment in wav file ###
-
-#first step is using a search function to identify segment of rating
-ratters <- c("textgrid_ak","textgrid_mm") # Define raters you are interested in
-# Let's try to find the same segment as before
-search = find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",ratters)
-search # here it is
-
-# Now that you have all the rating for this wave file you can extract and agreagate results
-ratting  = aggregate.rating(search ,CR,0.1)
-# Now let's provide some statistics
-# You will be provide multiple indicator for each of the speaker and the overall
-# For the composite on you can verify that the results are the same as rating_27200
-rez = analyse(ratting)
-rez
-
-# why not to try to find multiple segment in multiple wav file
-# Let's try our two raters on multiple files
-ratters <- c("textgrid_ak","textgrid_mm") # Define raters you are interested in
-wave_file <- CR$all.meta$filename
-head(wave_file) # some wav file name
-search1 <- data.frame() # saving all search result
-for (file in wave_file[30:40]){ # Some files doesn't seem to work 
-  find.ratting.segment(CR, file, ratters)
-  search1 <- rbind(search1, find.ratting.segment(CR, file, ratters))
-}
-search1
-ratting1  = aggregate.rating(search1 ,CR,0.1) # build a raterData class
+###############################################
+#                                             #
+#           aggregating  function             #
+#                                             #
+###############################################
+raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
+ratting1  = aggregate.rating(search ,CR,0.1)
 rez = analyse(ratting1)
+raters.comp <- c("textgrid_ak","textgrid_mm")
+SDT = SDT.raterData(ratting1,raters.comp)
+SDT
 
+#################################################
+#                                               #
+#    finding all segment ratting across files   #
+#                                               #
+#################################################
+#
+# Let'zs try to analyse a larger number of file
 
-# And now with ours 3 raters
+wave_file <- unique(CR$all.meta$filename) # get all the wav files
 ratters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
 
+# bind all the results 
 search2 <- data.frame() 
-for (file in wave_file[30:40]){ 
-  find.ratting.segment(CR, file, ratters)
-  search2 <- rbind(search2, find.ratting.segment(CR, file, ratters))
+for (file in wave_file[1:40]){ 
+  search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
 }
+# analyze all the result
 ratting2  = aggregate.rating(search2 ,CR,0.1)
 rez = analyse(ratting2)
-# it seem that m1 increase agreement
+# composit Alpha = 0.41 Kappa = 0.41 ACI = 0.64
 
+# compare the raters in SDT
+ratercomp <- c("textgrid_ak","textgrid_m1")
+SDT.raterData(ratting2,ratercomp)
+ratercomp <- c("textgrid_mm","textgrid_m1")
+SDT.raterData(ratting2,ratercomp)
+ratercomp <- c("textgrid_ak","textgrid_mm")
+SDT.raterData(ratting2,ratercomp)
+# Rater MM seem to impair ratings 
+
+# try the analyze without MM rater
 ratters <- c("textgrid_ak","textgrid_m1") # Define raters you are interested in
-
 search3 <- data.frame() 
-for (file in wave_file[30:40]){ 
-  find.ratting.segment(CR, file, ratters)
+for (file in wave_file[1:40]){ 
   search3 <- rbind(search3, find.ratting.segment(CR, file, ratters))
 }
 ratting3  = aggregate.rating(search3 ,CR,0.1)
 rez = analyse(ratting3)
-
-# rater MM seem to impair the raters reliability
-
+# composit Alpha = 0.55 Kappa = 0.55 ACI = 0.74 obviously that seem "better"
 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 
+# 
+# # When a time range is provided, the function also extracts the actual data, 
+# # and formats it into a table where each line represents a cut-second slice of the annotation
+# # by default the length of the "cut" variable is 0.100 seconde but you can change it like this
+# rating_27200_cut1 = find_raters_wav(CR,"aiku/namibie_aiku_20160715_1.wav",27200,27300,cut=1)
+# rating_27200_cut1$table
+# 
+# plot(rating_27200_cut1) # This prints 5 graphs. You can open them in a window for a better view
+# 
+# 
+# ### reliability in raterCompCR class 
+# # you can extract reliability using the summary method
+# summary(rating_27200_cut1)
+# 
+# # detail information can be found here 
+# rating_27200_cut1$reliability$`Krippendorff's Alpha`
+# rating_27200_cut1$reliability$`Fleiss' Kappa`
+# rating_27200_cut1$reliability$AC1
+# 
+# ### Find ratting segment in wav file ###
+# 
+# #first step is using a search function to identify segment of rating
+# ratters <- c("textgrid_ak","textgrid_mm") # Define raters you are interested in
+# # Let's try to find the same segment as before
+# search = find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",ratters)
+# search # here it is
+# 
+# # Now that you have all the rating for this wave file you can extract and agreagate results
+# ratting  = aggregate.rating(search ,CR,0.1)
+# # Now let's provide some statistics
+# # You will be provide multiple indicator for each of the speaker and the overall
+# # For the composite on you can verify that the results are the same as rating_27200
+# rez = analyse(ratting)
+# rez
+# 
+# # why not to try to find multiple segment in multiple wav file
+# # Let's try our two raters on multiple files
+# ratters <- c("textgrid_ak","textgrid_mm") # Define raters you are interested in
+# wave_file <- unique(CR$all.meta$filename)
+# head(wave_file) # some wav file name
+# search1 <- data.frame() # saving all search result
+# for (file in wave_file[30:40]){ # Some files doesn't seem to work 
+#   find.ratting.segment(CR, file, ratters)
+#   search1 <- rbind(search1, find.ratting.segment(CR, file, ratters))
+# }
+# search1
+# ratting1  = aggregate.rating(search1 ,CR,0.1) # build a raterData class
+# rez = analyse(ratting1)
+# 
+# 
+# # And now with ours 3 raters
+# ratters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
+# 
+# search2 <- data.frame() 
+# for (file in wave_file[30:40]){ 
+#   find.ratting.segment(CR, file, ratters)
+#   search2 <- rbind(search2, find.ratting.segment(CR, file, ratters))
+# }
+# ratting2  = aggregate.rating(search2 ,CR,0.1)
+# rez = analyse(ratting2)
+# # it seem that m1 increase agreement
+# 
+# ratters <- c("textgrid_ak","textgrid_m1") # Define raters you are interested in
+# 
+# search3 <- data.frame() 
+# for (file in wave_file[30:40]){ 
+#   find.ratting.segment(CR, file, ratters)
+#   search3 <- rbind(search3, find.ratting.segment(CR, file, ratters))
+# }
+# ratting3  = aggregate.rating(search3 ,CR,0.1)
+# rez = analyse(ratting3)
+# 
+# # rater MM seem to impair the raters reliability
+# 
+# 
+# 
+# 
+# 
