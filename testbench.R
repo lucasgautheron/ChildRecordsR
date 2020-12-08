@@ -53,8 +53,6 @@ head(long)
 ###############################################
 
 ### Search function for ratting segment
-# Changing one error in metadata for function to work (no range_offset for VTC)
-CR$all.meta[CR$all.meta$annotation_filename=="vtc/aiku/namibie_aiku_20160715_1_0_0.csv",]$range_offset<-53551
 
 # if no time windows is specified, this function will only return at table for all the know raters 
 # All the rater need to ratter any segment find
@@ -106,8 +104,8 @@ for (file in wave_file){
 }
 # analyze all the result
 ratting2  = aggregate.rating(CR,search2,0.1)
-rez = analyse(ratting2)
-rez
+rez1 = analyse(ratting2)
+rez1
 # composit Alpha = 0.41 Kappa = 0.41 ACI = 0.64
 # compare the raters in SDT
 ratercomp <- c("textgrid_ak","textgrid_m1")
@@ -127,7 +125,7 @@ SDT.raterData(ratting2,ratercomp)
 # The second on is using SDT and merging the results for every 1rater VS 1rater 
 # possible combination giving us a Mean macro precision recall and F1 score.
 
-rez = ratterComparaison(ratting2)
+comparaison = ratterComparaison(ratting2)
 
 
 # try the analyze without MM rater
@@ -138,7 +136,8 @@ for (file in wave_file){
   search3 <- rbind(search3, find.ratting.segment(CR, file, ratters))
 }
 ratting3  = aggregate.rating(CR, search3, 0.1)
-rez = analyse(ratting3)
+rez2 = analyse(ratting3)
+rez2
 SDT.raterData(ratting3,ratters)
 # composit Alpha = 0.55 Kappa = 0.55 ACI = 0.74 obviously that seem "better"
 
