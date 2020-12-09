@@ -5,6 +5,20 @@ library(irrCAC)
 ####################################################
 ######### Building childrecordings class ###########
 ####################################################
+#' 
+#' Main class of the package. Help to check data integrity and provide data 
+#' organization 
+#' Only provide the path folder of the childrecordings project.
+#'
+#' 
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+
 
 ChildRecordings <- function(path) {
   ChildRecordingsPath = path
@@ -12,8 +26,12 @@ ChildRecordings <- function(path) {
   ### Metadata
   annotation <- read.csv(paste0(path, "metadata/annotations.csv"), stringsAsFactors = F)
   recordings <- read.csv(paste0(path, "metadata/recordings.csv"), stringsAsFactors = F)
+  children <- read.csv(paste0(path, "metadata/children.csv"), stringsAsFactors = F)
   all.meta <-
     merge(recordings, annotation, by.x = "filename", by.y = "recording_filename")
+  
+  all.meta <-
+    merge(all.meta, children, by.x = "child_id", by.y = "child_id")
   
   ### Check data test  
   
@@ -65,6 +83,7 @@ ChildRecordings <- function(path) {
     list(
       annotation = annotation,
       recordings = recordings,
+      children = children,
       all.meta = all.meta,
       path = ChildRecordingsPath,
       integrity_test = list("files.missing"=files.missing,

@@ -1,4 +1,16 @@
-
+#' 
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
 
 data_to_OneHotEnc <- function(data){
   rez <- c()

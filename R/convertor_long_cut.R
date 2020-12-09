@@ -1,4 +1,16 @@
-
+#' 
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
 convertor_long_cut <- function(data,onset,offset,cut = 0.100){
   
   min.time = onset

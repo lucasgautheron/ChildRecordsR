@@ -5,7 +5,19 @@ library(GGally)
 library(gridExtra)
 
 
-
+#' 
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
 
 
 setClass("ratterCompCR")

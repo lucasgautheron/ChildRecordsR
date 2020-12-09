@@ -1,6 +1,22 @@
 
 library(reshape)
 library(ggplot2)
+
+
+#' 
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+
 library(GGally)
 library(gridExtra)
 setClass("raterCompCR")

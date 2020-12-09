@@ -8,7 +8,19 @@ library(irrCAC)
 ####################################################
 ## import CSV files from a child recoding project ##
 ####################################################
-
+#' 
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
 extractDataCR <- function(ChildRecordings,set.type) {
   
   if(!is(ChildRecordings, "ChildRecordings")){

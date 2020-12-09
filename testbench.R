@@ -8,9 +8,7 @@ ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
 # ChildRecordingsPath = "/Users/alejandrinacristia/Dropbox/namidia-data/"
 
 ### Import the function 
-source("test/Secondary_function.R")
-source("test/ChildRecordings.R")
-source("test/Methods.R")
+for (file in list.files("R")){  source(paste0("R/",file))}
 
 ### Create a ChildRecordings class
 # Here you will create a class by specifing the root folder of the ChildRecording

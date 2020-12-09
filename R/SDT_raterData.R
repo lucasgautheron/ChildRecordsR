@@ -1,5 +1,18 @@
 
-
+#' 
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
 library(scales)
 library(caret)
 SDT.raterData <- function(raterData,raters){

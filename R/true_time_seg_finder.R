@@ -1,5 +1,17 @@
 
-
+#' 
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
+#'
 true_time_seg_finder <- function(range_from,range_to,all.meta.table){
   
   larger = all.meta.table$true_onset<range_from & all.meta.table$true_offset>range_to

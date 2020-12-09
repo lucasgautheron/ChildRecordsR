@@ -1,4 +1,23 @@
 
+####################################################
+######## aggregation of annnotations data ##########
+####################################################
+
+#' Base on the result of an find.ratting.segment return or similar data.frame
+#' the function will extract data from annotation file in a raterData Class
+#' 
+#' the data will be organize un raw annotation format and a long segmented format 
+#' 
+#' @params : 
+#' - ChildRecordings : a ChildRecordings class
+#' - data : find.ratting.segment return or similar data.frame
+#' - cut : time size in second for the unit segment 
+#'
+#'
+#'
+#'
+#'
+#'
 library(lubridate)
 library(irr)
 library(irrCAC)
