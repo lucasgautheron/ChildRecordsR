@@ -40,6 +40,15 @@ ChildRecordings <- function(path) {
   nbr.start.time <- sum(test)
   missing.start.time <- all.meta[test, ]$annotation_filename
 
+  # check empty file
+  empty.files <- c()
+
+  for (file in all.meta$annotation_file){
+    tmp <- read.csv(paste0(path,"/annotations/",file))
+    if(nrow(tmp)==0){empty.files <-c(empty.files,file)}
+
+  }
+
 
   ### Print Info summary
 
@@ -72,6 +81,14 @@ ChildRecordings <- function(path) {
     cat("\t more infos in ChildRecordings$integrity_test$missing.start.time \n")
   }
 
+  if(length(empty.files)!=0){
+    cat(" ", length(empty.files), " files are empty \n" )
+    cat("\t This should normally mean that no annotation were provided by annotator \n")
+    cat("\t more infos in ChildRecordings$integrity_test$empty.files \n")
+  }
+
+
+
   value <-
     list(
       annotation = annotation,
@@ -81,7 +98,8 @@ ChildRecordings <- function(path) {
       path = ChildRecordingsPath,
       integrity_test = list("files.missing"=files.missing,
                             "files.unreferenced"=files.unreferenced,
-                            "missing.start.time"=missing.start.time)
+                            "missing.start.time"=missing.start.time,
+                            "empty.files"=empty.files)
     )
   attr(value, "class") <- "ChildRecordings"
   value
