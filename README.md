@@ -1,6 +1,8 @@
 # ChildRecordsR
 R package for ChildRecordsData
 
+---
+
 ## Getting started
 
  1. Make sure you have installed [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation) 
@@ -8,11 +10,23 @@ R package for ChildRecordsData
  3. If you are in the LAAC team, you can import a dataset that has already been formatted. See Appendix for details. 
 - get annotation
 
+---
+
 ## Install
 
+### Usign R 
 
+`install.packages("devtools") `
 
-### Usign git and Rstudio 
+`library(devtools)`
+
+`install_github("LAAC-LSCP/ChildRecordsR",ref="Rpackage",user="YourUserName",auth_token = "YourPersonalToken")`
+
+auth_token : your Personal access tokens see doc [here](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) only select repo
+
+user : your user in github
+
+### Usign git and Rstudio (recommanded for now)
 
  - Open terminal
  - `git clone https://github.com/LAAC-LSCP/ChildRecordsR.git`
@@ -20,23 +34,26 @@ R package for ChildRecordsData
  - Open folder in Rstudio
  - On the right panel slect build and click on ** Install and Restart **  
 
+---
 
-### Usign R (not work private repository for now)
 
-`install.packages("devtools") `
+## testing 
 
-`library(devtools)`
 
-`install_github("LAAC-LSCP/ChildRecordsR",ref="Rpackage")`
-
-### testing 
+### With git and r studio install 
 
 If you want to test the firsts functions please use the testbench.R fil, do not change this file. Use playground.R to test what you want. 
 
-After ** Install and Restart ** build in rstudio help panel could be used
+### R install
 
+For every function you could use the help in R and Rstudio
+you can download this file : (https://github.com/LAAC-LSCP/ChildRecordsR/blob/Rpackage/testbench.R) 
+
+---
 
 ## What it can do 
+
+
 
  - Checking referenced file in the childrecording folder and meta (try to mess it to check)
  - retrieve file and provide "True" onset and offset
@@ -45,16 +62,19 @@ After ** Install and Restart ** build in rstudio help panel could be used
  - You can choose the granulation of the cut, by default it is 0.100 second
  - Search function tu provide common windows of annotations
 
+---
+
 ## Need to implementation 
 
- - Currently, research functions lack  flexibility 
- - Function do not know how to handle empty ratting file
+
  - A summary method to provide reliability of ratter is not implemented
  - The code could be refine.
  - implemetation of overlap labeling and lena method on overlap
- - Description of CLass/function will come later as well as structure
+
+---
  
 # if you want to change code 
+
 
 - Create a new branch from *develop* and a merge request on develop i will handle the merge. 
  
