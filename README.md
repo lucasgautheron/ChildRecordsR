@@ -8,7 +8,33 @@ R package for ChildRecordsData
  3. If you are in the LAAC team, you can import a dataset that has already been formatted. See Appendix for details. 
 - get annotation
 
+## Install
+
+
+
+### Usign git and Rstudio 
+
+ - Open terminal
+ - `git clone https://github.com/LAAC-LSCP/ChildRecordsR.git`
+ - `git checkout Rpackage`
+ - Open folder in Rstudio
+ - On the right panel slect build and click on ** Install and Restart **  
+
+
+### Usign R (not work private repository for now)
+
+`install.packages("devtools") `
+
+`library(devtools)`
+
+`install_github("LAAC-LSCP/ChildRecordsR",ref="Rpackage")`
+
+### testing 
+
 If you want to test the firsts functions please use the testbench.R fil, do not change this file. Use playground.R to test what you want. 
+
+After ** Install and Restart ** build in rstudio help panel could be used
+
 
 ## What it can do 
 
@@ -17,6 +43,7 @@ If you want to test the firsts functions please use the testbench.R fil, do not 
  - If date_iso and time_start are provided then it gives the real date and hour of the ratting line (useful if you want to look at the file by year/day/hours)
  - formatting data to future reliability test (0 = silence, 1=child, 2=FEM, 3=MAL, 4=OCHI, NA=overlap)
  - You can choose the granulation of the cut, by default it is 0.100 second
+ - Search function tu provide common windows of annotations
 
 ## Need to implementation 
 

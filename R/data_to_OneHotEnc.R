@@ -1,5 +1,5 @@
-#' 
 #'
+#' Create a composit verctor
 #'
 #'
 #'
@@ -16,8 +16,8 @@ data_to_OneHotEnc <- function(data){
   rez <- c()
   for (row in 1:nrow(data)){
     # print(data[row,])
-    
-    if (rowSums(data[row,-1])==0){ 
+
+    if (rowSums(data[row,-1])==0){
       trez= "silence"
     }else{
       if(rowSums(data[row,-1])>1) {
@@ -33,7 +33,7 @@ data_to_OneHotEnc <- function(data){
     # row =row +1
     rez <- c(rez,trez)
   }
-  
+
   data$composit <- rez
   data
 }
