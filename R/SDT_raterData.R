@@ -81,17 +81,17 @@ SDT.raterData <- function(raterData,raters,plot=TRUE){
   macro.recall <- sum(tbl["Recall",],na.rm=T)/length(tbl["Recall",])
   macro.precision <- sum(tbl["Precision",],na.rm=T)/length(tbl["Precision",])
   macro.f1 <- sum(tbl["F1",],na.rm=T)/length(tbl["F1",])
-  unweigth <- c(macro.recall,macro.precision,macro.f1)
+  unweight <- c(macro.recall,macro.precision,macro.f1)
 
 
   macro.recall.w <- sum(tbl["Recall",]*colsums,na.rm=T)/sum(colsums)
   macro.precision.w <- sum(tbl["Precision",]*colsums,na.rm=T)/sum(colsums)
   macro.f1.w <- sum(tbl["F1",]*colsums,na.rm=T)/sum(colsums)
-  weigth <- c(macro.recall.w,macro.precision.w,macro.f1.w)
+  weight <- c(macro.recall.w,macro.precision.w,macro.f1.w)
 
   type <- c("Recall","Precision","F1")
 
-  macro <- data.frame(type, unweigth, weigth)
+  macro <- data.frame(type, unweight, weight)
 
 
   return(list("confusion_mat" = cof_mat,
