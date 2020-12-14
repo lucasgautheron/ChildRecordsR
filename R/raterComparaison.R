@@ -51,7 +51,7 @@ raterComparaison <- function(raterData){
 
       ctt.data <- cbind(ctt.data,data.frame(ratting))
 
-      tmp<-SDT.raterData(raterData,c(rater,comp.rater))
+      tmp<-SDT.raterData(raterData,c(rater,comp.rater),plot=F)
       # print(tmp)
       sdt.list[[comp.rater]]<-tmp
     }

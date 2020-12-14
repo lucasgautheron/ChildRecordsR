@@ -1,15 +1,16 @@
 
 #' Signal detection theory to compare two annotators
 #'
-#' Provide a SDT indicator to compare two rater
+#' Provide a SDT indicator to compare two rater and graph
 #' @param raterData : a raterData class
 #' @param raters : a vector containning two string witht the names of the two raters
 #'
 #'
-#' @return Soon
+#' @return print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
+#'
 
 
-SDT.raterData <- function(raterData,raters){
+SDT.raterData <- function(raterData,raters,plot=TRUE){
   levels = c("CHI","FEM","MAL","OCH","overlap","silence")
   rater1 <- raterData$rater[[raters[1]]]$long_file
   rater2 <- raterData$rater[[raters[2]]]$long_file
@@ -72,8 +73,8 @@ SDT.raterData <- function(raterData,raters){
     ggplot2::xlab(raters[2]) + ggplot2::ylab(raters[1]) +
     ggplot2::ggtitle("Recall")+ ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
 
+  if (plot){gridExtra::grid.arrange(prec_plot,rec_plot)}
 
-  print(gridExtra::grid.arrange(prec_plot,rec_plot))
 
   tbl <- data.frame(t(cof_mat[["byClass"]]))
 
