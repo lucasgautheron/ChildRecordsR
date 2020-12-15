@@ -20,7 +20,7 @@ R package for ChildRecordsData
 
 `library(devtools)`
 
-`install_github("LAAC-LSCP/ChildRecordsR",ref="Rpackage",user="YourUserName",auth_token = "YourPersonalToken")`
+`install_github("LAAC-LSCP/ChildRecordsR",ref="Rpackage",auth_token = "YourPersonalToken")`
 
 auth_token : your Personal access tokens see doc [here](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) only select repo
 
