@@ -71,14 +71,28 @@ aggregate.rating <- function(ChildRecordings, data, cut=0.100){
   value <- list(
     rater= rater,
     args = list(ratersID = ratersID,
-                cut = cut)
+                cut = cut,
+                search = data)
   )
   attr(value, "class") <- "raterData"
-  return(value)
+
+
+  print.raterData(value)
+  invisible(value)
 }
 
 
+print.raterData <- function(raterData){
 
+  ### Print results
+  recording.length <- sum(raterData$args$search$true_offset -raterData$args$search$true_onset)
+
+
+  cat("number of annotators", length(raterData$args$ratersID),"\n")
+  cat("length of reccording annotation", recording.length,"seconds or ", recording.length/3600, "hours\n")
+  cat("Reccord span ", recording.length/length(raterData$args$ratersID),"seconds or ", recording.length/length(raterData$args$ratersID)/3600, "hours\n\n")
+
+}
 
 
 
