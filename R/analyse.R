@@ -43,11 +43,35 @@ analyse.raterData <- function(raterData){
 
   }
 
-  # if(print.rez){print(reliability)}
-  return(
-    list(
-      type  =  ratting_by_type,
-      reliability = reliability)
+
+
+
+  value <- list(type  =  ratting_by_type,
+                reliability = reliability
   )
+  class(value)="analyse"
+
+
+  print.analyse(value)
+  invisible(value)
+}
+
+
+print.analyse <- function(analyse){
+
+  types <- names(analyse$reliability)
+  cat("Reliability indicator by type","\n\n")
+  for (type in types){
+    cat("#", type,"\n\n" )
+    print(analyse$reliability[[type]])
+    cat("\n\n" )
+
+  }
+
+
 
 }
+
+
+
+
