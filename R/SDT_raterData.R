@@ -38,14 +38,8 @@ SDT.raterData <- function(raterData,raters,plot=TRUE){
   )
   stall=merge(stall,prop_cat[c("id","pr")])
 
-  prec_plot = ggplot2::ggplot(data = stall, mapping = ggplot2::aes(y = get(raters[1]), x= get(raters[2]))) +
-    ggplot2::geom_tile(ggplot2::aes(fill= scales::rescale(pr)), colour = "white") +
-    ggplot2::geom_text(ggplot2::aes(label = paste(round(pr),"%")), vjust = -1,size=4) +
-    ggplot2::geom_text(ggplot2::aes(label = Freq), vjust = 1,size=4) +
-    ggplot2::scale_fill_gradient(low = "white", high = "red", name = "Percentage") +
-    ggplot2::theme(legend.position = "none") +
-    ggplot2::xlab(raters[2]) + ggplot2::ylab(raters[1]) +
-    ggplot2::ggtitle("Precision")+ ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
+  cof_mat[["precision"]]<- stall
+
 
   # repeat for recall
   rowsums=rowSums(conf_tab)
@@ -64,16 +58,7 @@ SDT.raterData <- function(raterData,raters,plot=TRUE){
     lapply(stall[raters[2]], as.character)[[1]]
   )
   stall=merge(stall,prop_cat[c("id","rec")])
-  rec_plot = ggplot2::ggplot(data = stall, mapping = ggplot2::aes(y = get(raters[1]), x= get(raters[2]))) +
-    ggplot2::geom_tile(ggplot2::aes(fill= scales::rescale(rec)), colour = "white") +
-    ggplot2::geom_text(ggplot2::aes(label = paste(round(rec),"%")), vjust = -1,size=4) +
-    ggplot2::geom_text(ggplot2::aes(label = Freq), vjust = 1,size=4) +
-    ggplot2::scale_fill_gradient(low = "white", high = "red", name = "Percentage") +
-    ggplot2::theme(legend.position = "none") +
-    ggplot2::xlab(raters[2]) + ggplot2::ylab(raters[1]) +
-    ggplot2::ggtitle("Recall")+ ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
-
-  if (plot){gridExtra::grid.arrange(prec_plot,rec_plot)}
+  cof_mat[["recall"]]<- stall
 
 
   tbl <- data.frame(t(cof_mat[["byClass"]]))
@@ -94,7 +79,83 @@ SDT.raterData <- function(raterData,raters,plot=TRUE){
   macro <- data.frame(type, unweight, weight)
 
 
-  return(list("confusion_mat" = cof_mat,
-              "macro" = macro))
+
+
+  value <- list(
+    table = list("Confusion Matrix" = cof_mat$table,
+                 "Recall Matrix" = cof_mat$recall,
+                 "Precision Matrix" = cof_mat$precision),
+    byClass = cof_mat$byClass,
+    macro = macro,
+    raters = raters
+  )
+  class(value)="SDT.rater"
+
+
+
+  print.SDT.rater(value)
+  if(plot)plot(value)
+
+
+  invisible(value)
 
 }
+
+
+print.SDT.rater <- function(SDT.rater){
+
+  cat("Confusion matrix : \n\n")
+  print(SDT.rater$table$"Confusion Matrix")
+  cat("\n\n")
+
+  cat("STD by class : \n\n")
+  print(t(SDT.rater$byClass))
+  cat("\n\n")
+
+  cat("STD macro indicators : \n\n")
+  print(SDT.rater$macro)
+
+}
+
+
+
+
+
+setClass("SDT.rater")
+setGeneric("plot")
+setMethod("plot",signature = "SDT.rater",
+          function(x){
+
+            raters = x$raters
+            prec = x$table$"Precision Matrix"
+            recall = x$table$"Recall Matrix"
+
+            prec_plot = ggplot2::ggplot(data = prec, mapping = ggplot2::aes(y = get(raters[1]), x= get(raters[2]))) +
+              ggplot2::geom_tile(ggplot2::aes(fill= scales::rescale(pr)), colour = "white") +
+              ggplot2::geom_text(ggplot2::aes(label = paste(round(pr),"%")), vjust = -1,size=4) +
+              ggplot2::geom_text(ggplot2::aes(label = Freq), vjust = 1,size=4) +
+              ggplot2::scale_fill_gradient(low = "white", high = "red", name = "Percentage") +
+              ggplot2::theme(legend.position = "none") +
+              ggplot2::xlab(raters[2]) + ggplot2::ylab(raters[1]) +
+              ggplot2::ggtitle("Precision")+ ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
+
+            rec_plot = ggplot2::ggplot(data = recall, mapping = ggplot2::aes(y = get(raters[1]), x= get(raters[2]))) +
+              ggplot2::geom_tile(ggplot2::aes(fill= scales::rescale(rec)), colour = "white") +
+              ggplot2::geom_text(ggplot2::aes(label = paste(round(rec),"%")), vjust = -1,size=4) +
+              ggplot2::geom_text(ggplot2::aes(label = Freq), vjust = 1,size=4) +
+              ggplot2::scale_fill_gradient(low = "white", high = "red", name = "Percentage") +
+              ggplot2::theme(legend.position = "none") +
+              ggplot2::xlab(raters[2]) + ggplot2::ylab(raters[1]) +
+              ggplot2::ggtitle("Recall")+ ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
+
+            gridExtra::grid.arrange(prec_plot,rec_plot)
+
+          }
+)
+
+
+
+
+
+
+
