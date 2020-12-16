@@ -16,9 +16,9 @@
 
 
 
-analyse <- function(x) UseMethod("analyse", x)
+analyse <- function(x,summary) UseMethod("analyse", x)
 
-analyse.raterData <- function(raterData){
+analyse.raterData <- function(raterData, summary=TRUE){
   ratting.type = c("CHI","OCH","FEM","MAL","composit")
 
   ratting_by_type <- list()
@@ -52,7 +52,7 @@ analyse.raterData <- function(raterData){
   class(value)="analyse"
 
 
-  print.analyse(value)
+  if(summary) print.analyse(value)
   invisible(value)
 }
 

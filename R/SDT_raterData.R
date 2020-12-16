@@ -10,7 +10,7 @@
 #'
 
 
-SDT.raterData <- function(raterData,raters,plot=TRUE){
+SDT.raterData <- function(raterData,raters,plot=TRUE,summary=TRUE){
   levels = c("CHI","FEM","MAL","OCH","overlap","silence")
   rater1 <- raterData$rater[[raters[1]]]$long_file
   rater2 <- raterData$rater[[raters[2]]]$long_file
@@ -93,8 +93,8 @@ SDT.raterData <- function(raterData,raters,plot=TRUE){
 
 
 
-  print.SDT.rater(value)
-  if(plot)plot(value)
+  if(summary) print.SDT.rater(value)
+  if(plot) plot(value)
 
 
   invisible(value)
