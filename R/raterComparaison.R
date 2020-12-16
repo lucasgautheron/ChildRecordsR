@@ -30,7 +30,7 @@ raterComparaison <- function(raterData){
 
 
   raters <- raterData$args$ratersID
-  global.reliability <- analyse(raterData)
+  global.reliability <- analyse(raterData,summary=F)
   global.reliability <- global.reliability$reliability[["composit"]]
 
   rater.result <- list()
@@ -51,7 +51,7 @@ raterComparaison <- function(raterData){
 
       ctt.data <- cbind(ctt.data,data.frame(ratting))
 
-      tmp<-SDT.raterData(raterData,c(rater,comp.rater),plot=F)
+      tmp<-SDT.raterData(raterData,c(rater,comp.rater),plot=F,summary=F)
       # print(tmp)
       sdt.list[[comp.rater]]<-tmp
     }
@@ -89,7 +89,7 @@ raterComparaison <- function(raterData){
     ctt <-rbind(ctt,ctt.rez)
   }
 
-  print(ctt)
+
 
   ### SDT
   sdt <- data.frame()
@@ -107,17 +107,69 @@ raterComparaison <- function(raterData){
     rater.sdt <- cbind(rater,indic,rater.sdt/length(comp.raters))
     sdt <-rbind(sdt,rater.sdt)
   }
-  print(sdt)
 
 
-  return(
-    list(
-      global.reliability=global.reliability,
-      rater.result=rater.result,
-      ctt = ctt,
-      sdt=sdt
+  ### Print results
+  recording.length <- sum(raterData$args$search$true_offset -raterData$args$search$true_onset)
 
-    )
-  )
+
+  # cat("number of annotators", length(raters),"\n")
+  # cat("length of reccording annotation", recording.length,"seconds or ", recording.length/3600, "hours\n")
+  # cat("Record span ", recording.length/length(raters),"seconds or ", recording.length/length(raters)/3600, "hours\n\n")
+
+
+  # print(sdt)
+  # print(ctt)
+  value <- list(global.reliability=global.reliability,
+                rater.result=rater.result,
+                ctt = ctt,
+                sdt=sdt,
+                args = list(raters = raters,
+                            recording.length = recording.length,
+                            raterData = deparse(substitute(raterData))
+
+                ))
+
+
+  class(value) <- "raterComp"
+  print.raterComp(value)
+  invisible(value)
+
 }
+
+
+print.raterComp <- function(raterComp){
+  raters = raterComp$args$raters
+  nRaters = length(raters)
+  recording.length = raterComp$args$recording.length
+
+  cat("number of annotators", nRaters,"\n")
+  cat("length of reccording annotation", recording.length,"seconds or ", recording.length/3600, "hours\n")
+  cat("Record span ", recording.length/nRaters,"seconds or ", recording.length/nRaters/3600, "hours\n\n")
+
+  ctt = raterComp$ctt
+  ctt[,c(3,5,7)] <- round(ctt[,c(3,5,7)],3)
+  sdt = raterComp$sdt
+  sdt[,c(3,4)] <- round(sdt[,c(3,4)],3)
+
+  for (rater in raters){
+
+    cat("### Annotator",rater,"###\n\n")
+
+    tmp.ctt <- ctt[ctt$rater==rater,]
+    rownames(tmp.ctt) <- tmp.ctt[,2]
+    print(tmp.ctt[,c(-1,-2)])
+
+    cat("\n")
+    tmp.sdt <- sdt[sdt$rater==rater,]
+    rownames(tmp.sdt) <- tmp.sdt[,2]
+    print(tmp.sdt[,c(-1,-2)])
+    cat("\n")
+
+  }
+
+}
+
+
+
 
