@@ -15,5 +15,6 @@ Imports:
 	ggplot2, 
 	gridExtra,
 	scales,
-	caret
+	caret,
+	forcats
 RoxygenNote: 7.1.1
