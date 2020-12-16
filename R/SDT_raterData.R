@@ -127,8 +127,12 @@ setMethod("plot",signature = "SDT.rater",
           function(x){
 
             raters = x$raters
+
             prec = x$table$"Precision Matrix"
+            prec[raters[1]] <- forcats::fct_rev(prec[[raters[1]]])
+
             recall = x$table$"Recall Matrix"
+            recall[raters[1]] <- forcats::fct_rev(recall[[raters[1]]])
 
             prec_plot = ggplot2::ggplot(data = prec, mapping = ggplot2::aes(y = get(raters[1]), x= get(raters[2]))) +
               ggplot2::geom_tile(ggplot2::aes(fill= scales::rescale(pr)), colour = "white") +
