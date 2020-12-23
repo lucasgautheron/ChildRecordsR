@@ -26,8 +26,9 @@ ChildRecordings <- function(path) {
   all.meta <-
     merge(all.meta, children, by.x = "child_id", by.y = "child_id")
 
-  erro.convertion <- all.meta[all.meta$error!="",]
-  all.meta <- all.meta[all.meta$error=="",]
+  erro.convertion <- all.meta[ nchar(all.meta$error)>=1 & !is.na(nchar(all.meta$error)),]
+  all.meta <- all.meta[is.na(all.meta$error) | all.meta$error=="",]
+
 
   ### Check data test
 
@@ -136,6 +137,7 @@ print.ChildRecordings <- function(ChildRecordings){
   if (nrow(erro.convertion)!=0){
     cat(" ", nrow(erro.convertion), " files with convertion error\n" )
     cat("\t This should normally mean that your conversion fail \n")
+    cat("\t Those files are remove from package analysis \n")
     cat("\t more infos in ChildRecordings$integrity_test$erro.convertion \n")
   }
 
