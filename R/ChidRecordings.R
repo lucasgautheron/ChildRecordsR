@@ -26,6 +26,9 @@ ChildRecordings <- function(path) {
   all.meta <-
     merge(all.meta, children, by.x = "child_id", by.y = "child_id")
 
+  erro.convertion <- all.meta[all.meta$error!="",]
+  all.meta <- all.meta[all.meta$error=="",]
+
   ### Check data test
 
   # Meta file
@@ -44,49 +47,12 @@ ChildRecordings <- function(path) {
   empty.files <- c()
 
   for (file in all.meta$annotation_file){
-    tmp <- read.csv(paste0(path,"/annotations/",file))
-    if(nrow(tmp)==0){empty.files <-c(empty.files,file)}
 
+    # if(nchar(file)!=0){
+      tmp <- read.csv(paste0(path,"/annotations/",file))
+      if(nrow(tmp)==0){empty.files <-c(empty.files,file)}
+    # }
   }
-
-
-  # ### Print Info summary
-  #
-  # cat("###############################################\n")
-  # cat("Hello Wellcome to the ChildRecordings R Project \n\n")
-  #
-  # cat("Your ChildRecording project path containe : \n",
-  #     nbr.file," annotations files \n",
-  #     referenced.file, " are referenced in the metadata \n")
-  #
-  # if(length(files.missing)==0 & length(files.unreferenced)==0){
-  #   cat("\n All files seems to be present and referenced in the metadata (good news ;) )\n")
-  # }
-  #
-  # if(length(files.missing)!=0 ){
-  #   cat( length(files.missing), " files seems to be missing in the annotations folders")
-  #   cat("\t more infos inChildRecordings$integrity_test$files.missing \n")
-  # }
-  #
-  # if(length(files.unreferenced)!=0 ){
-  #   cat( length(files.unreferenced), " files seems to be unreferenced in the metadata \n")
-  #   cat("\t more infos in  ChildRecordings$integrity_test$files.unreferenced \n")
-  # }
-  #
-  # cat("\n")
-  #
-  # if(length(missing.start.time)!=0){
-  #   cat(" ", length(missing.start.time), " metadata don't have a start recording time (a.k.a start.time) \n" )
-  #   cat("\t therefore time indicators wil not be build for those files \n")
-  #   cat("\t more infos in ChildRecordings$integrity_test$missing.start.time \n")
-  # }
-  #
-  # if(length(empty.files)!=0){
-  #   cat(" ", length(empty.files), " files are empty \n" )
-  #   cat("\t This should normally mean that no annotation were provided by annotator \n")
-  #   cat("\t more infos in ChildRecordings$integrity_test$empty.files \n")
-  # }
-
 
 
   value <-
@@ -101,7 +67,8 @@ ChildRecordings <- function(path) {
                             "files.missing"=files.missing,
                             "files.unreferenced"=files.unreferenced,
                             "missing.start.time"=missing.start.time,
-                            "empty.files"=empty.files)
+                            "empty.files"=empty.files,
+                            "erro.convertion"=erro.convertion)
     )
   attr(value, "class") <- "ChildRecordings"
 
@@ -120,6 +87,7 @@ print.ChildRecordings <- function(ChildRecordings){
   referenced.file <- ChildRecordings$integrity_test$referenced.file
   files.missing <- ChildRecordings$integrity_test$files.missing
   files.unreferenced <- ChildRecordings$integrity_test$files.unreferenced
+  erro.convertion <- ChildRecordings$integrity_test$erro.convertion
 
   # check time start
 
@@ -165,6 +133,11 @@ print.ChildRecordings <- function(ChildRecordings){
     cat("\t more infos in ChildRecordings$integrity_test$empty.files \n")
   }
 
+  if (nrow(erro.convertion)!=0){
+    cat(" ", nrow(erro.convertion), " files with convertion error\n" )
+    cat("\t This should normally mean that your conversion fail \n")
+    cat("\t more infos in ChildRecordings$integrity_test$erro.convertion \n")
+  }
 
 
   # print(table(x[[2]]))
