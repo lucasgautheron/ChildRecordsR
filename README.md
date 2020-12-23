@@ -29,9 +29,9 @@ auth_token : your Personal access tokens see doc [here](https://docs.github.com/
 
  - Open terminal
  - `git clone https://github.com/LAAC-LSCP/ChildRecordsR.git`
- - `git checkout Rpackage`
+ - `git checkout develop`
  - Open folder in Rstudio
- - On the right panel slect build and click on ** Install and Restart **  
+ - On the right panel select build and click on ** Install and Restart **  
 
 ---
 
