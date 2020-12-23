@@ -140,9 +140,6 @@ print.ChildRecordings <- function(ChildRecordings){
   }
 
 
-  # print(table(x[[2]]))
-  # invisible(x)
-  # NextMethod()
 }
 
 
