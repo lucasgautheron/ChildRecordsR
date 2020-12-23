@@ -19,7 +19,7 @@ file.openner <- function(meta_row,ChildRecordings){
   temps.data <- read.csv(path)
 
   if (nrow(temps.data) == 0) {
-    print(paste("no row (i.e., no annotated speech) in ", path))
+    # print(paste("no row (i.e., no annotated speech) in ", path))
     return(temps.data)
   }
 
