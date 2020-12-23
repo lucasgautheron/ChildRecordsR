@@ -46,7 +46,6 @@ ChildRecordings <- function(path) {
 
   # check empty file
   empty.files <- c()
-
   for (file in all.meta$annotation_file){
 
     # if(nchar(file)!=0){
