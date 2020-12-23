@@ -31,7 +31,7 @@ find.ratting.segment <- function(ChildRecordings,filename,annotators=NULL,range_
 
 
 
-  tbl <- CR$all.meta
+  tbl <- ChildRecordings$all.meta
   tbl <- tbl[tbl$filename==filename,]
 
   ### True time from time seek
