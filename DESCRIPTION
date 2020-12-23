@@ -1,0 +1,20 @@
+Package: ChildRecordsR
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Date: 2020-12-11
+Author: Nicolas Rochat
+Maintainer: Nicolas Rochat <nicolas.r.rochat@gmail.com>
+Description: More about what it does (maybe more than one line)
+    Use four spaces when indenting paragraphs within the Description.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Imports:
+	lubridate, 
+	ggplot2, 
+	gridExtra,
+	scales,
+	caret,
+	forcats
+RoxygenNote: 7.1.1
