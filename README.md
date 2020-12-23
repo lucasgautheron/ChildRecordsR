@@ -20,11 +20,10 @@ R package for ChildRecordsData
 
 `library(devtools)`
 
-`install_github("LAAC-LSCP/ChildRecordsR",ref="Rpackage",auth_token = "YourPersonalToken")`
+`install_github("LAAC-LSCP/ChildRecordsR",ref="develop",auth_token = "YourPersonalToken")`
 
 auth_token : your Personal access tokens see doc [here](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) only select repo
 
-user : your user in github
 
 ### Usign git and Rstudio (recommanded for now)
 
@@ -39,33 +38,24 @@ user : your user in github
 
 ## testing 
 
+for any installation type For you could use the help in R and Rstudio and you can download this file : (https://github.com/LAAC-LSCP/ChildRecordsR/blob/develop/testbench.R).
+this will provide you basic function available. (sometime annotators may be call raters or *vice versa*)
 
-### With git and r studio install 
-
-If you want to test the firsts functions please use the testbench.R fil, do not change this file. Use playground.R to test what you want. 
-
-### R install
-
-For every function you could use the help in R and Rstudio
-you can download this file : (https://github.com/LAAC-LSCP/ChildRecordsR/blob/Rpackage/testbench.R) 
 
 ---
 
 ## What it can do 
-
-
 
  - Checking referenced file in the childrecording folder and meta (try to mess it to check)
  - retrieve file and provide "True" onset and offset
  - If date_iso and time_start are provided then it gives the real date and hour of the ratting line (useful if you want to look at the file by year/day/hours)
  - formatting data to future reliability test (0 = silence, 1=child, 2=FEM, 3=MAL, 4=OCHI, NA=overlap)
  - You can choose the granulation of the cut, by default it is 0.100 second
- - Search function tu provide common windows of annotations
+ - The search function provide common windows of annotations
 
 ---
 
 ## Need to implementation 
-
 
  - A summary method to provide reliability of ratter is not implemented
  - The code could be refine.
@@ -78,7 +68,7 @@ you can download this file : (https://github.com/LAAC-LSCP/ChildRecordsR/blob/Rp
 
 - Create a new branch from *develop* and a merge request on develop i will handle the merge. 
  
- ## Appendix: getting a LAAC dataset that has already been formatted.
+## Appendix: getting a LAAC dataset that has already been formatted.
  
 You can find the list of formatted LAAC datasets as well as instructions to get them [here](https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#list-of-available-projects)
 
