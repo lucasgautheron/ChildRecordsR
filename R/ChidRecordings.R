@@ -84,6 +84,7 @@ print.ChildRecordings <- function(ChildRecordings){
 
   # Meta file
   nbr.file <- ChildRecordings$integrity_test$nbr.file
+  coders <- unique(ChildRecordings$all.meta$set)
   referenced.file <- ChildRecordings$integrity_test$referenced.file
   files.missing <- ChildRecordings$integrity_test$files.missing
   files.unreferenced <- ChildRecordings$integrity_test$files.unreferenced
@@ -103,7 +104,8 @@ print.ChildRecordings <- function(ChildRecordings){
 
   cat("Your ChildRecording project path containe : \n",
       nbr.file," annotations files \n",
-      referenced.file, " are referenced in the metadata \n")
+      referenced.file, " are referenced in the metadata \n",
+      length(coders), " coders were finded : ",  coders)
 
   if(length(files.missing)==0 & length(files.unreferenced)==0){
     cat("\n All files seems to be present and referenced in the metadata (good news ;) )\n")
