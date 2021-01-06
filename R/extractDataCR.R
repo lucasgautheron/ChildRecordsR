@@ -27,7 +27,13 @@ extractDataCR <- function(set.type,LENA.OL = F,ChildRecordings) {
 
   ### Data extraction loop
   data <- data.frame()
+  start <- Sys.time()
   for (row in 1:nrow(all.meta)) {
+
+
+    ### aggregate data
+
+
     if (LENA.OL){
       temps.data <- LENA.overlap(all.meta[row, ],ChildRecordings)
     }else{
@@ -36,6 +42,23 @@ extractDataCR <- function(set.type,LENA.OL = F,ChildRecordings) {
 
     # bind data
     data <- rbind(data, temps.data)
+
+    ### Progress bar
+    t <- Sys.time()
+    extra <- nchar('||100%')
+    width <- options(width = 80)$width
+    step <- round(row / nrow(all.meta) * (width - extra))
+    step.time <- as.numeric(difftime(t, start, units = "secs")/row)
+    est.duration = step.time*nrow(all.meta)/60
+    est.remain=step.time*(nrow(all.meta)-row)/60
+    text <- sprintf('|%s%s|% 3s%% time by step : %ss estimate duration : %sm remain : %sm', strrep('=', step),
+                    strrep(' ', width - step - extra), round(row / nrow(all.meta) * 100),
+                    round(step.time) ,
+                    round(est.duration),
+                    round(est.remain)
+    )
+    cat(text,"\n")
+
 
   }
 
