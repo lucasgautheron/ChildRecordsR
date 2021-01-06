@@ -24,9 +24,6 @@ aggregate.rating <- function(ChildRecordings, data, cut=0.100){
     print(paste( substitute(ChildRecordings), "is not a ChildRecordings class retrun null result"))
     return(NULL)
   }
-
-
-
   attach(data)
   data <- data[order(filename,set,true_onset),]
   detach(data)
@@ -35,9 +32,12 @@ aggregate.rating <- function(ChildRecordings, data, cut=0.100){
 
   rater <- list()
 
+  ### init progress bar
+  start <- Sys.time()
+  Nrow <- 1
+
   for(rat in ratersID){
     tmp.data <- data[data$set==rat,]
-    # print(tmp.data)
     raw_files <- data.frame()
     long_files <- data.frame()
 
@@ -47,21 +47,37 @@ aggregate.rating <- function(ChildRecordings, data, cut=0.100){
       annotation_filename <- row$annotation_filename
       true_onset <- row$true_onset
       true_offset <- row$true_offset
-      # print(row)
+
 
       meta.row <- all.meta[all.meta$annotation_filename==annotation_filename,]
-
-
       raw_file <- file.openner(meta.row,ChildRecordings)
       long_file <- convertor_long_cut(raw_file,true_onset,true_offset,cut=cut)
       long_file <- data_to_OneHotEnc(long_file)
-
       raw_files<-rbind(raw_files,raw_file)
       long_files <- rbind(long_files,long_file)
 
+
+      ### Progress bar
+      t <- Sys.time()
+      extra <- nchar('||100%')
+      width <- options(width = 80)$width
+      step <- round(Nrow / nrow(data) * (width - extra))
+      step.time <- as.numeric(difftime(t, start, units = "secs")/Nrow)
+      est.duration = step.time*nrow(data)/60
+      est.remain=step.time*(nrow(data)-Nrow)/60
+      text <- sprintf('|%s%s|% 3s%% time by step : %ss estimate duration : %sm remain : %sm', strrep('=', step),
+                      strrep(' ', width - step - extra), round(Nrow / nrow(data) * 100),
+                      round(step.time) ,
+                      round(est.duration),
+                      round(est.remain))
+      cat(text,"\n")
+      Nrow = Nrow + 1
+      ###
+
+
+
     }
-    # print(head(raw_files))
-    # print(head(long_files))
+
     rater[[rat]]$raw_file <- raw_files
     rater[[rat]]$long_file <- long_files
 
