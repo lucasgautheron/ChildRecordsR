@@ -52,18 +52,17 @@
 
 
 convertor_long_cut <- function(data,onset,offset,cut = 0.100){
-
-  if(nrow(data)<1){
-    return(data.frame("time.seq"=as.numeric(),
-                      "MAL"=as.numeric(),
-                      "CHI"=as.numeric(),
-                      "OCH"=as.numeric(),
-                      "FEM"=as.numeric()))
-  }
-
   min.time = onset
   max.time = offset
   time.seq <- seq.default(onset,offset,cut)
+  if(nrow(data)<1){
+    return(data.frame("time.seq"=time.seq,
+                      "MAL"=0,
+                      "CHI"=0,
+                      "OCH"=0,
+                      "FEM"=0))
+  }
+
 
   tmp.data <- data.frame(time.seq,"MAL"=0, "CHI"=0, "OCH"=0, "FEM"=0)
 
