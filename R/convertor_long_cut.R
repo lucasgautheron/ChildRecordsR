@@ -68,18 +68,19 @@ convertor_long_cut <- function(data,onset,offset,cut = 0.100){
   tmp.data <- data.frame(time.seq,"MAL"=0, "CHI"=0, "OCH"=0, "FEM"=0)
 
   for (row in 1:nrow(data)){
-    segment_onset <- data[row,]$segment_onset
-    segment_offset <- data[row,]$segment_offset
-    speaker_type <- as.character(data[row,]$speaker_type)
+    segment_onset <- data$segment_onset[row]
+    segment_offset <- data$segment_offset[row]
+    speaker_type <- as.character(data$speaker_type[row])
 
     # print(data[row,1:7])
     # print(speaker_type)
     # print(speaker_type %in% c("MAL", "CHI", "OCH", "FEM"))
     if(speaker_type %in% c("MAL", "CHI", "OCH", "FEM")){
       # tmp.data[time.seq>=segment_onset & time.seq<=segment_offset,speaker_type] + 1
-      d = tmp.data[time.seq>=segment_onset & time.seq<=segment_offset,][,speaker_type] + 1
-      tmp.data[time.seq>=segment_onset & time.seq<=segment_offset,][,speaker_type] = d
-
+      # d = tmp.data[time.seq>=segment_onset & time.seq<=segment_offset,speaker_type] + 1
+      # tmp.data[time.seq>=segment_onset & time.seq<=segment_offset,speaker_type] = d
+      tmp.data[time.seq>=segment_onset & time.seq<=segment_offset,speaker_type] =
+        tmp.data[time.seq>=segment_onset & time.seq<=segment_offset,speaker_type] + 1
     }
 
   }
