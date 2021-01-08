@@ -14,7 +14,7 @@
 #'
 #'
 #'
-extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F) {
+extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
 
   if(!is(ChildRecordings, "ChildRecordings")){
     print("ChildRecordings value is not a ChildRecordings class retrun null result")
@@ -44,20 +44,22 @@ extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F) {
     data <- rbind(data, temps.data)
 
     ### Progress bar
-    t <- Sys.time()
-    extra <- nchar('||100%')
-    width <- options(width = 80)$width
-    step <- round(row / nrow(all.meta) * (width - extra))
-    step.time <- as.numeric(difftime(t, start, units = "secs")/row)
-    est.duration = step.time*nrow(all.meta)/60
-    est.remain=step.time*(nrow(all.meta)-row)/60
-    text <- sprintf('|%s%s|% 3s%% time by step : %ss estimate duration : %sm remain : %sm', strrep('=', step),
-                    strrep(' ', width - step - extra), round(row / nrow(all.meta) * 100),
-                    round(step.time) ,
-                    round(est.duration),
-                    round(est.remain)
-    )
-    cat(text,"\n")
+    if(verbose){
+      t <- Sys.time()
+      extra <- nchar('||100%')
+      width <- options(width = 80)$width
+      step <- round(row / nrow(all.meta) * (width - extra))
+      step.time <- as.numeric(difftime(t, start, units = "secs")/row)
+      est.duration = step.time*nrow(all.meta)/60
+      est.remain=step.time*(nrow(all.meta)-row)/60
+      text <- sprintf('|%s%s|% 3s%% time by step : %ss estimate duration : %sm remain : %sm', strrep('=', step),
+                      strrep(' ', width - step - extra), round(row / nrow(all.meta) * 100),
+                      round(step.time) ,
+                      round(est.duration),
+                      round(est.remain)
+      )
+      cat(text,"\n")
+    }
 
 
   }
