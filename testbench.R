@@ -42,14 +42,20 @@ CR = ChildRecordings(ChildRecordingsPath)
 # Date and hours of the recording will be computed if start_time and date_iso of the recording are provided.
 # This procedure will raise a message if a file is empty (no annotation).
 
-rez = extractDataCR(CR, "textgrid_m1")
+rez = extractDataCR( "textgrid_m1",CR)
 rez = rez[rez$child_id=="aiku",]
 rez = rez[rez$date_iso=="2016-07-15",]
 head(rez)
+# With a LENA overlap method
+rez2 = extractDataCR( "textgrid_m1",CR,LENA.OL = T)
+rez2 = rez2[rez2$child_id=="aiku",]
+rez2 = rez2[rez2$date_iso=="2016-07-15",]
+head(rez2)
+
 ### Function to convert the file into long format (ie adapt onset times to the long-form audio)
 # Useful to future rater reliability
-long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),1)
-head(long)
+long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),cut = 0.1)
+head(long,20)
 
 ###############################################
 #                                             #
@@ -88,7 +94,7 @@ ratting1  = aggregate.rating(CR,search,0.1)
 rez = analyse(ratting1)
 raters.comp <- c("textgrid_ak","textgrid_mm")
 SDT = SDT.raterData(ratting1,raters.comp)
-SDT
+
 
 #################################################
 #                                               #
@@ -98,12 +104,12 @@ SDT
 #
 # Let'zs try to analyse a larger number of file
 
-wave_file <- unique(CR$all.meta$filename)[0:40] # get all the wav files
+wave_file <- unique(CR$all.meta$filename) # get all the wav files
 ratters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
 
 # bind all the results
 search2 <- data.frame()
-for (file in wave_file){
+for (file in wave_file[1:10]){
   print(file)
   search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
 }
@@ -136,7 +142,7 @@ comparaison = ratterComparaison(ratting2)
 # try the analyze without MM rater
 ratters <- c("textgrid_ak","textgrid_m1") # Define raters you are interested in
 search3 <- data.frame()
-for (file in wave_file){
+for (file in wave_file[1:10]){
   print(file)
   search3 <- rbind(search3, find.ratting.segment(CR, file, ratters))
 }
