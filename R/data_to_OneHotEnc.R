@@ -45,7 +45,7 @@ data_to_OneHotEnc <- function(data){
   }
   # print(data)
   data$sum <- rowSums(data[,-1])
-  data$composit <- 0
+  data$composit <- "silence"
 
   tmp.data <- data[data$sum!=0,]
   # print(nrow(tmp.data))
