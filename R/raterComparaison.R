@@ -176,7 +176,7 @@ setMethod("plot",signature = "raterComp",
           function(x){
 
             # CTT
-            ctt <- raterComp$ctt
+            ctt <- x$ctt
             ctt$`conf.int after` <- as.character(ctt$`conf.int after`)
             ctt$`conf.int after` <- stringr::str_remove(ctt$`conf.int after`,"\\(")
             ctt$`conf.int after` <- stringr::str_remove(ctt$`conf.int after`,"\\)")
@@ -192,7 +192,7 @@ setMethod("plot",signature = "raterComp",
               ggplot2::ggtitle("Reliability after rater retraction")
 
             # SDT
-            sdt <- raterComp$sdt
+            sdt <- x$sdt
 
             b <- ggplot2::ggplot(sdt,ggplot2::aes(x=rater,y=weight,color=indic))+
               ggplot2::geom_point( position=ggplot2::position_dodge(width=0.3))+
