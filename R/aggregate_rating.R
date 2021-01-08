@@ -18,7 +18,7 @@
 
 
 
-aggregate.rating <- function(ChildRecordings, data, cut=0.100){
+aggregate.rating <- function(ChildRecordings, data, cut=0.100,verbose=T){
 
   if(!is(ChildRecordings, "ChildRecordings")){
     print(paste( substitute(ChildRecordings), "is not a ChildRecordings class retrun null result"))
@@ -58,20 +58,23 @@ aggregate.rating <- function(ChildRecordings, data, cut=0.100){
 
 
       ### Progress bar
-      t <- Sys.time()
-      extra <- nchar('||100%')
-      width <- options(width = 80)$width
-      step <- round(Nrow / nrow(data) * (width - extra))
-      step.time <- as.numeric(difftime(t, start, units = "secs")/Nrow)
-      est.duration = step.time*nrow(data)/60
-      est.remain=step.time*(nrow(data)-Nrow)/60
-      text <- sprintf('|%s%s|% 3s%% time by step : %ss estimate duration : %sm remain : %sm', strrep('=', step),
-                      strrep(' ', width - step - extra), round(Nrow / nrow(data) * 100),
-                      round(step.time) ,
-                      round(est.duration),
-                      round(est.remain))
-      cat(text,"\n")
-      Nrow = Nrow + 1
+
+      if(verbose){
+        t <- Sys.time()
+        extra <- nchar('||100%')
+        width <- options(width = 80)$width
+        step <- round(Nrow / nrow(data) * (width - extra))
+        step.time <- as.numeric(difftime(t, start, units = "secs")/Nrow)
+        est.duration = step.time*nrow(data)/60
+        est.remain=step.time*(nrow(data)-Nrow)/60
+        text <- sprintf('|%s%s|% 3s%% time by step : %ss estimate duration : %sm remain : %sm', strrep('=', step),
+                        strrep(' ', width - step - extra), round(Nrow / nrow(data) * 100),
+                        round(step.time) ,
+                        round(est.duration),
+                        round(est.remain))
+        cat(text,"\n")
+        Nrow = Nrow + 1
+      }
       ###
 
 
