@@ -51,6 +51,9 @@ find.ratting.segment <- function(ChildRecordings,filename,annotators=NULL,range_
     tbl <- tbl[tbl$set %in% annotators,]
   }
 
+  if (nrow(tbl)==0){
+    return(NULL)
+  }
 
 
   ### Find segment of ratter common segment
@@ -84,7 +87,8 @@ find.ratting.segment <- function(ChildRecordings,filename,annotators=NULL,range_
 
     tmp <- data.frame( filename=tbl[tmp,]$filename,
                        set= tbl[tmp,]$set,
-                       annotation_filename = tbl[tmp,]$annotation_filename)
+                       annotation_filename = tbl[tmp,]$annotation_filename,
+                       stringsAsFactors = F)
 
 
     tmp$true_onset <- true_onset+1
