@@ -20,6 +20,10 @@ file.openner <- function(meta_row,ChildRecordings){
 
   if (nrow(temps.data) == 0) {
     # print(paste("no row (i.e., no annotated speech) in ", path))
+
+    tmp = data.frame(child_id=NA,date_iso=NA,POSIXct_time_onset=NA,POSIXct_time_offset=NA,year=NA,month=NA,day=NA)
+    tmp = tmp[!is.na(tmp$child_id),]
+    temps.data = cbind(temps.data,tmp)
     return(temps.data)
   }
 
