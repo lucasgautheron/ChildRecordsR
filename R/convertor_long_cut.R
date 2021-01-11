@@ -55,6 +55,9 @@ convertor_long_cut <- function(data,onset,offset,cut = 0.100){
   min.time = onset
   max.time = offset
   time.seq <- seq.default(onset,offset,cut)
+  data = data[data$segment_onset>=min.time & data$segment_offset<=max.time,]
+
+
   if(nrow(data)<1){
     return(data.frame("time.seq"=time.seq,
                       "MAL"=0,

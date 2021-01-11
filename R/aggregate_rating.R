@@ -49,11 +49,13 @@ aggregate.rating <- function(ChildRecordings, data, cut=0.100,verbose=T){
       true_offset <- row$true_offset
 
 
+
       meta.row <- all.meta[all.meta$annotation_filename==annotation_filename,]
       raw_file <- file.openner(meta.row,ChildRecordings)
       long_file <- convertor_long_cut(raw_file,true_onset,true_offset,cut=cut)
       long_file <- data_to_OneHotEnc(long_file)
-      raw_files<-rbind(raw_files,raw_file)
+
+      raw_files<-rbind(raw_files,raw_file[raw_file$segment_onset>=true_onset & raw_file$segment_offset<=true_offset,])
       long_files <- rbind(long_files,long_file)
 
 
