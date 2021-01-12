@@ -10,10 +10,22 @@ ChildRecordings(path)
 \item{path}{path to the childrecoding project folder}
 }
 \value{
-A ChildRecordings class
+A ChildRecordings class containing meta data path
 }
 \description{
 Main class of the package. Help to check data integrity and provide data
 organization. Only provide the path folder of the childrecordings project.
 Provid some integrity check such as missing files or missing meta
+}
+\examples{
+library(ChildRecordsR)
+path = "A_childrecord_data_path"
+CR = ChildRecordings(path)
+CR
+
+
+
+
+
+
 }

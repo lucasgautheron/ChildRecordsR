@@ -10,7 +10,11 @@
 #' @param ChildRecordings : a ChildRecordings class
 #' @return A data.frame
 #'
-#'
+#' @example
+#' library(ChildRecordsR)
+#' path = "A_childrecord_data_path"
+#' CR = ChildRecordings(path)
+#' raw_file <- file.openner(CR$all.meta[1,],CR)
 #'
 #'
 

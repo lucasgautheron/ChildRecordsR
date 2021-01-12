@@ -9,11 +9,49 @@
 #' @param annotators : an optional argument providing le annotators to look at
 #' @param range_from and range_to : an optional time windows for the search
 #'
-#'
 #' @return A data.frame containing commun annoation segment for each annotator
 #'
+#' @examples
+#' library(ChildRecordsR)
+#' path = "A_childrecord_data_path"
+#' CR = ChildRecordings(path)
+#' CR
+#' # if no time windows is specified, this function will only return at table for all the know raters
+#' # All the rater need to ratter any segment find
+#' find.ratting.segment(CR,"Wav_file_name")
+#'
+#' # However, if a time windows is provided, this function will find all the data that
+#' # overlaps with the time windows provided.
+#' # For instance, you can shift the window it will give you the same result
+#' find.ratting.segment(CR,"Wav_file_name",range_from = t1, range_to = t3)
+#' find.ratting.segment(CR,"Wav_file_name",range_from = t1, range_to = t3)
+#' find.ratting.segment(CR,"Wav_file_name",range_from = t2, range_to = t3)
+#'
+#' # finding segments on wav file for designated rater
+#' raters <- c("Coder1","Coder2","Coder3")
+#' find.ratting.segment(CR,"Wav_file_name",raters)
+#'
+#' # finding segments on wav file for the designated windows in second and rater
+#' search <- find.ratting.segment(CR,"Wav_file_name", raters, range_from = t1, range_to = t2)
+#'
+#' # try to analyse a larger number of file
+#' wave_file <- unique(CR$all.meta$filename) # get all the wav files
+#' ratters <- c("Coder1","Coder2","Coder3") # Define raters you are interested in
+#'
+#' # bind all the results
+#' search2 <- data.frame()
+#' for (file in wave_file[1:10]){
+#'   print(file)
+#'   search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
+#' }
 #'
 #'
+#'
+#'
+#'
+#'
+#'
+
 
 
 

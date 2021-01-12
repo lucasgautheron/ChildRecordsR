@@ -11,9 +11,24 @@ convertor_long_cut(data, onset, offset, cut = 0.1)
 
 \item{onset}{offset : time of the data where the conversion should start and stop}
 
-\item{cut}{: lenght of the windoaws in second}
+\item{cut}{: length of the windows in second}
 }
 \description{
 Convert annotation data.frame to a long format sequence when the length of the
  time windows is define by the cut
+}
+\examples{
+library(ChildRecordsR)
+path = "A_childrecord_data_path"
+CR = ChildRecordings(path)
+raw_file <- file.openner(CR$all.meta[1,],CR)
+long_file <- convertor_long_cut(raw_file, onset = 1, offset = 500, cut = 1)
+
+
+
+
+
+
+
+
 }

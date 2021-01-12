@@ -4,16 +4,27 @@
 \alias{extractDataCR}
 \title{file importation from annotator}
 \usage{
-extractDataCR(ChildRecordings, set.type)
+extractDataCR(set.type, ChildRecordings, LENA.OL = F, verbose = T)
 }
 \arguments{
+\item{set.type}{: a string containing th name of the annotator present in the "set" column meta}
+
 \item{ChildRecordings}{: a ChildRecordings class}
 
-\item{set.type}{: a string containing th name of the annotator present in the "set" column meta}
+\item{LENA.OL}{: add the LENA overlap method to handle onset and offset}
 }
 \value{
-: a data.frame
+A data.frame with all the aggregated data
 }
 \description{
 Import all the file from a specific annotators
+}
+\examples{
+library(ChildRecordsR)
+path = "A_childrecord_data_path"
+CR = ChildRecordings(path)
+rez = extractDataCR( "Coder_Name", CR)
+# With LENA overlap methode
+rez = extractDataCR("Coder_Name", CR, LENA.OL = T)
+
 }

@@ -5,7 +5,15 @@
 #' Provid some integrity check such as missing files or missing meta
 #'
 #' @param path path to the childrecoding project folder
-#' @return A ChildRecordings class
+#' @return  A ChildRecordings class containing meta data path
+#'
+#'
+#' @examples
+#' library(ChildRecordsR)
+#' path = "A_childrecord_data_path"
+#' CR = ChildRecordings(path)
+#' CR
+#'
 #'
 #'
 #'

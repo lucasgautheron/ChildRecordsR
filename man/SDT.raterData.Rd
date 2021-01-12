@@ -4,7 +4,7 @@
 \alias{SDT.raterData}
 \title{Signal detection theory to compare two annotators}
 \usage{
-SDT.raterData(raterData, raters)
+SDT.raterData(raterData, raters, plot = TRUE, summary = TRUE)
 }
 \arguments{
 \item{raterData}{: a raterData class}
@@ -12,8 +12,8 @@ SDT.raterData(raterData, raters)
 \item{raters}{: a vector containning two string witht the names of the two raters}
 }
 \value{
-Soon
+print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
 }
 \description{
-Provide a SDT indicator to compare two rater
+Provide a SDT indicator to compare two rater and graph
 }

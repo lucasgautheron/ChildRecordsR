@@ -15,3 +15,32 @@ In classical test theory tested annotator is retracted from the data and reliabi
 A good annotator should should decrase the indicator after retraction.
 In signal detection theory a mean of precision, recal and F-score are provided by rater.
 }
+\examples{
+library(ChildRecordsR)
+path = "A_childrecord_data_path"
+CR = ChildRecordings(path)
+
+# finding segments on wav file for designated rater
+raters <- c("Coder1","Coder2","Coder3")
+search <- find.ratting.segment(CR,"Wav_file_name", raters, range_from = t1, range_to = t2)
+ratting1  = aggregate.rating(search, CR, 0.1)
+comp1 = raterComparaison(ratting1)
+plot(comp1)
+
+# try to analyse a larger number of file
+wave_file <- unique(CR$all.meta$filename) # get all the wav files
+ratters <- c("Coder1","Coder2","Coder3") # Define raters you are interested in
+
+
+# bind all the results
+search2 <- data.frame()
+for (file in wave_file[1:10]){
+  print(file)
+  search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
+}
+ratting2  = aggregate.rating(search2, CR, 0.1)
+comp2 = raterComparaison(ratting2)
+plot(comp2)
+
+
+}

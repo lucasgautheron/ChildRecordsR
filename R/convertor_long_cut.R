@@ -5,12 +5,16 @@
 #'
 #' @param data : a data.frame annotation
 #' @param onset offset : time of the data where the conversion should start and stop
-#' @param cut : lenght of the windoaws in second
+#' @param cut : length of the windows in second
 #'
-#' @result a data.frame
+#' @result A data.frame
 #'
-#'
-#'
+#' @examples
+#' library(ChildRecordsR)
+#' path = "A_childrecord_data_path"
+#' CR = ChildRecordings(path)
+#' raw_file <- file.openner(CR$all.meta[1,],CR)
+#' long_file <- convertor_long_cut(raw_file, onset = 1, offset = 500, cut = 1)
 #'
 #'
 #'
