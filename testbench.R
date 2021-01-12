@@ -90,7 +90,7 @@ search <- find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, ra
 #                                             #
 ###############################################
 
-ratting1  = aggregate.rating(CR,search,0.1)
+ratting1  = aggregate.rating(search,CR,0.1)
 rez = analyse(ratting1)
 raters.comp <- c("textgrid_ak","textgrid_mm")
 SDT = SDT.raterData(ratting1,raters.comp)
@@ -114,7 +114,7 @@ for (file in wave_file[1:10]){
   search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
 }
 # analyze all the result
-ratting2  = aggregate.rating(CR,search2,0.1)
+ratting2  = aggregate.rating(search2,CR,0.1)
 rez1 = analyse(ratting2)
 rez1
 # composit Alpha = 0.41 Kappa = 0.41 ACI = 0.64
@@ -136,8 +136,8 @@ SDT.raterData(ratting2,ratercomp)
 # The second on is using SDT and merging the results for every 1rater VS 1rater
 # possible combination giving us a Mean macro precision recall and F1 score.
 
-comparaison = ratterComparaison(ratting2)
-
+comparaison = raterComparaison(ratting2)
+plot(comparaison)
 
 # try the analyze without MM rater
 ratters <- c("textgrid_ak","textgrid_m1") # Define raters you are interested in
@@ -146,7 +146,7 @@ for (file in wave_file[1:10]){
   print(file)
   search3 <- rbind(search3, find.ratting.segment(CR, file, ratters))
 }
-ratting3  = aggregate.rating(CR, search3, 0.1)
+ratting3  = aggregate.rating(search3, CR, 0.1)
 rez2 = analyse(ratting3)
 rez2
 SDT.raterData(ratting3,ratters)
