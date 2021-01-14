@@ -43,10 +43,15 @@ CR = ChildRecordings(ChildRecordingsPath)
 # This procedure will raise a message if a file is empty (no annotation).
 
 rez = extractDataCR( "textgrid_m1",CR)
-rez = rez[rez$child_id=="aiku",]
-rez = rez[rez$date_iso=="2016-07-15",]
+rez = rez[rez$child_id=="aiku",] # select a specific child ID
+rez = rez[rez$date_iso=="2016-07-15",] # select a specific date
 head(rez)
-# With a LENA overlap method
+
+
+# Sometime researcher need to remove overlaps speech duration for further analysis
+# One of the method was develop for LENA and remove speech segment that overlap
+# This method was implemented by using a variable option call LENA.OL
+
 rez2 = extractDataCR( "textgrid_m1",CR,LENA.OL = T)
 rez2 = rez2[rez2$child_id=="aiku",]
 rez2 = rez2[rez2$date_iso=="2016-07-15",]
@@ -63,25 +68,25 @@ head(long,20)
 #                                             #
 ###############################################
 
-### Search function for ratting segment
+### Search function for rating segment
 
 # if no time windows is specified, this function will only return at table for all the know raters
-# All the rater need to ratter any segment find
-find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
+# All the rater need to rater any segment find
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 
 # However, if a time windows is provided, this function will find all the data that
 # overlaps with the time windows provided.
-# For instance, you can shift the window it will give you the same result
-find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
-find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27250)
-find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
+# For instance, if you need to observe a specific time you can shift the window
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27250)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
 
 # finding segments on wav file for designated rater
 raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
-find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav",raters)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",raters)
 
 # finding segments on wav file for the designated windows in second and rater
-search <- find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
+search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
 
 
 ###############################################
@@ -89,38 +94,33 @@ search <- find.ratting.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, ra
 #           aggregating  function             #
 #                                             #
 ###############################################
+# Once you fine the files and time for the raters you can use the aggregate function
+# The function will help you to join table and convert data into long format
+# this could be useful to analyse the all corpus for example after
 
-ratting1  = aggregate.rating(search,CR,0.1)
-rez = analyse(ratting1)
-raters.comp <- c("textgrid_ak","textgrid_mm")
-SDT = SDT.raterData(ratting1,raters.comp)
+rating1  = aggregate.rating(search,CR,0.1)
+# this function contains list with raters data with original format and long format
 
 
 #################################################
 #                                               #
-#    finding all segment ratting across files   #
+#    finding all segment rating across files   #
 #                                               #
 #################################################
 #
-# Let'zs try to analyse a larger number of file
+# If you need to analyze the all corpus you may need to bind different search result as follow
 
 wave_file <- unique(CR$all.meta$filename) # get all the wav files
-ratters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
+raters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
 
 # bind all the results
 search2 <- data.frame()
 for (file in wave_file[1:10]){
   print(file)
-  search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
+  search2 <- rbind(search2, find.rating.segment(CR, file, raters)) # could take some time
 }
 # analyze all the result
-ratting2  = aggregate.rating(search2,CR,0.1)
-rez1 = analyse(ratting2)
-rez1
-# composit Alpha = 0.41 Kappa = 0.41 ACI = 0.64
-# compare the raters in SDT
-ratercomp <- c("textgrid_ak","textgrid_m1")
-SDT.raterData(ratting2,ratercomp)
+rating2  = aggregate.rating(search2,CR,0.1)
 
 
 
@@ -136,20 +136,30 @@ SDT.raterData(ratting2,ratercomp)
 # The second on is using SDT and merging the results for every 1rater VS 1rater
 # possible combination giving us a Mean macro precision recall and F1 score.
 
-comparaison = raterComparaison(ratting2)
+rez1 = analyse(rating2)
+rez1
+
+
+# You can also analyse the reliability of each rater
+comparaison = raterComparaison(rating2)
 plot(comparaison)
 
+# compare the  two raters in classification
+ratercomp <- c("textgrid_ak","textgrid_m1")
+SDT.raterData(rating2,ratercomp)
+
+
 # try the analyze without MM rater
-ratters <- c("textgrid_ak","textgrid_m1") # Define raters you are interested in
+raters <- c("textgrid_ak","textgrid_m1") # Define raters you are interested in
 search3 <- data.frame()
 for (file in wave_file[1:10]){
   print(file)
-  search3 <- rbind(search3, find.ratting.segment(CR, file, ratters))
+  search3 <- rbind(search3, find.rating.segment(CR, file, raters))
 }
-ratting3  = aggregate.rating(search3, CR, 0.1)
-rez2 = analyse(ratting3)
+rating3  = aggregate.rating(search3, CR, 0.1)
+rez2 = analyse(rating3)
 rez2
-SDT.raterData(ratting3,ratters)
+SDT.raterData(rating3,raters)
 # composit Alpha = 0.55 Kappa = 0.55 ACI = 0.74 obviously that seem "better"
 
 

@@ -59,7 +59,7 @@
 
 
 
-find.ratting.segment <- function(ChildRecordings,filename,annotators=NULL,range_from=NULL,range_to=NULL){
+find.rating.segment <- function(ChildRecordings,filename,annotators=NULL,range_from=NULL,range_to=NULL){
 
   if(!is(ChildRecordings, "ChildRecordings")){
     print(paste( substitute(ChildRecordings), "is not a ChildRecordings class retrun null result"))
