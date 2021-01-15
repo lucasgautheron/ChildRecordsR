@@ -44,9 +44,9 @@ aggregate.rating <- function(data, ChildRecordings, cut=0.100,verbose=T){
     print(paste( substitute(ChildRecordings), "is not a ChildRecordings class retrun null result"))
     return(NULL)
   }
-  attach(data)
-  data <- data[order(filename,set,true_onset),]
-  detach(data)
+  # attach(data)
+  data <- data[order(data$filename,data$set,data$true_onset),]
+  # detach(data)
   all.meta <- ChildRecordings$all.meta
   ratersID <- as.character(unique(data$set))
 
