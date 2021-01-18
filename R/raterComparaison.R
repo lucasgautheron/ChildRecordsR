@@ -55,7 +55,7 @@ raterComparaison <- function(raterData){
 
 
   raters <- raterData$args$ratersID
-  global.reliability <- analyse(raterData,summary=F)
+  global.reliability <- reliability(raterData,summary=F)
   global.reliability <- global.reliability$reliability[["composit"]]
 
   rater.result <- list()
