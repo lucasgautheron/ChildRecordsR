@@ -1,0 +1,64 @@
+---
+title: "Untitled"
+author: "Nicolas"
+date: "1/14/2021"
+output: html_document
+---
+
+hello! I've decided to try it myself again, since she has much higher standards than me, but I know her enough to have an internal "camila's feedback" generator
+
+here's what she'd say:
+
+when I go to https://github.com/LAAC-LSCP/ChildRecordsr there is nothing in the README
+(fair point, I think! let's promote your best version to master)
+
+10:54 AM
+
+
+
+the README in develop still assumes prior knowledge, for instance pointing to the childrecdat docs, rather than a specific section
+
+another example of the same assumption, if you're not familiar with CRData, it's unclear how step 3 is different from step 2 --> solution: give more details, or merge 2 and 3, and suggest people to look at the appendix for a full set of code to go from nothing to a working CRData+dataset+annotations
+
+another example of words that are not defined (assumed to be known) childrecording folder and meta actually, all the things under what the package can do only make sense if you're very familiar with the problems we've been trying to solve
+
+so perhaps a solution is to change the name of testbench to tutorial or demo, and then in the readme say to people that they can learn about what they can do with the data is in there
+
+
+
+
+
+I didn't get this: "# For instance, you can shift the window it will give you the same result"
+then... why would you shift the window? replace with an example where shifting the window actually accomplishes something?
+
+
+
+
+
+add comments under aggregating function to explain what is being aggregated, and what these functions contain
+instead of "# Let'zs try to analyse a larger number of file" use some kind of comment that explains the logic of what is being done in the context of someone trying to learn to use the package to do reliability checks
+
+in "Investigate rater perfomances" start by "sometime you have more than two raters -- for instance, you have three human annotators or two human annotators and an automated one, or one human annotator and two automated ones."
+
+SDT will not be something that she (or people in that community) will understand. It really would be a lot clearer to them if we avoided calling this class of functions SDT... I think most people in these fields know the "classification context" definition as in the wiki page: https://en.wikipedia.org/wiki/Precision_and_recall
+but perhaps it's simpler to call this prf = precision recall F ?
+
+finally, I think she'd agree that providing also an html that corresponds to the results of that .R in some joint database would be good
+On that note, I've been doing something similar with LG's instructions, and one of the things that came up is that it would be useful to have a public database
+
+
+
+
+there is one we can use:
+
+https://homebank.talkbank.org/access/Public/VanDam-Daylong.html
+
+it's perfect because it comes with some annotations, in .its
+
+so I've asked LG to bump up the import of .its
+
+this database then would allow us to try all the steps in LG's instructions: creating a database that fits his desiderata, importing the audio, analyzing it with VTC, importing the .its annotations 
+
+and then there would be two annotations, VTC's & LENA (which is what created the .its file)
+
+so it would be a fitting example for most of the functions you have (except the three+ annotators case)
