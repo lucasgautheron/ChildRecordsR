@@ -136,7 +136,7 @@ rating2  = aggregate.rating(search2,CR,0.1)
 # The second on is using SDT and merging the results for every 1rater VS 1rater
 # possible combination giving us a Mean macro precision recall and F1 score.
 
-rez1 = analyse(rating2)
+rez1 = reliability(rating2)
 rez1
 
 
@@ -157,7 +157,7 @@ for (file in wave_file[1:10]){
   search3 <- rbind(search3, find.rating.segment(CR, file, raters))
 }
 rating3  = aggregate.rating(search3, CR, 0.1)
-rez2 = analyse(rating3)
+rez2 = reliability(rating3)
 rez2
 SDT.raterData(rating3,raters)
 # composit Alpha = 0.55 Kappa = 0.55 ACI = 0.74 obviously that seem "better"

@@ -15,7 +15,7 @@
 #' raters <- c("Coder1","Coder2","Coder3")
 #' search <- find.ratting.segment(CR,"Wav_file_name", raters, range_from = t1, range_to = t2)
 #' ratting1  = aggregate.rating(search, CR, 0.1)
-#' analyse(ratting1)
+#' reliability(ratting1)
 #'
 #' # try to analyse a larger number of file
 #' wave_file <- unique(CR$all.meta$filename) # get all the wav files
@@ -29,16 +29,16 @@
 #'   search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
 #' }
 #' ratting2  = aggregate.rating(search2, CR, 0.1)
-#' analyse(ratting2)
+#' reliability(ratting2)
 #'
 #'
 #'
 
 
 
-analyse <- function(x,summary) UseMethod("analyse", x)
+# analyse <- function(x,summary) UseMethod("analyse", x)
 
-analyse.raterData <- function(raterData, summary=TRUE){
+reliability <- function(raterData, summary=TRUE){
   ratting.type = c("CHI","OCH","FEM","MAL","composit")
 
   ratting_by_type <- list()
