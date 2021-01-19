@@ -18,15 +18,11 @@ R package for ChildRecordsData
 
 ## Install
 
-
-### Using R (only if you are a co-developer)
 ``` 
 install.packages("devtools")
 library(devtools)
 install_github("LAAC-LSCP/ChildRecordsR",ref="develop",auth_token = "YourPersonalToken")
 ```
-
-
 auth_token : your Personal access tokens see doc [here](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) only select repo
 
 
@@ -35,10 +31,10 @@ auth_token : your Personal access tokens see doc [here](https://docs.github.com/
 
 ## Testing the package
 
-1. Download this file : (https://github.com/LAAC-LSCP/ChildRecordsR/blob/develop/Demo.R).
-2. All of the instructions should work as is. If they don't, please open an issue [here](https://github.com/LAAC-LSCP/ChildRecordsR/issues)
+1. Setup aand download childrecord dataset (see Appendix)  
+2. Download this file : (https://github.com/LAAC-LSCP/ChildRecordsR/blob/develop/Demo.R).
 
-At any point, you can also use the help in R and Rstudio, using `?function_name` where function_name is the name of a function that you've seen in Demo. This will provide you with basic descriptions of the available functions. 
+All of the instructions should work as is. If they don't, please open an issue [here](https://github.com/LAAC-LSCP/ChildRecordsR/issues). At any point, you can also use the help in R and Rstudio, using `?function_name` where function_name is the name of a function that you've seen in Demo. This will provide you with basic descriptions of the available functions. 
 Note that we are still working on the docs, so sometimes "annotators" may be called "raters" or *vice versa*.
 
 
@@ -58,7 +54,7 @@ Note that we are still working on the docs, so sometimes "annotators" may be cal
 
  - A summary method to provide reliability of ratter is not implemented
  - The code could be refine.
- - implemetation of overlap labeling and lena method on overlap
+ - Implemetation of overlap labeling and lena method on overlap
 
 ---
  
