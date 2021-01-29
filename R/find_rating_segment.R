@@ -95,7 +95,13 @@ find.rating.segment <- function(ChildRecordings,filename,annotators=NULL,range_f
 
 
   ### Find segment of ratter common segment
-  find_time_code_data<-data.frame(time_seg= seq( min(tbl$true_onset)-1, max(tbl$true_offset),1))
+
+  if(!is.null(range_from) & !is.null(range_to)){
+    find_time_code_data<-data.frame(time_seg= seq( range_from-1, range_to+1,1))
+  } else {
+    find_time_code_data<-data.frame(time_seg= seq( min(tbl$true_onset)-1, max(tbl$true_offset),1))
+  }
+
   annotator_nbr <- c()
   for (time in find_time_code_data$time_seg){
     annotator_nbr <- c(annotator_nbr,sum(time>=tbl$true_onset & time<=tbl$true_offset & tbl$true_onset!=tbl$true_offset))
@@ -104,13 +110,22 @@ find.rating.segment <- function(ChildRecordings,filename,annotators=NULL,range_f
   find_time_code_data$annotator_nbr <- annotator_nbr
   find_time_code_data$segments <- as.numeric(find_time_code_data$annotator_nbr==length(annotators))
 
+  # add 0 annotator the start and end off segment
+  find_time_code_data[find_time_code_data$time_seg == min(find_time_code_data$time_seg ), ]$segments <- 0
+  find_time_code_data[find_time_code_data$time_seg == max(find_time_code_data$time_seg ), ]$segments <- 0
+
   # if no ratting segment find return null
   if( sum(find_time_code_data$segments) == 0 ){return(NULL)}
 
   time_code <- find_time_code_data$time_seg[which(diff(find_time_code_data$segments)!=0)]
 
   # Adding an ending time if necessary
-  if(length(time_code)%%2!=0){time_code<-c(time_code,max(tbl$true_offset))}
+  if(!is.null(range_from) & !is.null(range_to)){
+    if(length(time_code)%%2!=0){time_code<-c(time_code,range_to)}
+  } else {
+    if(length(time_code)%%2!=0){time_code<-c(time_code,max(tbl$true_offset))}
+  }
+
 
   time_code <- as.data.frame(matrix(time_code,ncol=2,byrow = T))
   names(time_code) <- c("true_onset","true_offset")
