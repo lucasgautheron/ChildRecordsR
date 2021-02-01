@@ -1,0 +1,131 @@
+---
+title: "ChildReccordsR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{case_study}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=7,fig.height = 8
+)
+```
+
+
+The ChildRecordsR package is an R package dedicated to the analysis of daily record annotations in ChildRecord-data format. The objective is to provide both data aggregation functions and to analyze the reliability of the annotators on the whole corpus. 
+
+
+### Create a ChildRecordings class
+Here you will create a class by specifing the root folder of the ChildRecording
+The class provides basic control such as missing files or unreferenced files in the meta data
+Try to add, misplace or erase some files to see if it works
+All other functions will be based on the class to mitigate problems as much as possible
+
+
+```{r setup}
+library(ChildRecordsR)
+ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+CR = ChildRecordings(ChildRecordingsPath)
+```
+
+
+### search function 
+
+Before it can provide any statistical reliability, the current package will need to find annotation segments that have been scored by at least two annotators. This search is performed by the `find.rating.segment` function and return a data.frame will the current wav filename, the annotaters name, the annotation filename and the true onset and offset of the segment(s). 
+
+The minimum instruction required will be to provide a child class of recordings and a specific wav relative file path. The function will then find each segment annotated by all annotators in the wav file.
+
+```{r}
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
+```
+
+However if a specific time windows is provided this function will find all the data that overlaps with the time windows provided. 
+
+```{r}
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27250)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
+```
+
+
+It is also possible tu find segment for a limited number or annotators 
+
+```{r}
+raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",raters)
+```
+
+Time window and limited annotator can also be combined 
+
+```{r}
+search1 <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
+search1
+```
+
+
+### Reliability mesure 
+
+Once you fine the files and time for the raters you can use the aggregate function. The function will help you to join table and convert data into long format. To convert the annotator format to long format, a time window in seconds must be filled in the `cut` argument. The function will return a **raterData** class with original format and long format
+
+```{r}
+rating1  = aggregate.rating(search1, CR, cut = 0.1)
+```
+
+
+After the aggregation of the data, analyse function can be call. If the analysis requiere to have reliability indicator the function reliability will provide alpha, kappa and AC1. Reliability will be compute for every category of speech and a composition of all of them.
+
+```{r}
+rez1 = reliability(rating1)
+```
+
+Another possible way to investigate annotators is through classification indicators.
+
+```{r}
+ratercomp <- c("textgrid_ak","textgrid_m1")
+SDT.raterData(rating1,ratercomp)
+```
+
+Finally, the `raterComp` function allows to compare the impact of annotators on reliability indicators. This impact is calculated by removing the annotator from the analyses and observing the increase or decrease in the reliability of the annotations
+
+```{r}
+comparaison = raterComparaison(rating1)
+plot(comparaison)
+```
+
+
+### Corpus analysis
+
+
+```{r}
+wave_file <- unique(CR$all.meta$filename) # get all the wav files
+raters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
+
+# bind all the results
+search2 <- data.frame()
+for (file in wave_file[1:20]){
+  search2 <- rbind(search2, find.rating.segment(CR, file, raters)) # could take some time
+}
+#  aggregation 
+rating2  = aggregate.rating(search2,CR,0.1,verbose = F)
+```
+
+```{r}
+rez2 = reliability(rating1)
+
+comparaison = raterComparaison(rating2)
+plot(comparaison)
+
+```
+
+
+
+
+
+
+
+
+

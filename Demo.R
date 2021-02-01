@@ -78,8 +78,14 @@ find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 # overlaps with the time windows provided.
 # For instance, if you need to observe a specific time you can shift the window
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27250)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27240)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27500)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27170, range_to = 27250)
+
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27190, range_to = 27230)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27190, range_to = 27500)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27230)
+
 
 # finding segments on wav file for designated rater
 raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
