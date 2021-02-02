@@ -63,75 +63,48 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-
 <div id="childrecordsr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#childrecordsr" class="anchor"></a>ChildRecordsR</h1></div>
-<p>R package for ChildRecordsData</p>
+<p>ChildrecordsR is an R package for the Childrecords project, it provides and facilitates the analysis of annotations in the <a href="https://github.com/LAAC-LSCP/ChildRecordsData#installation">ChildRecordsData</a> format. The main functions are data aggregation and analysis of the reliability of human or machine annotators, whether the annotations relate to the day or to small segments.</p>
 <hr>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
-<ol>
-<li><p>Make sure you have installed <a href="https://github.com/LAAC-LSCP/ChildRecordsData#installation">ChildRecordsData</a></p></li>
-<li>
-<p>Make sure you have some data within the ChildRecordsData format.</p>
-<p>2.a. More information about this format can be found in the <a href="https://github.com/LAAC-LSCP/ChildRecordsData#data-formatting-and-structure">ChildRecordsData docs</a>.</p>
-<p>2.b. If you are in the LAAC team, you can import a dataset that has already been formatted. See Appendix for details.</p>
-</li>
-<li><p>Make sure that you have some annotations (see Appendix for an example).</p></li>
-</ol>
-<hr>
+<p>Before you start, make sure you have some data within the <a href="https://github.com/LAAC-LSCP/ChildRecordsData#installation">ChildRecordsData</a> format. Documentation concerning the setup and installation of corpuses in ChildRecords-data format can be found <a href="https://laac-lscp.github.io/ChildRecordsData/">here</a>. Make sure that you have some annotations (see Appendix for an example).</p>
 </div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
+<p>In R terminal :</p>
 <pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("devtools")
 library(devtools)
-install_github("LAAC-LSCP/ChildRecordsR",auth_token = "YourPersonalToken")</a></code></pre>
-<p>auth_token : your Personal access tokens see doc <a href="https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token">here</a> only select repo</p>
-<hr>
-</div>
-<div id="testing-the-package" class="section level2">
-<h2 class="hasAnchor">
-<a href="#testing-the-package" class="anchor"></a>Testing the package</h2>
-<ol>
-<li>Setup aand download childrecord dataset (see Appendix)<br>
-</li>
-<li>Download this file : (<a href="https://github.com/LAAC-LSCP/ChildRecordsR/blob/develop/Demo.R" class="uri">https://github.com/LAAC-LSCP/ChildRecordsR/blob/develop/Demo.R</a>).</li>
-</ol>
-<p>All of the instructions should work as is. If they don’t, please open an issue <a href="https://github.com/LAAC-LSCP/ChildRecordsR/issues">here</a>. At any point, you can also use the help in R and Rstudio, using <code>?function_name</code> where function_name is the name of a function that you’ve seen in Demo. This will provide you with basic descriptions of the available functions. Note that we are still working on the docs, so sometimes “annotators” may be called “raters” or <em>vice versa</em>.</p>
-<hr>
+install_github("LAAC-LSCP/ChildRecordsR")</a></code></pre>
 </div>
 <div id="what-the-package-can-do" class="section level2">
 <h2 class="hasAnchor">
 <a href="#what-the-package-can-do" class="anchor"></a>What the package can do</h2>
 <ul>
-<li>When you import a dataset, the package automatically checks that all referenced files in the childrecording folder and meta match up (you can try to mess your dataset to test the checking function)</li>
-<li>For each annotation file, the package can retrieve file and provide “true” onset and offset related to the audiorecording (in case annotation was not done on the full audio file)</li>
-<li>If date_iso (recording date) and time_start (time at which recording was started) are provided then the package will calculate the real date and hour of the annotation (useful if you want to look at the file by year/day/hours)</li>
-<li>You can choose the granulation of the cut, by default it is 0.100 second</li>
-<li>The search function provide common windows of annotations</li>
+<li>Checking the integrity of you ChilRocordsData folder</li>
+<li>The package provide search function to help you find time segment and files common to multiples annotators</li>
+<li>The aggregation of the annotation data and their transformation to the long format</li>
+<li>Calculates indicators of annotation reliability</li>
+<li>Evaluation of the quality of the annotators with reliability and classification indicators</li>
 </ul>
-<hr>
 </div>
-<div id="need-to-implementation" class="section level2">
+<div id="tutorial" class="section level2">
 <h2 class="hasAnchor">
-<a href="#need-to-implementation" class="anchor"></a>Need to implementation</h2>
-<ul>
-<li>A summary method to provide reliability of ratter is not implemented</li>
-<li>The code could be refine.</li>
-<li>Implemetation of overlap labeling and lena method on overlap</li>
-</ul>
+<a href="#tutorial" class="anchor"></a>Tutorial</h2>
+<p>An R tutorial/vignette can be found <a href="https://laac-lscp.github.io/ChildRecordsR/articles/ChildRecordsR.html">here</a>, i will provide you a guide to the basic function and analyses from the package.</p>
+</div>
+<div id="help" class="section level2">
+<h2 class="hasAnchor">
+<a href="#help" class="anchor"></a>Help</h2>
+<p>At any point, you can also use the help in R and Rstudio, using <code>?function_name</code> where function_name is the name of a function or in the help panel if you are using Rstudio. You can also found function documentation on the <a href="https://laac-lscp.github.io/ChildRecordsR/reference/index.html">https://laac-lscp.github.io/ChildRecordsR</a>.</p>
+<p>If any issues arise, feel free to post them <a href="https://github.com/LAAC-LSCP/ChildRecordsData/issues">here</a></p>
+<hr>
 <hr>
 </div>
-</div>
-<div id="for-developers" class="section level1">
-<h1 class="hasAnchor">
-<a href="#for-developers" class="anchor"></a>For developers</h1>
-<ul>
-<li>Create a new branch from <em>develop</em> and a merge request on develop</li>
-</ul>
 <div id="appendix-getting-a-laac-dataset-that-has-already-been-formatted" class="section level2">
 <h2 class="hasAnchor">
 <a href="#appendix-getting-a-laac-dataset-that-has-already-been-formatted" class="anchor"></a>Appendix: getting a LAAC dataset that has already been formatted.</h2>
@@ -143,10 +116,8 @@ install_github("LAAC-LSCP/ChildRecordsR",auth_token = "YourPersonalToken")</a></
 <a href="https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#installing-a-dataset">install the dataset you want</a>. Note that this just installs the structure of the dataset, but not the contents.</li>
 <li>Get the contents of annotations/ by doing, from within your local copy of the dataset, <code>datalad get annotations/</code>.</li>
 </ul>
-<p>If any issues arise, feel free to post them <a href="https://github.com/LAAC-LSCP/ChildRecordsData/issues">here</a></p>
 </div>
 </div>
-
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
