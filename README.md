@@ -2,17 +2,12 @@
 
 ChildrecordsR is an R package for the Childrecords project, it provides and facilitates the analysis of annotations in the [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation)  format. The main functions are data aggregation and analysis of the reliability of human or machine annotators, whether the annotations relate to the day or to small segments. 
 
-
-
-
-
 ---
 
 ## Getting started
 
 Before you start, make sure you have some data within the [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation) format.
 Documentation concerning the setup and installation of corpuses in ChildRecords-data format can be found [here](https://laac-lscp.github.io/ChildRecordsData/). Make sure that you have some annotations (see Appendix for an example).
-
 
 ## Install
 
@@ -24,7 +19,6 @@ library(devtools)
 install_github("LAAC-LSCP/ChildRecordsR")
 ```
 
-
 ## What the package can do 
 
  - Checking the integrity of you ChilRocordsData folder
@@ -32,9 +26,6 @@ install_github("LAAC-LSCP/ChildRecordsR")
  - The aggregation of the annotation data and their transformation to the long format 
  - Calculates indicators of annotation reliability 
  - Evaluation of the quality of the annotators with reliability and classification indicators
-
-
-
 
 ## Tutorial 
 
@@ -45,7 +36,7 @@ At any point, you can also use the help in R and Rstudio, using `?function_name`
 
 If any issues arise, feel free to post them [here](https://github.com/LAAC-LSCP/ChildRecordsData/issues)
 
----
+-----
 
 ---
 
