@@ -20,3 +20,11 @@ The function provide transformation on data such as create a true segment_onset
 and segment_offset based on meta data. Will also provide POSIXct time info if
 strat_time of the recording is provided in the meta
 }
+\examples{
+library(ChildRecordsR)
+path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+CR = ChildRecordings(path)
+raw_file <- file.openner(CR$all.meta[1,],CR)
+head(raw_file)
+
+}

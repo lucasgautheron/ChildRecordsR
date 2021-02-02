@@ -31,39 +31,43 @@ for common coding in raters
 }
 \examples{
 library(ChildRecordsR)
-path = "A_childrecord_data_path"
+path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
 CR = ChildRecordings(path)
-CR
+
 # if no time windows is specified, this function will only return at table for all the know raters
 # All the rater need to ratter any segment find
-find.ratting.segment(CR,"Wav_file_name")
+find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
 
 # However, if a time windows is provided, this function will find all the data that
 # overlaps with the time windows provided.
 # For instance, you can shift the window it will give you the same result
-find.ratting.segment(CR,"Wav_file_name",range_from = t1, range_to = t3)
-find.ratting.segment(CR,"Wav_file_name",range_from = t1, range_to = t3)
-find.ratting.segment(CR,"Wav_file_name",range_from = t2, range_to = t3)
+Wav_file_name = "aiku/namibie_aiku_20160715_1.wav"
+t1 = 27180
+t2 = 27000
+t3 = 27240
+find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
+find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
+find.rating.segment(CR, Wav_file_name, range_from = t2, range_to = t3)
 
 # finding segments on wav file for designated rater
-raters <- c("Coder1","Coder2","Coder3")
-find.ratting.segment(CR,"Wav_file_name",raters)
+raters <-  c("textgrid_ak", "textgrid_mm", "textgrid_m1")
+find.rating.segment(CR,"Wav_file_name", raters)
 
 # finding segments on wav file for the designated windows in second and rater
-search <- find.ratting.segment(CR,"Wav_file_name", raters, range_from = t1, range_to = t2)
+search <- find.rating.segment(CR,"Wav_file_name", raters, range_from = t1, range_to = t2)
 
 # try to analyse a larger number of file
 wave_file <- unique(CR$all.meta$filename) # get all the wav files
-ratters <- c("Coder1","Coder2","Coder3") # Define raters you are interested in
+raters <- c("textgrid_ak", "textgrid_mm", "textgrid_m1") # Define raters you are interested in
 
 # bind all the results
 search2 <- data.frame()
 for (file in wave_file[1:10]){
   print(file)
-  search2 <- rbind(search2, find.ratting.segment(CR, file, ratters)) # could take some time
+  search2 <- rbind(search2, find.rating.segment(CR, file, raters)) # could take some time
 }
 
-
+head(search2)
 
 
 
