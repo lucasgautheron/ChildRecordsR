@@ -5,9 +5,7 @@ Version: 0.1.0
 Date: 2020-12-11
 Author: Nicolas Rochat
 Maintainer: Nicolas Rochat <nicolas.r.rochat@gmail.com>
-Description: The ChildRecordsR package is an R package dedicated to the analysis of daily record 
-annotations in ChildRecord-data format. The objective is to provide both data aggregation functions 
-and to analyze the reliability of the annotators on the whole corpus. https://laac-lscp.github.io/ChildRecordsR/
+Description: The ChildRecordsR package is an R package dedicated to the analysis of daily record annotations in ChildRecord-data format. The objective is to provide both data aggregation functions and to analyze the reliability of the annotators on the whole corpus. https://laac-lscp.github.io/ChildRecordsR/
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
