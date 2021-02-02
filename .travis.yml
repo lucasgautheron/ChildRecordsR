@@ -7,4 +7,4 @@ deploy:
   target_branch: gh-pages
   local_dir: docs
   on:
-    branch: master
+    branch: main
