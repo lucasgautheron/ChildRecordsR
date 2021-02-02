@@ -5,17 +5,19 @@
 #'
 #' @param ChildRecordings : a ChildRecordings class
 #' @param set.type : a string containing th name of the annotator present in the "set" column meta
-#' @param LENA.OL : add the LENA overlap method to handle onset and offset
+#' @param LENA.OL : add the LENA overlap method. The overlap method will correct onset and offset when speech overlap by removing part that overlap.
 #'
 #' @return  A data.frame with all the aggregated data
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "A_childrecord_data_path"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
 #' CR = ChildRecordings(path)
-#' rez = extractDataCR( "Coder_Name", CR)
-#' # With LENA overlap methode
-#' rez = extractDataCR("Coder_Name", CR, LENA.OL = T)
+#' rez = extractDataCR( "textgrid_m1", CR, verbose = F )
+#' head(rez)
+#' # With LENA overlap method
+#' rez = extractDataCR("textgrid_m1", CR, LENA.OL = T, verbose = F)
+#' head(rez)
 #'
 extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
 

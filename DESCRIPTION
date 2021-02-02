@@ -3,9 +3,7 @@ Type: Package
 Title: ChildRecordsR reliability analysis (ChildRecordsR)
 Version: 0.1.0
 Date: 2020-12-11
-Authors@R: c(
-    person("Nicolas", "Rochat", , "nicolas.r.rochat@gmail.com", role = c("aut", "dev")
-    ))
+Authors@R: person("Nicolas", "Rochat", email = "nicolas.r.rochat@gmail.com", role = c("aut", "cre"))
 Maintainer: Nicolas Rochat <nicolas.r.rochat@gmail.com>
 Description: The ChildRecordsR package is an R package dedicated to the analysis of daily record annotations in ChildRecord-data format. The objective is to provide both data aggregation functions and to analyze the reliability of the annotators on the whole corpus. https://laac-lscp.github.io/ChildRecordsR/
 URL: https://laac-lscp.github.io/ChildRecordsR/, https://github.com/LAAC-LSCP/ChildRecordsR

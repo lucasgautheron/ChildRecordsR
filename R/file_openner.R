@@ -10,12 +10,12 @@
 #' @param ChildRecordings : a ChildRecordings class
 #' @return A data.frame
 #'
-#' @example
+#' @examples
 #' library(ChildRecordsR)
-#' path = "A_childrecord_data_path"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
 #' CR = ChildRecordings(path)
 #' raw_file <- file.openner(CR$all.meta[1,],CR)
-#'
+#' head(raw_file)
 #'
 
 file.openner <- function(meta_row,ChildRecordings){

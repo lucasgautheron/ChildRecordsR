@@ -10,9 +10,9 @@
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "A_childrecord_data_path"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
 #' CR = ChildRecordings(path)
-#' CR
+#'
 #'
 #'
 #'

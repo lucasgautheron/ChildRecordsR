@@ -131,14 +131,161 @@
     </tr>
     <tr>
       <th>raters</th>
-      <td><p>: a vector containning two string witht the names of the two raters</p></td>
+      <td><p>: a vector containing two string with the names of the two raters</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator</p>
+    <p>a Class,  print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
+<span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/namibia-data/"</span>
+<span class='va'>CR</span> <span class='op'>=</span> <span class='fu'><a href='ChildRecordings.html'>ChildRecordings</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; ###############################################
+#&gt; Hello Wellcome to the ChildRecordings R Project 
+#&gt; 
+#&gt; Your ChildRecording project path containe : 
+#&gt;  1720  annotations files 
+#&gt;  1720  are referenced in the metadata 
+#&gt;  5  coders were finded :  textgrid_m1 vtc textgrid_mm textgrid_ak textgrid_ac
+#&gt;  All files seems to be present and referenced in the metadata (good news ;) )
+#&gt; 
+#&gt;   379  metadata don't have a start recording time (a.k.a start.time) 
+#&gt; 	 therefore time indicators wil not be build for those files 
+#&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
+#&gt;   362  files are empty 
+#&gt; 	 This should normally mean that no annotation were provided by annotator 
+#&gt; 	 more infos in ChildRecordings$integrity_test$empty.files </div><div class='input'>
+<span class='co'># finding segments on wav file for designated rater</span>
+<span class='va'>raters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"textgrid_ak"</span>,<span class='st'>"textgrid_mm"</span>,<span class='st'>"textgrid_m1"</span><span class='op'>)</span>
+<span class='va'>search</span> <span class='op'>&lt;-</span> <span class='fu'><a href='find.rating.segment.html'>find.rating.segment</a></span><span class='op'>(</span><span class='va'>CR</span>,<span class='st'>"aiku/namibie_aiku_20160715_1.wav"</span>,range_from <span class='op'>=</span> <span class='fl'>27180</span>, range_to <span class='op'>=</span> <span class='fl'>27240</span><span class='op'>)</span>
+<span class='va'>ratting1</span>  <span class='op'>=</span> <span class='fu'><a href='aggregate.rating.html'>aggregate.rating</a></span><span class='op'>(</span><span class='va'>search</span>, <span class='va'>CR</span>, <span class='fl'>0.1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; |==================                                                        | 25% time by step : 0s estimate duration : 0m remain : 0m 
+#&gt; |=====================================                                     | 50% time by step : 0s estimate duration : 0m remain : 0m 
+#&gt; |========================================================                  | 75% time by step : 0s estimate duration : 0m remain : 0m 
+#&gt; |==========================================================================|100% time by step : 0s estimate duration : 0m remain : 0m 
+#&gt; number of annotators 4 
+#&gt; length of reccording annotation 240 seconds or  0.06666667 hours
+#&gt; Reccord span  60 seconds or  0.01666667 hours
+#&gt; </div><div class='input'><span class='va'>comp1</span> <span class='op'>=</span> <span class='fu'><a href='raterComparaison.html'>raterComparaison</a></span><span class='op'>(</span><span class='va'>ratting1</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; number of annotators 4 
+#&gt; length of reccording annotation 240 seconds or  0.06666667 hours
+#&gt; Record span  60 seconds or  0.01666667 hours
+#&gt; 
+#&gt; ### Annotator textgrid_ak ###
+#&gt; 
+#&gt;                      coeff.val before conf.int before coeff.val after
+#&gt; Krippendorff's Alpha            0.402   (0.373,0.432)           0.330
+#&gt; Fleiss' Kappa                   0.402   (0.372,0.432)           0.330
+#&gt; AC1                             0.449   (0.419,0.479)           0.371
+#&gt;                      conf.int after coeff.difference
+#&gt; Krippendorff's Alpha  (0.296,0.365)            0.072
+#&gt; Fleiss' Kappa         (0.295,0.365)            0.072
+#&gt; AC1                   (0.336,0.406)            0.078
+#&gt; 
+#&gt;           unweight weight
+#&gt; Recall       0.516  0.599
+#&gt; Precision    0.543  0.585
+#&gt; F1           0.505  0.569
+#&gt; 
+#&gt; ### Annotator textgrid_m1 ###
+#&gt; 
+#&gt;                      coeff.val before conf.int before coeff.val after
+#&gt; Krippendorff's Alpha            0.402   (0.373,0.432)            0.33
+#&gt; Fleiss' Kappa                   0.402   (0.372,0.432)            0.33
+#&gt; AC1                             0.449   (0.419,0.479)            0.38
+#&gt;                      conf.int after coeff.difference
+#&gt; Krippendorff's Alpha  (0.296,0.364)            0.072
+#&gt; Fleiss' Kappa         (0.295,0.364)            0.072
+#&gt; AC1                   (0.344,0.415)            0.069
+#&gt; 
+#&gt;           unweight weight
+#&gt; Recall       0.590  0.593
+#&gt; Precision    0.540  0.600
+#&gt; F1           0.538  0.579
+#&gt; 
+#&gt; ### Annotator textgrid_mm ###
+#&gt; 
+#&gt;                      coeff.val before conf.int before coeff.val after
+#&gt; Krippendorff's Alpha            0.402   (0.373,0.432)           0.440
+#&gt; Fleiss' Kappa                   0.402   (0.372,0.432)           0.439
+#&gt; AC1                             0.449   (0.419,0.479)           0.485
+#&gt;                      conf.int after coeff.difference
+#&gt; Krippendorff's Alpha  (0.405,0.475)           -0.037
+#&gt; Fleiss' Kappa         (0.404,0.474)           -0.037
+#&gt; AC1                    (0.451,0.52)           -0.036
+#&gt; 
+#&gt;           unweight weight
+#&gt; Recall       0.420  0.504
+#&gt; Precision    0.440  0.550
+#&gt; F1           0.414  0.514
+#&gt; 
+#&gt; ### Annotator vtc ###
+#&gt; 
+#&gt;                      coeff.val before conf.int before coeff.val after
+#&gt; Krippendorff's Alpha            0.402   (0.373,0.432)           0.509
+#&gt; Fleiss' Kappa                   0.402   (0.372,0.432)           0.508
+#&gt; AC1                             0.449   (0.419,0.479)           0.560
+#&gt;                      conf.int after coeff.difference
+#&gt; Krippendorff's Alpha  (0.473,0.545)           -0.106
+#&gt; Fleiss' Kappa         (0.472,0.545)           -0.106
+#&gt; AC1                   (0.525,0.594)           -0.111
+#&gt; 
+#&gt;           unweight weight
+#&gt; Recall       0.441  0.443
+#&gt; Precision    0.444  0.579
+#&gt; F1           0.401  0.476
+#&gt; </div><div class='input'><span class='fu'>SDT.raterData</span><span class='op'>(</span><span class='va'>comp1</span>,<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"textgrid_ak"</span>,<span class='st'>"textgrid_mm"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; Confusion matrix : 
+#&gt; 
+#&gt;            textgrid_mm
+#&gt; textgrid_ak CHI FEM MAL OCH overlap silence
+#&gt;     CHI       0   0   0   0       0       0
+#&gt;     FEM       0   0   0   0       0       0
+#&gt;     MAL       0   0   0   0       0       0
+#&gt;     OCH       0   0   0   0       0       0
+#&gt;     overlap   0   0   0   0       0       0
+#&gt;     silence   0   0   0   0       0       0
+#&gt; 
+#&gt; 
+#&gt; STD by class : 
+#&gt; 
+#&gt;                      Class: CHI Class: FEM Class: MAL Class: OCH Class: overlap
+#&gt; Sensitivity                  NA         NA         NA         NA             NA
+#&gt; Specificity                  NA         NA         NA         NA             NA
+#&gt; Pos Pred Value               NA         NA         NA         NA             NA
+#&gt; Neg Pred Value               NA         NA         NA         NA             NA
+#&gt; Precision                    NA         NA         NA         NA             NA
+#&gt; Recall                       NA         NA         NA         NA             NA
+#&gt; F1                           NA         NA         NA         NA             NA
+#&gt; Prevalence                  NaN        NaN        NaN        NaN            NaN
+#&gt; Detection Rate              NaN        NaN        NaN        NaN            NaN
+#&gt; Detection Prevalence        NaN        NaN        NaN        NaN            NaN
+#&gt; Balanced Accuracy            NA         NA         NA         NA             NA
+#&gt;                      Class: silence
+#&gt; Sensitivity                      NA
+#&gt; Specificity                      NA
+#&gt; Pos Pred Value                   NA
+#&gt; Neg Pred Value                   NA
+#&gt; Precision                        NA
+#&gt; Recall                           NA
+#&gt; F1                               NA
+#&gt; Prevalence                      NaN
+#&gt; Detection Rate                  NaN
+#&gt; Detection Prevalence            NaN
+#&gt; Balanced Accuracy                NA
+#&gt; 
+#&gt; 
+#&gt; STD macro indicators : 
+#&gt; 
+#&gt;        type unweight weight
+#&gt; 1    Recall        0    NaN
+#&gt; 2 Precision        0    NaN
+#&gt; 3        F1        0    NaN</div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to min; returning Inf</span></div><div class='output co'>#&gt; <span class='warning'>Warning: no non-missing arguments to max; returning -Inf</span></div><div class='img'><img src='SDT.raterData-1.png' alt='' width='700' height='433' /></div><div class='input'>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

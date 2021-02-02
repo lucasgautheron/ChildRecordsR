@@ -9,11 +9,25 @@ SDT.raterData(raterData, raters, plot = TRUE, summary = TRUE)
 \arguments{
 \item{raterData}{: a raterData class}
 
-\item{raters}{: a vector containning two string witht the names of the two raters}
+\item{raters}{: a vector containing two string with the names of the two raters}
 }
 \value{
-print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
+a Class,  print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
 }
 \description{
 Provide a SDT indicator to compare two rater and graph
+}
+\examples{
+library(ChildRecordsR)
+path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+CR = ChildRecordings(path)
+
+# finding segments on wav file for designated rater
+raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
+search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
+ratting1  = aggregate.rating(search, CR, 0.1)
+comp1 = raterComparaison(ratting1)
+SDT.raterData(comp1,c("textgrid_ak","textgrid_mm"))
+
+
 }

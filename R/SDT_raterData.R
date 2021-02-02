@@ -3,10 +3,23 @@
 #'
 #' Provide a SDT indicator to compare two rater and graph
 #' @param raterData : a raterData class
-#' @param raters : a vector containning two string witht the names of the two raters
+#' @param raters : a vector containing two string with the names of the two raters
 #'
 #'
-#' @return print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
+#' @return a Class,  print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
+#'
+#' @examples
+#' library(ChildRecordsR)
+#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+#' CR = ChildRecordings(path)
+#'
+#' # finding segments on wav file for designated rater
+#' raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
+#' search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
+#' ratting1  = aggregate.rating(search, CR, 0.1)
+#' comp1 = raterComparaison(ratting1)
+#' SDT.raterData(comp1,c("textgrid_ak","textgrid_mm"))
+#'
 #'
 
 
@@ -24,7 +37,7 @@ SDT.raterData <- function(raterData,raters,plot=TRUE,summary=TRUE){
   colsums=colSums(conf_tab)
   my_conf_tab=conf_tab
   for(i in 1:dim(conf_tab)[2]) my_conf_tab[,i]=my_conf_tab[,i]/colsums[i]
-  #colSums(my_conf_tab) #check
+
   prop_cat=data.frame(my_conf_tab*100) #generates precision because columns
   prop_cat$id=paste(
     lapply(prop_cat[raters[1]], as.character)[[1]],
@@ -45,7 +58,7 @@ SDT.raterData <- function(raterData,raters,plot=TRUE,summary=TRUE){
   rowsums=rowSums(conf_tab)
   my_conf_tab=conf_tab
   for(i in 1:dim(conf_tab)[2]) my_conf_tab[,i]=my_conf_tab[,i]/rowsums[i]
-  #rowSums(my_conf_tab)
+
   prop_cat=data.frame(conf_tab/rowSums(conf_tab)*100)  #generates recall because rows
   prop_cat$id=paste(
     lapply(prop_cat[raters[1]], as.character)[[1]],
