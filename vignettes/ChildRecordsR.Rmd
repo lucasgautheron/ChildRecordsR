@@ -15,16 +15,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-
-The ChildRecordsR package is an R package dedicated to the analysis of daily record annotations in ChildRecord-data format. The objective is to provide both data aggregation functions and to analyze the reliability of the annotators on the whole corpus. 
-
+The ChildRecordsR package is an R package dedicated to the analysis of daily record annotations in ChildRecord-data format. The objective is to provide both data aggregation functions and to analyze the reliability of the annotators on the whole corpus.
 
 ### Create a ChildRecordings class
-Here you will create a class by specifing the root folder of the ChildRecording
-The class provides basic control such as missing files or unreferenced files in the meta data
-Try to add, misplace or erase some files to see if it works
-All other functions will be based on the class to mitigate problems as much as possible
 
+Here you will create a class by specifing the root folder of the ChildRecording The class provides basic control such as missing files or unreferenced files in the meta data Try to add, misplace or erase some files to see if it works All other functions will be based on the class to mitigate problems as much as possible
 
 ```{r setup}
 library(ChildRecordsR)
@@ -32,10 +27,9 @@ ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
 CR = ChildRecordings(ChildRecordingsPath)
 ```
 
+### Search function
 
-### search function 
-
-Before it can provide any statistical reliability, the current package will need to find annotation segments that have been scored by at least two annotators. This search is performed by the `find.rating.segment` function and return a data.frame will the current wav filename, the annotaters name, the annotation filename and the true onset and offset of the segment(s). 
+Before it can provide any statistical reliability, the current package will need to find annotation segments that have been scored by at least two annotators. This search is performed by the `find.rating.segment` function and return a data.frame will the current wav filename, the annotaters name, the annotation filename and the true onset and offset of the segment(s).
 
 The minimum instruction required will be to provide a child class of recordings and a specific wav relative file path. The function will then find each segment annotated by all annotators in the wav file.
 
@@ -43,7 +37,7 @@ The minimum instruction required will be to provide a child class of recordings 
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 ```
 
-However if a specific time windows is provided this function will find all the data that overlaps with the time windows provided. 
+However if a specific time windows is provided this function will find all the data that overlaps with the time windows provided.
 
 ```{r}
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
@@ -51,30 +45,27 @@ find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, ra
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
 ```
 
-
-It is also possible tu find segment for a limited number or annotators 
+It is also possible to find segment for a limited number or annotators
 
 ```{r}
 raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",raters)
 ```
 
-Time window and limited annotator can also be combined 
+Time window and limited annotator can also be combined
 
 ```{r}
 search1 <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
 search1
 ```
 
+### Reliability measure
 
-### Reliability mesure 
-
-Once you fine the files and time for the raters you can use the aggregate function. The function will help you to join table and convert data into long format. To convert the annotator format to long format, a time window in seconds must be filled in the `cut` argument. The function will return a **raterData** class with original format and long format
+Once you have obtained the information from the search function, you can use the aggregate function. The function will help you to join table and convert data into long format. To convert the annotator format to long format, a time window in seconds must be filled in the `cut` argument by default it set to 0.1 second. The function will return a **raterData** class with original format and long format for every annotators.
 
 ```{r}
 rating1  = aggregate.rating(search1, CR, cut = 0.1)
 ```
-
 
 After the aggregation of the data, analyse function can be call. If the analysis requiere to have reliability indicator the function reliability will provide alpha, kappa and AC1. Reliability will be compute for every category of speech and a composition of all of them.
 
@@ -89,19 +80,21 @@ ratercomp <- c("textgrid_ak","textgrid_m1")
 SDT.raterData(rating1,ratercomp)
 ```
 
-Finally, the `raterComp` function allows to compare the impact of annotators on reliability indicators. This impact is calculated by removing the annotator from the analyses and observing the increase or decrease in the reliability of the annotations
+### Compare annotator
+
+Finally, the `raterComp` function allows to compare the impact of annotators on reliability indicators. This impact is calculated by removing the annotator from pool and observing the increase or decrease in the reliability when reliability was compute the poll of annotator. If the reliability indicator increases after the deletion of a specific annotator, then that annotator should be considered as having a negative impact on the annotations. In our next example, **textgrid_mm** as an negative impact on reliability.
 
 ```{r}
 comparaison = raterComparaison(rating1)
 plot(comparaison)
 ```
 
-
 ### Corpus analysis
 
+The previous examples were for a single annotation segment only. Normally, in order to have a general idea of the annotations, the preceding analyses must be carried out on the whole corpus as in the following example. The result in that case confirm the previous conclusion on the **textgrid_mm** annotator.
 
-```{r}
-wave_file <- unique(CR$all.meta$filename) # get all the wav files
+```{r, cache=T}
+wave_file <- unique(CR$all.meta$filename)[1:10] # get all the wav files
 raters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
 
 # bind all the results
@@ -120,12 +113,3 @@ comparaison = raterComparaison(rating2)
 plot(comparaison)
 
 ```
-
-
-
-
-
-
-
-
-

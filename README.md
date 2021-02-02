@@ -1,67 +1,54 @@
 # ChildRecordsR
-R package for ChildRecordsData
+
+ChildrecordsR is an R package for the Childrecords project, it provides and facilitates the analysis of annotations in the [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation)  format. The main functions are data aggregation and analysis of the reliability of human or machine annotators, whether the annotations relate to the day or to small segments. 
+
+
+
+
 
 ---
 
 ## Getting started
 
- 1. Make sure you have installed [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation) 
- 2. Make sure you have some data within the ChildRecordsData format. 
- 
-     2.a. More information about this format can be found in the [ChildRecordsData docs](https://github.com/LAAC-LSCP/ChildRecordsData#data-formatting-and-structure).
- 
-     2.b. If you are in the LAAC team, you can import a dataset that has already been formatted. See Appendix for details. 
-     
- 3. Make sure that you have some annotations (see Appendix for an example).
+Before you start, make sure you have some data within the [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation) format.
+Documentation concerning the setup and installation of corpuses in ChildRecords-data format can be found [here](https://laac-lscp.github.io/ChildRecordsData/). Make sure that you have some annotations (see Appendix for an example).
 
----
 
 ## Install
+
+In R terminal : 
 
 ``` 
 install.packages("devtools")
 library(devtools)
-install_github("LAAC-LSCP/ChildRecordsR",auth_token = "YourPersonalToken")
+install_github("LAAC-LSCP/ChildRecordsR")
 ```
-auth_token : your Personal access tokens see doc [here](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token) only select repo
 
-
----
-
-
-## Testing the package
-
-1. Setup aand download childrecord dataset (see Appendix)  
-2. Download this file : (https://github.com/LAAC-LSCP/ChildRecordsR/blob/develop/Demo.R).
-
-All of the instructions should work as is. If they don't, please open an issue [here](https://github.com/LAAC-LSCP/ChildRecordsR/issues). At any point, you can also use the help in R and Rstudio, using `?function_name` where function_name is the name of a function that you've seen in Demo. This will provide you with basic descriptions of the available functions. 
-Note that we are still working on the docs, so sometimes "annotators" may be called "raters" or *vice versa*.
-
-
----
 
 ## What the package can do 
 
- - When you import a dataset, the package automatically checks that all referenced files in the childrecording folder and meta match up (you can try to mess your dataset to test the checking function)
- - For each annotation file, the package can retrieve file and provide "true" onset and offset related to the audiorecording (in case annotation was not done on the full audio file)
- - If date_iso (recording date) and time_start (time at which recording was started) are provided then the package will calculate the real date and hour of the annotation (useful if you want to look at the file by year/day/hours)
- - You can choose the granulation of the cut, by default it is 0.100 second
- - The search function provide common windows of annotations
+ - Checking the integrity of you ChilRocordsData folder
+ - The package provide search function to help you find time segment and files common to multiples annotators
+ - The aggregation of the annotation data and their transformation to the long format 
+ - Calculates indicators of annotation reliability 
+ - Evaluation of the quality of the annotators with reliability and classification indicators
+
+
+
+
+## Tutorial 
+
+An R tutorial/vignette can be found [here](https://laac-lscp.github.io/ChildRecordsR/articles/ChildRecordsR.html), i will provide you a guide to the basic function and analyses from the package.
+
+## Help
+At any point, you can also use the help in R and Rstudio, using `?function_name` where function_name is the name of a function or in the help panel if you are using Rstudio. You can also found function documentation on the [https://laac-lscp.github.io/ChildRecordsR](https://laac-lscp.github.io/ChildRecordsR/reference/index.html).
+
+If any issues arise, feel free to post them [here](https://github.com/LAAC-LSCP/ChildRecordsData/issues)
 
 ---
 
-## Need to implementation 
-
- - A summary method to provide reliability of ratter is not implemented
- - The code could be refine.
- - Implemetation of overlap labeling and lena method on overlap
-
 ---
- 
-# For developers 
 
-- Create a new branch from *develop* and a merge request on develop 
- 
 ## Appendix: getting a LAAC dataset that has already been formatted.
  
 You can find the list of formatted LAAC datasets as well as instructions to get them [here](https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#list-of-available-projects)
@@ -72,4 +59,4 @@ All you need to do these analyses are the contents of annotations/. So typically
 - [install the dataset you want](https://github.com/LAAC-LSCP/ChildRecordsData/blob/f314c7a536ba48422bf42ce0161ef1a2c55106e2/docs/templates/PROJECTS.md#installing-a-dataset). Note that this just installs the structure of the dataset, but not the contents.
 - Get the contents of annotations/ by doing, from within your local copy of the dataset, `datalad get annotations/`.
 
-If any issues arise, feel free to post them [here](https://github.com/LAAC-LSCP/ChildRecordsData/issues)
+
