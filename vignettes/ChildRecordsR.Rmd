@@ -2,7 +2,7 @@
 title: "ChildReccordsR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{case_study}
+  %\VignetteIndexEntry{ChildReccordsR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -106,7 +106,7 @@ raters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are i
 
 # bind all the results
 search2 <- data.frame()
-for (file in wave_file[1:20]){
+for (file in wave_file){
   search2 <- rbind(search2, find.rating.segment(CR, file, raters)) # could take some time
 }
 #  aggregation 
