@@ -1,17 +1,17 @@
 # ChildRecordsR
 
-ChildrecordsR is an R package for the Childrecords project, it provides and facilitates the analysis of annotations in the [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation)  format. The main functions are data aggregation and analysis of the reliability of human or machine annotators, whether the annotations relate to the day or to small segments. 
+ChildRecordsR is an R package that provides and facilitates the analysis of annotations (often from daylong recordings) formatted using [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData). The main functions in this package are data aggregation and analysis of the reliability of (human or machine) annotators. 
 
 ---
 
 ## Getting started
 
-Before you start, make sure you have some data within the [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData#installation) format.
-Documentation concerning the setup and installation of corpuses in ChildRecords-data format can be found [here](https://laac-lscp.github.io/ChildRecordsData/). Make sure that you have some annotations (see Appendix for an example).
+Before you start, make sure you have some data formatted using ChildRecordsData. A description of the format is provided [here](https://laac-lscp.github.io/ChildRecordsData/FORMATTING.html). 
+Documentation concerning the setup and installation of corpora in ChildRecordsData format can be found [here](https://laac-lscp.github.io/ChildRecordsData/#installation). Available corpora are listed [here](https://laac-lscp.github.io/ChildRecordsData/EXTANT.html). See Appendix for an example.
 
 ## Install
 
-In R terminal : 
+In R terminal: 
 
 ``` 
 install.packages("devtools")
@@ -21,18 +21,18 @@ install_github("LAAC-LSCP/ChildRecordsR")
 
 ## What the package can do 
 
- - Checking the integrity of you ChilRocordsData folder
- - The package provide search function to help you find time segment and files common to multiples annotators
- - The aggregation of the annotation data and their transformation to the long format 
- - Calculates indicators of annotation reliability 
- - Evaluation of the quality of the annotators with reliability and classification indicators
+ - Checking the integrity of your ChildRecordsData folder.
+ - Finding times and files common to multiple annotators
+ - Aggregating of their annotations and their transformation to multiple formats 
+ - Calculating indicators of annotation reliability 
+ - Evaluating the annotations' quality with reliability and classification indicators
 
 ## Tutorial 
 
-An R tutorial/vignette can be found [here](https://laac-lscp.github.io/ChildRecordsR/articles/ChildRecordsR.html), i will provide you a guide to the basic function and analyses from the package.
+An R tutorial/vignette can be found [here](https://laac-lscp.github.io/ChildRecordsR/articles/ChildRecordsR.html), which provides you a guide to the basic functions and analyses from the package.
 
 ## Help
-At any point, you can also use the help in R and Rstudio, using `?function_name` where function_name is the name of a function or in the help panel if you are using Rstudio. You can also found function documentation on the [https://laac-lscp.github.io/ChildRecordsR](https://laac-lscp.github.io/ChildRecordsR/reference/index.html).
+At any point, you can also use the help in R and Rstudio, using `?function_name` where function_name is the name of a function or in the help panel if you are using Rstudio. You can also found functions' documentation on the [https://laac-lscp.github.io/ChildRecordsR](https://laac-lscp.github.io/ChildRecordsR/reference/index.html).
 
 If any issues arise, feel free to post them [here](https://github.com/LAAC-LSCP/ChildRecordsData/issues)
 
