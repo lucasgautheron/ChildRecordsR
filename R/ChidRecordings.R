@@ -110,22 +110,22 @@ print.ChildRecordings <- function(ChildRecordings){
   cat("###############################################\n")
   cat("Hello Wellcome to the ChildRecordings R Project \n\n")
 
-  cat("Your ChildRecording project path containe : \n",
+  cat("Your ChildRecording project path contained : \n",
       nbr.file," annotations files \n",
       referenced.file, " are referenced in the metadata \n",
-      length(coders), " coders were finded : ",  coders)
+      length(coders), " coders were found : ",  coders)
 
   if(length(files.missing)==0 & length(files.unreferenced)==0){
     cat("\n All files seems to be present and referenced in the metadata (good news ;) )\n")
   }
 
   if(length(files.missing)!=0 ){
-    cat( length(files.missing), " files seems to be missing in the annotations folders")
+    cat( length(files.missing), " file(s) seem(s) to be missing in the annotations folders")
     cat("\t more infos inChildRecordings$integrity_test$files.missing \n")
   }
 
   if(length(files.unreferenced)!=0 ){
-    cat( length(files.unreferenced), " files seems to be unreferenced in the metadata \n")
+    cat( length(files.unreferenced), " file(s) seem(s) to be unreferenced in the metadata \n")
     cat("\t more infos in  ChildRecordings$integrity_test$files.unreferenced \n")
   }
 
@@ -133,7 +133,7 @@ print.ChildRecordings <- function(ChildRecordings){
 
   if(length(missing.start.time)!=0){
     cat(" ", length(missing.start.time), " metadata don't have a start recording time (a.k.a start.time) \n" )
-    cat("\t therefore time indicators wil not be build for those files \n")
+    cat("\t therefore time indicators will not be built for those files \n")
     cat("\t more infos in ChildRecordings$integrity_test$missing.start.time \n")
   }
 
@@ -144,7 +144,7 @@ print.ChildRecordings <- function(ChildRecordings){
   }
 
   if (nrow(erro.convertion)!=0){
-    cat(" ", nrow(erro.convertion), " files with convertion error\n" )
+    cat(" ", nrow(erro.convertion), " files with conversion error\n" )
     cat("\t This should normally mean that your conversion fail \n")
     cat("\t Those files are remove from package analysis \n")
     cat("\t more infos in ChildRecordings$integrity_test$erro.convertion \n")

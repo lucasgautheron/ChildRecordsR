@@ -1,11 +1,11 @@
-#'  Converte annotation format to long format
+#'  Converts annotation format to long format
 #'
-#'  Convert annotation data.frame to a long format sequence when the length of the
-#'  time windows is define by the cut
+#'  Convert annotation data.frame to a long format sequence where the length of the
+#'  time window bins is defined by cut (in seconds)
 #'
 #' @param data : a data.frame annotation
 #' @param onset offset : time of the data where the conversion should start and stop
-#' @param cut : length of the windows in second
+#' @param cut : length of the bins in second
 #'
 #' @return  A data.frame in a long format version of the classic raw annotation file
 #'

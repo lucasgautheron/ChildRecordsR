@@ -1,7 +1,7 @@
 
 #' file importation from annotator
 #'
-#' Import all the file from a specific annotators
+#' Import all the files from a specific annotator
 #'
 #' @param ChildRecordings : a ChildRecordings class
 #' @param set.type : a string containing th name of the annotator present in the "set" column meta

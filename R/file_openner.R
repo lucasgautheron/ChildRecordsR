@@ -1,13 +1,13 @@
 #'
-#' Openning a data file in childrecording class
+#' Opening a data file in ChildRecordingsData class
 #'
-#' Open a csv file from a ChildRecordings class.
-#' The function provide transformation on data such as create a true segment_onset
-#' and segment_offset based on meta data. Will also provide POSIXct time info if
-#' strat_time of the recording is provided in the meta
+#' Open a csv file from a ChildRecordingsData class.
+#' The function provides transformation of data such as creating a true segment_onset
+#' and segment_offset based on meta data. It will also provide POSIXct time info if
+#' start_time of the recording is provided in the meta
 #'
 #' @param meta_row : a row from the meta containing all the info of the cvs file
-#' @param ChildRecordings : a ChildRecordings class
+#' @param ChildRecordings : a ChildRecordingsData class
 #' @return A data.frame
 #'
 #' @examples
