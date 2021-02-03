@@ -1,8 +1,8 @@
 ---
-title: "ChildReccordsR"
+title: "ChildRecordsR"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ChildReccordsR}
+  %\VignetteIndexEntry{ChildRecordsR}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,11 +15,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-The ChildRecordsR package is an R package dedicated to the analysis of daily record annotations in ChildRecord-data format. The objective is to provide both data aggregation functions and to analyze the reliability of the annotators on the whole corpus.
+The ChildRecordsR package is an R package dedicated to the analysis of annotations of daylong recordings in ChildRecordsData format. The objective of our package is to provide data aggregation functions and to analyze the reliability of annotations and annotators.
 
 ### Create a ChildRecordings class
 
-Here you will create a class by specifing the root folder of the ChildRecording The class provides basic control such as missing files or unreferenced files in the meta data Try to add, misplace or erase some files to see if it works All other functions will be based on the class to mitigate problems as much as possible
+Here you will create a [class](https://www.datacamp.com/community/tutorials/r-objects-and-classes) by specifying the root folder of your corpus, which needs to be formatted using ChildRecordingData specifications. By using a class, we standardize all the references to the information in your corpus. Additionally, we provide basic checks such as missing files or unreferenced files in the meta data. Try to add, misplace or erase some files to see how these checks work. 
 
 ```{r setup}
 library(ChildRecordsR)
@@ -27,17 +27,19 @@ ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
 CR = ChildRecordings(ChildRecordingsPath)
 ```
 
-### Search function
+All functions are based on the class (i.e., `CR` in our example above) to avoid problems of reference, since the class is always set up in the same way.
 
-Before it can provide any statistical reliability, the current package will need to find annotation segments that have been scored by at least two annotators. This search is performed by the `find.rating.segment` function and return a data.frame will the current wav filename, the annotaters name, the annotation filename and the true onset and offset of the segment(s).
+### Finding annotations: Search function
 
-The minimum instruction required will be to provide a child class of recordings and a specific wav relative file path. The function will then find each segment annotated by all annotators in the wav file.
+Before it can provide any statistical reliability, the current package will need to find annotation segments that have been annotated by at least two annotators. The annotators could be humans or algorithms -- the package does not know the difference, so you need to think about implications. This search is performed by the `find.rating.segment` function, which returns a data frame with the wav filenames, the annotators' codenames, the annotation filenames and the onset and offset of the annotated segment(s) with respect to the wav.
+
+At a minimum, you need to provide to the search function the class (i.e., `CR` in our example above) and the relative path to one or several wav files. The function will then find every segment annotated by any annotators in the wav files. In the following example, we provide the path to a single wav file (to speed things up!):
 
 ```{r}
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 ```
 
-However if a specific time windows is provided this function will find all the data that overlaps with the time windows provided.
+Alternatively, if a specific time window is provided, the search function will find all the annotations that overlap with the time window provided.
 
 ```{r}
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
@@ -45,29 +47,30 @@ find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, ra
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
 ```
 
-It is also possible to find segment for a limited number or annotators
+It is also possible to find annotations for a specific set of annotators, by providing the list of their codenames:
 
 ```{r}
 raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",raters)
 ```
 
-Time window and limited annotator can also be combined
+Time window and limited annotator can also be specified jointly:
 
 ```{r}
 search1 <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
 search1
 ```
 
-### Reliability measure
+### Measuring reliability and classification agreement
 
-Once you have obtained the information from the search function, you can use the aggregate function. The function will help you to join table and convert data into long format. To convert the annotator format to long format, a time window in seconds must be filled in the `cut` argument by default it set to 0.1 second. The function will return a **raterData** class with original format and long format for every annotators.
+Once you have obtained information on a set of annotations with the search function and stored it in an object (`search1` above), you can use the aggregate function. This function will create a table with the annotation information, and additionally convert your data into a long format, where annotations are split up into temporal bins. For instance, imagine that an annotator said FEM spoke between .5s and 1s of the wav file. This would be one row in the table format. To convert this to long format, a bin size (in seconds) can be provided using the `cut` argument. For instance, if you specify `cut = .01`, then that 500 millisecond vocalization by FEM becomes 50 rows, each representing 10 milliseconds of speech. By default `cut` is set to 0.1 second. The function will return a **raterData** class with the original format and a long format for every annotator.
+
 
 ```{r}
 rating1  = aggregate.rating(search1, CR, cut = 0.1)
 ```
 
-After the aggregation of the data, analyse function can be call. If the analysis requiere to have reliability indicator the function reliability will provide alpha, kappa and AC1. Reliability will be compute for every category of speech and a composition of all of them.
+After the aggregation of the data, analyse function can be called. If the analysis requiere to have reliability indicator the function reliability will provide alpha, kappa and AC1. Reliability will be compute for every category of speech and a composition of all of them.
 
 ```{r}
 rez1 = reliability(rating1)
