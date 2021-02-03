@@ -33,7 +33,7 @@ All functions are based on the class (i.e., `CR` in our example above) to avoid 
 
 Before it can provide any statistical reliability, the current package will need to find annotation segments that have been annotated by at least two annotators. The annotators could be humans or algorithms -- the package does not know the difference, so you need to think about implications. This search is performed by the `find.rating.segment` function, which returns a data frame with the wav filenames, the annotators' codenames, the annotation filenames and the onset and offset of the annotated segment(s) with respect to the wav.
 
-At a minimum, you need to provide to the search function the class (i.e., `CR` in our example above) and the relative path to one or several wav files. The function will then find every segment annotated by any annotators in the wav files. In the following example, we provide the path to a single wav file (to speed things up!):
+At a minimum, you need to provide to the search function the class (i.e., `CR` in our example above) and the relative path to one or several wav files. The function will then find every segment annotated by any annotators in the wav files. In the following example, we provide the path to a single wav file (to speed things up, see section `Analyze a corpus` for an example with multiple files):
 
 ```{r}
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
@@ -70,22 +70,24 @@ Once you have obtained information on a set of annotations with the search funct
 rating1  = aggregate.rating(search1, CR, cut = 0.1)
 ```
 
-After the aggregation of the data, analyse function can be called. If the analysis requiere to have reliability indicator the function reliability will provide alpha, kappa and AC1. Reliability will be compute for every category of speech and a composition of all of them.
+Next, an analysis function can be called. We provide several. They all assume you have at least two annotators. It could be two automated algorithms, two humans, or one automated and one human -- this package does not treat these cases differently, so you should interpret results carefully.
+
+The `reliability` or `get.reliability` function provides alpha, kappa and AC1 for the whole pool of annotators in your search (so this works even if you have 10 annotators). Reliability will be computed for every speaker category and a composite of all of them.
 
 ```{r}
 rez1 = reliability(rating1)
 ```
 
-Another possible way to investigate annotators is through classification indicators.
+Another possible way to investigate annotators is through classification indicators, such as precision, recall, and F-score. These can only be calculated for cases with exactly two annotators. The first annotator will be assumed as the "gold" annotator, so if you have a human and an automated annotator, or someone with more versus less experience, make sure you order them so that the more reliable annotator (more likely to be "gold") is provided first.
 
 ```{r}
 ratercomp <- c("textgrid_ak","textgrid_m1")
 SDT.raterData(rating1,ratercomp)
 ```
 
-### Compare annotator
+### Compare annotators
 
-Finally, the `raterComp` function allows to compare the impact of annotators on reliability indicators. This impact is calculated by removing the annotator from pool and observing the increase or decrease in the reliability when reliability was compute the poll of annotator. If the reliability indicator increases after the deletion of a specific annotator, then that annotator should be considered as having a negative impact on the annotations. In our next example, **textgrid_mm** as an negative impact on reliability.
+Finally, the `raterComparaison` function allows you to compare the impact of annotators on reliability indicators. This is useful if you have multiple human annotators and you want to check whether one of them is doing something different, or if you want to check whether your automated annotator stands out in your pool of annotators. You can only use this function when you have more than 2 annotators. The impact of a given annotator is calculated by removing that annotator from the pool of annotators, and observing the increase or decrease in the overall reliability. If the reliability indicators increase after the deletion of a specific annotator, then that annotator should be considered as having a negative impact on the annotations. In our next example, **textgrid_mm** has a negative impact on reliability.
 
 ```{r}
 comparaison = raterComparaison(rating1)
@@ -94,7 +96,7 @@ plot(comparaison)
 
 ### Corpus analysis
 
-The previous examples were for a single annotation segment only. Normally, in order to have a general idea of the annotations, the preceding analyses must be carried out on the whole corpus as in the following example. The result in that case confirm the previous conclusion on the **textgrid_mm** annotator.
+The previous examples used a path to a single wave file. Typical, in order to have a general idea of the annotations, the preceding analyses must be carried out on the whole corpus, and thus multiple wave files. This is the analysis we try in the present example. The result in this case confirms our previous conclusion, that the **textgrid_mm** annotator had a negative impact on reliability.
 
 ```{r, cache=T}
 wave_file <- unique(CR$all.meta$filename)[1:10] # get all the wav files
@@ -107,9 +109,7 @@ for (file in wave_file){
 }
 #  aggregation 
 rating2  = aggregate.rating(search2,CR,0.1,verbose = F)
-```
 
-```{r}
 rez2 = reliability(rating1)
 
 comparaison = raterComparaison(rating2)
