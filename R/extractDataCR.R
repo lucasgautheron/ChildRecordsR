@@ -33,20 +33,29 @@ extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
   ### Data extraction loop
   data <- data.frame()
   start <- Sys.time()
+  rez.list <- vector("list", nrow(all.meta))
   for (row in 1:nrow(all.meta)) {
 
 
     ### aggregate data
 
 
+    # if (LENA.OL){
+    #   temps.data <- LENA.overlap(all.meta[row, ],ChildRecordings)
+    # }else{
+    #   temps.data <- file.openner(all.meta[row, ],ChildRecordings)
+    # }
+    #
+    # # bind data
+    # data <- rbind(data, temps.data)
+
     if (LENA.OL){
-      temps.data <- LENA.overlap(all.meta[row, ],ChildRecordings)
+      rez.list[[row]] <- LENA.overlap(all.meta[row, ],ChildRecordings)
     }else{
-      temps.data <- file.openner(all.meta[row, ],ChildRecordings)
+      rez.list[[row]] <- file.openner(all.meta[row, ],ChildRecordings)
     }
 
-    # bind data
-    data <- rbind(data, temps.data)
+
 
     ### Progress bar
     if(verbose){
@@ -68,6 +77,8 @@ extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
 
 
   }
+
+  data <- do.call("rbind", rez.list)
 
   data
 

@@ -3,5 +3,8 @@
 .RData
 .Ruserdata
 .testing.R
+.RDatatmp
+.vscode
 testing.R
 docs
+.RDataTmp
