@@ -32,8 +32,12 @@ file.openner <- function(meta_row,ChildRecordings){
   }
 
   # Child metadata
-  temps.data$child_id <- meta_row$child_id
   temps.data$date_iso <- meta_row$date_iso
+  temps.data$child_id <- meta_row$child_id
+
+  # Recording metadata
+  temps.data$range_offset <- meta_row$range_offset
+  temps.data$range_onset <- meta_row$range_onset
 
   # Adjusting segment in regard to time seek
   temps.data$segment_onset <- temps.data$segment_onset + meta_row$time_seek
