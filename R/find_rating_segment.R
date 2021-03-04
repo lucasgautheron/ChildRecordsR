@@ -81,12 +81,12 @@ find.rating.segment <- function(ChildRecordings,filename,annotators=NULL,range_f
   tbl$true_onset <- tbl$time_seek + tbl$range_onset
   tbl$true_offset <- tbl$time_seek + tbl$range_offset
 
-  ### Ranger windows selection
+  ### Range windows selection, if mentioned
   if(!is.null(range_from) & !is.null(range_to)){
     tbl <- tbl[true_time_seg_finder(range_from,range_to,tbl),]
   }
 
-  ### Rater selection if mention
+  ### Rater selection, if mentioned
   if (is.null(annotators)){
     annotators <- unique(tbl$set)
   } else {
@@ -98,7 +98,7 @@ find.rating.segment <- function(ChildRecordings,filename,annotators=NULL,range_f
   }
 
 
-  ### Find segment of ratter common segment
+  ### Find segments in common across raters
 
   if(!is.null(range_from) & !is.null(range_to)){
     find_time_code_data<-data.frame(time_seg= seq( range_from-1, range_to+1,1))
@@ -118,12 +118,12 @@ find.rating.segment <- function(ChildRecordings,filename,annotators=NULL,range_f
   find_time_code_data[find_time_code_data$time_seg == min(find_time_code_data$time_seg ), ]$segments <- 0
   find_time_code_data[find_time_code_data$time_seg == max(find_time_code_data$time_seg ), ]$segments <- 0
 
-  # if no ratting segment find return null
+  # if no segment found, then return null
   if( sum(find_time_code_data$segments) == 0 ){return(NULL)}
 
   time_code <- find_time_code_data$time_seg[which(diff(find_time_code_data$segments)!=0)]
 
-  # Adding an ending time if necessary
+  # Add an ending time if necessary
   if(!is.null(range_from) & !is.null(range_to)){
     if(length(time_code)%%2!=0){time_code<-c(time_code,range_to)}
   } else {
@@ -135,7 +135,7 @@ find.rating.segment <- function(ChildRecordings,filename,annotators=NULL,range_f
   names(time_code) <- c("true_onset","true_offset")
 
 
-  ### Building return format
+  ### Format data to be returned
   rez <- data.frame()
   for( row in 1:nrow(time_code)) {
     true_onset= time_code[row,]$true_onset

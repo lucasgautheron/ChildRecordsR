@@ -1,7 +1,7 @@
 #'
 #' Overlap LENA function
 #'
-#' Open a annotation file and add 2 columns for LENA overlap method
+#' Open an annotation file and add 2 columns to find overlap according to the LENA-style overlap definition
 #'
 #' @param meta_row : a row from the meta containing all the info of the cvs file
 #' @param ChildRecordings : a ChildRecordings class
