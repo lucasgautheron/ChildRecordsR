@@ -19,7 +19,7 @@ Open a annotation file and add 2 columns for LENA overlap method
 }
 \examples{
 library(ChildRecordsR)
-path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 raw_file <- LENA.overlap(CR$all.meta[1,],CR)
 head(raw_file)
