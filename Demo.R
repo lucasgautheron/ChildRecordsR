@@ -10,7 +10,7 @@
 
 
 library(ChildRecordsR)
-ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 # ChildRecordingsPath = "/Users/acristia/Documents/gitrepos/namibia-data/" # change the path
 # ChildRecordingsPath = "/Users/alejandrinacristia/Dropbox/namidia-data/"
 
@@ -43,7 +43,7 @@ CR = ChildRecordings(ChildRecordingsPath)
 # This procedure will raise a message if a file is empty (no annotation).
 
 rez = extractDataCR( "textgrid_m1",CR)
-rez = rez[rez$child_id=="aiku",] # select a specific child ID
+rez = rez$data[rez$data$child_id=="aiku",] # select a specific child ID
 rez = rez[rez$date_iso=="2016-07-15",] # select a specific date
 head(rez)
 
@@ -53,9 +53,7 @@ head(rez)
 # This method was implemented by using a variable option call LENA.OL
 
 rez2 = extractDataCR( "textgrid_m1",CR,LENA.OL = T)
-rez2 = rez2[rez2$child_id=="aiku",]
-rez2 = rez2[rez2$date_iso=="2016-07-15",]
-head(rez2)
+summary(rez2)
 
 ### Function to convert the file into long format (ie adapt onset times to the long-form audio)
 # Useful to future rater reliability
