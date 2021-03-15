@@ -14,12 +14,12 @@
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
-#' raw_file <- file.openner(CR$all.meta[1,],CR)
+#' raw_file <- file.opener(CR$all.meta[1,],CR)
 #' head(raw_file)
 #'
 
-file.openner <- function(meta_row,ChildRecordings){
-  path =  paste0(ChildRecordings$path,"annotations/",meta_row$annotation_filename)
+file.opener <- function(meta_row,ChildRecordings){
+  path =  paste0(ChildRecordings$path,"annotations/",meta_row$set,"/converted/",meta_row$annotation_filename)
   temps.data <- read.csv(path)
 
   if (nrow(temps.data) == 0) {
