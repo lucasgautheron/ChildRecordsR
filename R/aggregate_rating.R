@@ -118,8 +118,8 @@ print.raterData <- function(raterData){
 
 
   cat("number of annotators", length(raterData$args$ratersID),"\n")
-  cat("length of reccording annotation", recording.length,"seconds or ", recording.length/3600, "hours\n")
-  cat("Reccord span ", recording.length/length(raterData$args$ratersID),"seconds or ", recording.length/length(raterData$args$ratersID)/3600, "hours\n\n")
+  cat("length of recording annotation", recording.length,"seconds or ", recording.length/3600, "hours\n")
+  cat("Record span ", recording.length/length(raterData$args$ratersID),"seconds or ", recording.length/length(raterData$args$ratersID)/3600, "hours\n\n")
 
 }
 
