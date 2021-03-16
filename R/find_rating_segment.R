@@ -24,9 +24,9 @@
 #' # overlaps with the time windows provided.
 #' # For instance, you can shift the window it will give you the same result
 #' Wav_file_name = "aiku/namibie_aiku_20160715_1.wav"
-#' t1 = 27180
-#' t2 = 27000
-#' t3 = 27240
+#' t1 = 27180000
+#' t2 = 27000000
+#' t3 = 27240000
 #' find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
 #' find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
 #' find.rating.segment(CR, Wav_file_name, range_from = t2, range_to = t3)
@@ -60,99 +60,109 @@
 
 
 
-
-
-
-find.rating.segment <- function(ChildRecordings,filename,annotators=NULL,range_from=NULL,range_to=NULL){
+find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NULL,range_from=NULL,range_to=NULL){
 
   if(!is(ChildRecordings, "ChildRecordings")){
     print(paste( substitute(ChildRecordings), "is not a ChildRecordings class retrun null result"))
     return(NULL)
   }
 
-
-
-
+  ### table
   tbl <- ChildRecordings$all.meta
-  tbl <- tbl[tbl$filename==filename,]
+  tbl <- tbl[tbl$recording_filename==recording_filename,]
+  tbl$true_onset <- tbl$time_seek*1000 + tbl$range_onset
+  tbl$true_offset <- tbl$time_seek*1000 + tbl$range_offset
 
-  ### True time from time seek
-
-  tbl$true_onset <- tbl$time_seek + tbl$range_onset
-  tbl$true_offset <- tbl$time_seek + tbl$range_offset
-
-  ### Range windows selection, if mentioned
-  if(!is.null(range_from) & !is.null(range_to)){
-    tbl <- tbl[true_time_seg_finder(range_from,range_to,tbl),]
-  }
-
-  ### Rater selection, if mentioned
-  if (is.null(annotators)){
+  ### select annotators
+  if(is.null(annotators)){
     annotators <- unique(tbl$set)
+    n.annotator = length(annotators)
   } else {
     tbl <- tbl[tbl$set %in% annotators,]
+    n.annotator = length(annotators)
   }
 
   if (nrow(tbl)==0){
     return(NULL)
   }
 
-
-  ### Find segments in common across raters
-
+  ### Range windows selection, if mentioned
   if(!is.null(range_from) & !is.null(range_to)){
-    find_time_code_data<-data.frame(time_seg= seq( range_from-1, range_to+1,1))
-  } else {
-    find_time_code_data<-data.frame(time_seg= seq( min(tbl$true_onset)-1, max(tbl$true_offset),1))
+    tbl <- tbl[true_time_seg_finder(range_from,range_to,tbl),]
+  }else{
+    range_from= min(tbl$true_onset)
+    range_to= max(tbl$true_offset)
   }
 
-  annotator_nbr <- c()
-  for (time in find_time_code_data$time_seg){
-    annotator_nbr <- c(annotator_nbr,sum(time>=tbl$true_onset & time<=tbl$true_offset & tbl$true_onset!=tbl$true_offset))
+  ### return if empty
+  if (nrow(tbl)==0){
+    return(NULL)
   }
 
-  find_time_code_data$annotator_nbr <- annotator_nbr
-  find_time_code_data$segments <- as.numeric(find_time_code_data$annotator_nbr==length(annotators))
+  commun.annoatation <-c()
+  for(row in 1:nrow(tbl)){
+    ol.with <-c()
+    for(row2 in 1:nrow(tbl)){
 
-  # add 0 annotator the start and end off segment
-  find_time_code_data[find_time_code_data$time_seg == min(find_time_code_data$time_seg ), ]$segments <- 0
-  find_time_code_data[find_time_code_data$time_seg == max(find_time_code_data$time_seg ), ]$segments <- 0
-
-  # if no segment found, then return null
-  if( sum(find_time_code_data$segments) == 0 ){return(NULL)}
-
-  time_code <- find_time_code_data$time_seg[which(diff(find_time_code_data$segments)!=0)]
-
-  # Add an ending time if necessary
-  if(!is.null(range_from) & !is.null(range_to)){
-    if(length(time_code)%%2!=0){time_code<-c(time_code,range_to)}
-  } else {
-    if(length(time_code)%%2!=0){time_code<-c(time_code,max(tbl$true_offset))}
+      t = DescTools::Overlap(
+        x=c(tbl[row,]$true_onset,tbl[row,]$true_offset),
+        y=c(tbl[row2,]$true_onset,tbl[row2,]$true_offset)
+      )
+      # print(t)
+      if(t>0){
+        ol.with <- c(ol.with,as.character(tbl[row2,]$set))
+      }
+    }
+    commun.annoatation<- c(commun.annoatation,length(unique(ol.with)))
   }
 
+  # select commun segment possible
+  tbl$commun.annoatation <- commun.annoatation
+  tbl <- tbl[tbl$commun.annoatation==n.annotator,]
+  if (nrow(tbl)==0){
+    return(NULL)
+  }
 
-  time_code <- as.data.frame(matrix(time_code,ncol=2,byrow = T))
-  names(time_code) <- c("true_onset","true_offset")
+  # Define time segment
 
+  range_from <- max( c(min(tbl$true_onset),range_from ))
+  range_to <- min( c(max(tbl$true_offset),range_to ))
+  time =  seq(range_from-1000, range_to+1000, 1000)
+  time.line = data.frame(time = time, count = 0)
+
+  for (row in 1:nrow(tbl)){
+    time.line[time>= tbl[row,]$true_onset & time<= tbl[row,]$true_offset,]$count=  time.line[time>= tbl[row,]$true_onset & time<= tbl[row,]$true_offset,]$count +1
+  }
+  time.line$segment <- ifelse(time.line$count==n.annotator,1,0 )
+  time.line[time==range_from-1000 | time==range_to+1000,]$segment = 0 # add border
+
+  # find segments
+  time.code <- time.line[which(diff(time.line$segment)!=0),]$time
+  time.code <- as.data.frame(matrix(time.code,ncol=2,byrow = T))
+  names(time.code) <- c("true_onset","true_offset")
 
   ### Format data to be returned
   rez <- data.frame()
-  for( row in 1:nrow(time_code)) {
-    true_onset= time_code[row,]$true_onset
-    true_offset = time_code[row,]$true_offset
+  for( row in 1:nrow(time.code)) {
+    true_onset= time.code[row,]$true_onset
+    true_offset = time.code[row,]$true_offset
     tmp <- true_time_seg_finder(true_onset,true_offset,tbl)
 
-    tmp <- data.frame( filename=tbl[tmp,]$filename,
+    tmp <- data.frame( recording_filename=tbl[tmp,]$recording_filename,
                        set= tbl[tmp,]$set,
                        annotation_filename = tbl[tmp,]$annotation_filename,
                        stringsAsFactors = F)
 
 
-    tmp$true_onset <- true_onset+1
+    tmp$true_onset <- true_onset+1000
     tmp$true_offset <- true_offset
 
     rez <- rbind(rez,tmp)
 
   }
+
+
   rez
+
+
 }

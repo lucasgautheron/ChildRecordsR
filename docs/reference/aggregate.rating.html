@@ -123,7 +123,7 @@ the function will extract data from annotation file in a raterData Class</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rating</span>
-<span class='fu'><a href='https://rdrr.io/r/stats/aggregate.html'>aggregate</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>ChildRecordings</span>, cut <span class='op'>=</span> <span class='fl'>0.1</span>, verbose <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span></pre>
+<span class='fu'><a href='https://rdrr.io/r/stats/aggregate.html'>aggregate</a></span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>ChildRecordings</span>, cut <span class='op'>=</span> <span class='fl'>100</span>, verbose <span class='op'>=</span> <span class='cn'>T</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -138,7 +138,7 @@ the function will extract data from annotation file in a raterData Class</p>
     </tr>
     <tr>
       <th>cut</th>
-      <td><p>: time size in second for the unit segment</p></td>
+      <td><p>: time size in millisecond for the unit segment</p></td>
     </tr>
     </table>
 
@@ -156,14 +156,16 @@ the function will extract data from annotation file in a raterData Class</p>
 </div><div class='output co'>#&gt; ###############################################
 #&gt; Hello Wellcome to the ChildRecordings R Project 
 #&gt; 
-#&gt; Your ChildRecording project path containe : 
-#&gt;  1720  annotations files 
-#&gt;  1720  are referenced in the metadata 
-#&gt;  5  coders were finded :  textgrid_m1 vtc textgrid_mm textgrid_ak textgrid_ac
-#&gt;  All files seems to be present and referenced in the metadata (good news ;) )
+#&gt; Your ChildRecording project path contained : 
+#&gt;  3619  annotations files 
+#&gt;  1559  are referenced in the metadata 
+#&gt;  7  coders were found :  textgrid/m1 alice_vtc vtc alice textgrid/ak textgrid/mm textgrid/ac 
 #&gt; 
-#&gt;   379  metadata don't have a start recording time (a.k.a start.time) 
-#&gt; 	 therefore time indicators wil not be build for those files 
+#&gt; 42  file(s) seem(s) to be unreferenced in the metadata 
+#&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
+#&gt; 
+#&gt;   427  metadata don't have a start recording time (a.k.a start.time) 
+#&gt; 	 therefore time indicators will not be built for those files 
 #&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
 #&gt;   362  files are empty 
 #&gt; 	 This should normally mean that no annotation were provided by annotator 
@@ -172,13 +174,15 @@ the function will extract data from annotation file in a raterData Class</p>
 <span class='co'># All the rater need to ratter any segment find</span>
 <span class='va'>search</span> <span class='op'>=</span> <span class='fu'><a href='find.rating.segment.html'>find.rating.segment</a></span><span class='op'>(</span><span class='va'>CR</span>, <span class='st'>"aiku/namibie_aiku_20160715_1.wav"</span><span class='op'>)</span>
 <span class='va'>rez</span> <span class='op'>=</span> <span class='fu'>aggregate.rating</span><span class='op'>(</span><span class='va'>search</span>, <span class='va'>CR</span>, cut<span class='op'>=</span><span class='fl'>0.100</span>, verbose<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; |==================                                                        | 25% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |=====================================                                     | 50% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |========================================================                  | 75% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |==========================================================================|100% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; number of annotators 4 
-#&gt; length of reccording annotation 240 seconds or  0.06666667 hours
-#&gt; Reccord span  60 seconds or  0.01666667 hours
+</div><div class='output co'>#&gt; |============                                                              | 17% time by step : 0s estimate duration : 0m remain : 0m 
+#&gt; |=========================                                                 | 33% time by step : 1s estimate duration : 0m remain : 0m 
+#&gt; |=====================================                                     | 50% time by step : 1s estimate duration : 0m remain : 0m 
+#&gt; |=================================================                         | 67% time by step : 1s estimate duration : 0m remain : 0m 
+#&gt; |==============================================================            | 83% time by step : 1s estimate duration : 0m remain : 0m 
+#&gt; |==========================================================================|100% time by step : 1s estimate duration : 0m remain : 0m 
+#&gt; number of annotators 6 
+#&gt; length of recording annotation 360000 ms or  0.1 hours
+#&gt; Record span  60000 ms or  0.01666667 hours
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

@@ -6,7 +6,7 @@
 \usage{
 find.rating.segment(
   ChildRecordings,
-  filename,
+  recording_filename,
   annotators = NULL,
   range_from = NULL,
   range_to = NULL
@@ -15,11 +15,11 @@ find.rating.segment(
 \arguments{
 \item{ChildRecordings}{: a ChildRecordings class}
 
-\item{filename}{: a wav file name to look}
-
 \item{annotators}{: an optional argument providing le annotators to look at}
 
 \item{range_from}{and range_to : an optional time windows for the search}
+
+\item{filename}{: a wav file name to look}
 }
 \value{
 A data.frame containing commun annoation segment for each annotator
@@ -42,9 +42,9 @@ find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
 # overlaps with the time windows provided.
 # For instance, you can shift the window it will give you the same result
 Wav_file_name = "aiku/namibie_aiku_20160715_1.wav"
-t1 = 27180
-t2 = 27000
-t3 = 27240
+t1 = 27180000
+t2 = 27000000
+t3 = 27240000
 find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
 find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
 find.rating.segment(CR, Wav_file_name, range_from = t2, range_to = t3)

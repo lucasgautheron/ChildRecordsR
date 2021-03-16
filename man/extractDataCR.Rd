@@ -17,16 +17,16 @@ extractDataCR(set.type, ChildRecordings, LENA.OL = F, verbose = T)
 A class extractDataCR with a data.frame with all the aggregated data
 }
 \description{
-Import all the file from a specific annotators
+Import all the files from a specific annotator
 }
 \examples{
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
-rez = extractDataCR( "textgrid_m1", CR, verbose = F )
+rez = extractDataCR( "textgrid/m1", CR, verbose = F )
 head(rez)
 # With LENA overlap method
-rez = extractDataCR("textgrid_m1", CR, LENA.OL = T, verbose = F)
+rez = extractDataCR("textgrid/m1", CR, LENA.OL = T, verbose = F)
 
 
 }

@@ -13,10 +13,10 @@
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
-#' rez = extractDataCR( "textgrid_m1", CR, verbose = F )
+#' rez = extractDataCR( "textgrid/m1", CR, verbose = F )
 #' head(rez)
 #' # With LENA overlap method
-#' rez = extractDataCR("textgrid_m1", CR, LENA.OL = T, verbose = F)
+#' rez = extractDataCR("textgrid/m1", CR, LENA.OL = T, verbose = F)
 #'
 #'
 extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
@@ -52,7 +52,7 @@ extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
     if (LENA.OL){
       tmp <- LENA.overlap(all.meta[row, ],ChildRecordings)
     }else{
-      tmp <- file.openner(all.meta[row, ],ChildRecordings)
+      tmp <- file.opener(all.meta[row, ],ChildRecordings)
     }
     tmp <- merge(tmp, ChildRecordings$children, by = "child_id")
     tmp$date_iso <- as.Date(tmp$date_iso, format = "%Y-%m-%d")
@@ -112,10 +112,7 @@ extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
-#' rez = extractDataCR( "textgrid_m1", CR, verbose = F )
-#' head(rez)
-#' # With LENA overlap method
-#' rez = extractDataCR("textgrid_m1", CR, LENA.OL = T, verbose = F)
+#' rez = extractDataCR( "textgrid/m1", CR, verbose = F )
 #' summary(rez)
 #'
 

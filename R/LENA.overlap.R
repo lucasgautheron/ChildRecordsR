@@ -23,7 +23,7 @@
 
 LENA.overlap <- function(meta_row,ChildRecordings){
 
-  data = file.openner(meta_row,ChildRecordings)
+  data = file.opener(meta_row,ChildRecordings)
   if (nrow(data) == 0) {
     # print(paste("no row (i.e., no annotated speech) in ", path))
     return(data)

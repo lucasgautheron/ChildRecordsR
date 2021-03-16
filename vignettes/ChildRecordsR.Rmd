@@ -42,22 +42,22 @@ find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 Alternatively, if a specific time window is provided, the search function will find all the annotations that overlap with the time window provided.
 
 ```{r}
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27250)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27260)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27240000)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000000, range_to = 27250000)
+find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27260000)
 ```
 
 It is also possible to find annotations for a specific set of annotators, by providing the list of their codenames:
 
 ```{r}
-raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
+raters <- c("textgrid/ak","textgrid/mm","textgrid/m1")
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",raters)
 ```
 
 Time window and limited annotator can also be specified jointly:
 
 ```{r}
-search1 <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
+search1 <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180000, range_to = 27240000)
 search1
 ```
 
@@ -67,7 +67,7 @@ Once you have obtained information on a set of annotations with the search funct
 
 
 ```{r}
-rating1  = aggregate.rating(search1, CR, cut = 0.1)
+rating1  = aggregate.rating(search1, CR, cut = 100)
 ```
 
 Next, an analysis function can be called. We provide several. They all assume you have at least two annotators. It could be two automated algorithms, two humans, or one automated and one human -- this package does not treat these cases differently, so you should interpret results carefully.
@@ -81,7 +81,7 @@ rez1 = reliability(rating1)
 Another possible way to investigate annotators is through classification indicators, such as precision, recall, and F-score. These can only be calculated for cases with exactly two annotators. The first annotator will be assumed as the "gold" annotator, so if you have a human and an automated annotator, or someone with more versus less experience, make sure you order them so that the more reliable annotator (more likely to be "gold") is provided first.
 
 ```{r}
-ratercomp <- c("textgrid_ak","textgrid_m1")
+ratercomp <- c("textgrid/ak","textgrid/m1")
 SDT.raterData(rating1,ratercomp)
 ```
 
@@ -98,9 +98,9 @@ plot(comparaison)
 
 The previous examples used a path to a single wave file. Typical, in order to have a general idea of the annotations, the preceding analyses must be carried out on the whole corpus, and thus multiple wave files. This is the analysis we try in the present example. The result in this case confirms our previous conclusion, that the **textgrid_mm** annotator had a negative impact on reliability.
 
-```{r, cache=T}
-wave_file <- unique(CR$all.meta$filename)[1:10] # get all the wav files
-raters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
+```{r, cache=F}
+wave_file <- unique(CR$all.meta$recording_filename)[1:10] # get all the wav files
+raters <- c("textgrid/ak","textgrid/mm","textgrid/m1") # Define raters you are interested in
 
 # bind all the results
 search2 <- data.frame()
