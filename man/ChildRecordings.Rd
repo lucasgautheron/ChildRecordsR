@@ -19,7 +19,7 @@ Provid some integrity check such as missing files or missing meta
 }
 \examples{
 library(ChildRecordsR)
-path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 
 

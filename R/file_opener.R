@@ -1,25 +1,25 @@
 #'
-#' Openning a data file in childrecording class
+#' Opening a data file in ChildRecordingsData class
 #'
-#' Open a csv file from a ChildRecordings class.
-#' The function provide transformation on data such as create a true segment_onset
-#' and segment_offset based on meta data. Will also provide POSIXct time info if
-#' strat_time of the recording is provided in the meta
+#' Open a csv file from a ChildRecordingsData class.
+#' The function provides transformation of data such as creating a true segment_onset
+#' and segment_offset based on meta data. It will also provide POSIXct time info if
+#' start_time of the recording is provided in the meta
 #'
 #' @param meta_row : a row from the meta containing all the info of the cvs file
-#' @param ChildRecordings : a ChildRecordings class
+#' @param ChildRecordings : a ChildRecordingsData class
 #' @return A data.frame
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
-#' raw_file <- file.openner(CR$all.meta[1,],CR)
+#' raw_file <- file.opener(CR$all.meta[1,],CR)
 #' head(raw_file)
 #'
 
-file.openner <- function(meta_row,ChildRecordings){
-  path =  paste0(ChildRecordings$path,"annotations/",meta_row$annotation_filename)
+file.opener <- function(meta_row,ChildRecordings){
+  path =  paste0(ChildRecordings$path,"annotations/",meta_row$set,"/converted/",meta_row$annotation_filename)
   temps.data <- read.csv(path)
 
   if (nrow(temps.data) == 0) {
@@ -40,8 +40,8 @@ file.openner <- function(meta_row,ChildRecordings){
   temps.data$range_onset <- meta_row$range_onset
 
   # Adjusting segment in regard to time seek
-  temps.data$segment_onset <- temps.data$segment_onset + meta_row$time_seek
-  temps.data$segment_offset <- temps.data$segment_offset + meta_row$time_seek
+  temps.data$segment_onset <- temps.data$segment_onset + meta_row$time_seek*1000
+  temps.data$segment_offset <- temps.data$segment_offset + meta_row$time_seek*1000
 
   # Building time variable
   if (is.na(meta_row$start_time)){

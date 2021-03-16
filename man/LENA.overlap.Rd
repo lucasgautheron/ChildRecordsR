@@ -15,11 +15,11 @@ LENA.overlap(meta_row, ChildRecordings)
 A data.frame with 2 added columns
 }
 \description{
-Open a annotation file and add 2 columns for LENA overlap method
+Open an annotation file and add 2 columns to find overlap according to the LENA-style overlap definition
 }
 \examples{
 library(ChildRecordsR)
-path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 raw_file <- LENA.overlap(CR$all.meta[1,],CR)
 head(raw_file)

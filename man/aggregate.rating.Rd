@@ -4,14 +4,14 @@
 \alias{aggregate.rating}
 \title{aggregation of annnotations data}
 \usage{
-\method{aggregate}{rating}(data, ChildRecordings, cut = 0.1, verbose = T)
+\method{aggregate}{rating}(data, ChildRecordings, cut = 100, verbose = T)
 }
 \arguments{
 \item{data}{: find.ratting.segment return or similar data.frame}
 
 \item{ChildRecordings}{: a ChildRecordings class}
 
-\item{cut}{: time size in second for the unit segment}
+\item{cut}{: time size in millisecond for the unit segment}
 }
 \value{
 A raterData class containing with original format and long format for every annotators.
@@ -25,7 +25,7 @@ the data will be organize un raw annotation format and a long segmented format
 }
 \examples{
 library(ChildRecordsR)
-path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 
 # if no time windows is specified, this function will only return at table for all the know raters

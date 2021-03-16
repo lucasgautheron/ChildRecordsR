@@ -8,13 +8,13 @@
 
 #' @param ChildRecordings : a ChildRecordings class
 #' @param data : find.ratting.segment return or similar data.frame
-#' @param cut : time size in second for the unit segment
+#' @param cut : time size in millisecond for the unit segment
 #'
 #' @return A raterData class containing with original format and long format for every annotators.
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
 #'
 #' # if no time windows is specified, this function will only return at table for all the know raters
@@ -26,14 +26,14 @@
 
 
 
-aggregate.rating <- function(data, ChildRecordings, cut=0.100,verbose=T){
+aggregate.rating <- function(data, ChildRecordings, cut=100,verbose=T){
 
   if(!is(ChildRecordings, "ChildRecordings")){
     print(paste( substitute(ChildRecordings), "is not a ChildRecordings class retrun null result"))
     return(NULL)
   }
   # attach(data)
-  data <- data[order(data$filename,data$set,data$true_onset),]
+  data <- data[order(data$recording_filename,data$set,data$true_onset),]
   # detach(data)
   all.meta <- ChildRecordings$all.meta
   ratersID <- as.character(unique(data$set))
@@ -58,8 +58,8 @@ aggregate.rating <- function(data, ChildRecordings, cut=0.100,verbose=T){
 
 
 
-      meta.row <- all.meta[all.meta$annotation_filename==annotation_filename,]
-      raw_file <- file.openner(meta.row,ChildRecordings)
+      meta.row <- all.meta[all.meta$annotation_filename==annotation_filename & all.meta$set==rat,]
+      raw_file <- file.opener(meta.row,ChildRecordings)
       long_file <- convertor_long_cut(raw_file,true_onset,true_offset,cut=cut)
       long_file <- data_to_OneHotEnc(long_file)
 
@@ -118,8 +118,8 @@ print.raterData <- function(raterData){
 
 
   cat("number of annotators", length(raterData$args$ratersID),"\n")
-  cat("length of reccording annotation", recording.length,"seconds or ", recording.length/3600, "hours\n")
-  cat("Reccord span ", recording.length/length(raterData$args$ratersID),"seconds or ", recording.length/length(raterData$args$ratersID)/3600, "hours\n\n")
+  cat("length of recording annotation", recording.length,"ms or ", recording.length/3600000, "hours\n")
+  cat("Record span ", recording.length/length(raterData$args$ratersID),"ms or ", recording.length/length(raterData$args$ratersID)/3600000, "hours\n\n")
 
 }
 

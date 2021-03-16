@@ -10,7 +10,7 @@
 
 
 library(ChildRecordsR)
-ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 # ChildRecordingsPath = "/Users/acristia/Documents/gitrepos/namibia-data/" # change the path
 # ChildRecordingsPath = "/Users/alejandrinacristia/Dropbox/namidia-data/"
 
@@ -42,8 +42,8 @@ CR = ChildRecordings(ChildRecordingsPath)
 # Date and hours of the recording will be computed if start_time and date_iso of the recording are provided.
 # This procedure will raise a message if a file is empty (no annotation).
 
-rez = extractDataCR( "textgrid_m1",CR)
-rez = rez[rez$child_id=="aiku",] # select a specific child ID
+rez = extractDataCR( "textgrid/m1",CR)
+rez = rez$data[rez$data$child_id=="aiku",] # select a specific child ID
 rez = rez[rez$date_iso=="2016-07-15",] # select a specific date
 head(rez)
 
@@ -52,14 +52,12 @@ head(rez)
 # One of the method was develop for LENA and remove speech segment that overlap
 # This method was implemented by using a variable option call LENA.OL
 
-rez2 = extractDataCR( "textgrid_m1",CR,LENA.OL = T)
-rez2 = rez2[rez2$child_id=="aiku",]
-rez2 = rez2[rez2$date_iso=="2016-07-15",]
-head(rez2)
+rez2 = extractDataCR( "textgrid/m1",CR,LENA.OL = T)
+summary(rez2)
 
 ### Function to convert the file into long format (ie adapt onset times to the long-form audio)
 # Useful to future rater reliability
-long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),cut = 0.1)
+long = convertor_long_cut(rez,min(rez$segment_onset),max(rez$segment_offset),cut = 100)
 head(long,20)
 
 ###############################################
@@ -74,25 +72,12 @@ head(long,20)
 # All the rater need to rater any segment find
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 
-# However, if a time windows is provided, this function will find all the data that
-# overlaps with the time windows provided.
-# For instance, if you need to observe a specific time you can shift the window
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27240)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27500)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27170, range_to = 27250)
-
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27190, range_to = 27230)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27190, range_to = 27500)
-find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000, range_to = 27230)
-
-
 # finding segments on wav file for designated rater
-raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
+raters <- c("textgrid/ak","textgrid/mm","textgrid/m1")
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",raters)
 
 # finding segments on wav file for the designated windows in second and rater
-search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180, range_to = 27240)
+search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180000, range_to = 27240000)
 
 
 ###############################################
@@ -104,7 +89,7 @@ search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, ran
 # The function will help you to join table and convert data into long format
 # this could be useful to analyse the all corpus for example after
 
-rating1  = aggregate.rating(search,CR,0.1)
+rating1  = aggregate.rating(search,CR,100)
 # this function contains list with raters data with original format and long format
 
 
@@ -116,17 +101,17 @@ rating1  = aggregate.rating(search,CR,0.1)
 #
 # If you need to analyze the all corpus you may need to bind different search result as follow
 
-wave_file <- unique(CR$all.meta$filename) # get all the wav files
-raters <- c("textgrid_ak","textgrid_mm","textgrid_m1") # Define raters you are interested in
+wave_file <- unique(CR$all.meta$recording_filename) # get all the wav files
+raters <- c("textgrid/ak","textgrid/mm","textgrid/m1") # Define raters you are interested in
 
 # bind all the results
 search2 <- data.frame()
-for (file in wave_file[1:10]){
+for (file in wave_file[]){
   print(file)
   search2 <- rbind(search2, find.rating.segment(CR, file, raters)) # could take some time
 }
 # analyze all the result
-rating2  = aggregate.rating(search2,CR,0.1)
+rating2  = aggregate.rating(search2,CR,100)
 
 
 
@@ -151,18 +136,20 @@ comparaison = raterComparaison(rating2)
 plot(comparaison)
 
 # compare the  two raters in classification
-ratercomp <- c("textgrid_ak","textgrid_m1")
+ratercomp <- c("textgrid/ak","textgrid/m1")
 SDT.raterData(rating2,ratercomp)
 
 
 # try the analyze without MM rater
-raters <- c("textgrid_ak","textgrid_m1") # Define raters you are interested in
+raters <- c("textgrid/ak","textgrid/m1") # Define raters you are interested in
 search3 <- data.frame()
-for (file in wave_file[1:10]){
+for (file in wave_file){
   print(file)
   search3 <- rbind(search3, find.rating.segment(CR, file, raters))
 }
-rating3  = aggregate.rating(search3, CR, 0.1)
+
+
+rating3  = aggregate.rating(search3, CR, 100)
 rez2 = reliability(rating3)
 rez2
 SDT.raterData(rating3,raters)

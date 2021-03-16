@@ -1,7 +1,7 @@
 #'
 #' Overlap LENA function
 #'
-#' Open a annotation file and add 2 columns for LENA overlap method
+#' Open an annotation file and add 2 columns to find overlap according to the LENA-style overlap definition
 #'
 #' @param meta_row : a row from the meta containing all the info of the cvs file
 #' @param ChildRecordings : a ChildRecordings class
@@ -9,7 +9,7 @@
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
 #' raw_file <- LENA.overlap(CR$all.meta[1,],CR)
 #' head(raw_file)
@@ -23,7 +23,7 @@
 
 LENA.overlap <- function(meta_row,ChildRecordings){
 
-  data = file.openner(meta_row,ChildRecordings)
+  data = file.opener(meta_row,ChildRecordings)
   if (nrow(data) == 0) {
     # print(paste("no row (i.e., no annotated speech) in ", path))
     return(data)

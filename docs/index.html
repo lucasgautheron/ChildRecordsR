@@ -72,17 +72,17 @@
 <div id="childrecordsr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#childrecordsr" class="anchor"></a>ChildRecordsR</h1></div>
-<p>ChildrecordsR is an R package for the Childrecords project, it provides and facilitates the analysis of annotations in the <a href="https://github.com/LAAC-LSCP/ChildRecordsData#installation">ChildRecordsData</a> format. The main functions are data aggregation and analysis of the reliability of human or machine annotators, whether the annotations relate to the day or to small segments.</p>
+<p>ChildRecordsR is an R package that provides and facilitates the analysis of annotations (often from daylong recordings) formatted using <a href="https://github.com/LAAC-LSCP/ChildRecordsData">ChildRecordsData</a>. The main functions in this package are data aggregation and analysis of the reliability of (human or machine) annotators.</p>
 <hr>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
-<p>Before you start, make sure you have some data within the <a href="https://github.com/LAAC-LSCP/ChildRecordsData#installation">ChildRecordsData</a> format. Documentation concerning the setup and installation of corpuses in ChildRecords-data format can be found <a href="https://laac-lscp.github.io/ChildRecordsData/">here</a>. Make sure that you have some annotations (see Appendix for an example).</p>
+<p>Before you start, make sure you have some data formatted using ChildRecordsData. A description of the format is provided <a href="https://laac-lscp.github.io/ChildRecordsData/FORMATTING.html">here</a>. Documentation concerning the setup and installation of corpora in ChildRecordsData format can be found <a href="https://laac-lscp.github.io/ChildRecordsData/#installation">here</a>. Available corpora are listed <a href="https://laac-lscp.github.io/ChildRecordsData/EXTANT.html">here</a>. See Appendix for an example.</p>
 </div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<p>In R terminal :</p>
+<p>In R terminal:</p>
 <pre><code><a href="https://rdrr.io/r/utils/install.packages.html">install.packages("devtools")
 library(devtools)
 install_github("LAAC-LSCP/ChildRecordsR")</a></code></pre>
@@ -91,22 +91,22 @@ install_github("LAAC-LSCP/ChildRecordsR")</a></code></pre>
 <h2 class="hasAnchor">
 <a href="#what-the-package-can-do" class="anchor"></a>What the package can do</h2>
 <ul>
-<li>Checking the integrity of you ChilRocordsData folder</li>
-<li>The package provide search function to help you find time segment and files common to multiples annotators</li>
-<li>The aggregation of the annotation data and their transformation to the long format</li>
-<li>Calculates indicators of annotation reliability</li>
-<li>Evaluation of the quality of the annotators with reliability and classification indicators</li>
+<li>Checking the integrity of your ChildRecordsData folder.</li>
+<li>Finding times and files common to multiple annotators</li>
+<li>Aggregating of their annotations and their transformation to multiple formats</li>
+<li>Calculating indicators of annotation reliability</li>
+<li>Evaluating the annotations’ quality with reliability and classification indicators</li>
 </ul>
 </div>
 <div id="tutorial" class="section level2">
 <h2 class="hasAnchor">
 <a href="#tutorial" class="anchor"></a>Tutorial</h2>
-<p>An R tutorial/vignette can be found <a href="https://laac-lscp.github.io/ChildRecordsR/articles/ChildRecordsR.html">here</a>, i will provide you a guide to the basic function and analyses from the package.</p>
+<p>An R tutorial/vignette can be found <a href="https://laac-lscp.github.io/ChildRecordsR/articles/ChildRecordsR.html">here</a>, which provides you a guide to the basic functions and analyses from the package.</p>
 </div>
 <div id="help" class="section level2">
 <h2 class="hasAnchor">
 <a href="#help" class="anchor"></a>Help</h2>
-<p>At any point, you can also use the help in R and Rstudio, using <code>?function_name</code> where function_name is the name of a function or in the help panel if you are using Rstudio. You can also found function documentation on the <a href="https://laac-lscp.github.io/ChildRecordsR/reference/index.html">https://laac-lscp.github.io/ChildRecordsR</a>.</p>
+<p>At any point, you can also use the help in R and Rstudio, using <code>?function_name</code> where function_name is the name of a function or in the help panel if you are using Rstudio. You can also found functions’ documentation on the <a href="https://laac-lscp.github.io/ChildRecordsR/reference/index.html">https://laac-lscp.github.io/ChildRecordsR</a>.</p>
 <p>If any issues arise, feel free to post them <a href="https://github.com/LAAC-LSCP/ChildRecordsData/issues">here</a></p>
 <hr>
 <hr>

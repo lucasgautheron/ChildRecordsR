@@ -1,10 +1,10 @@
 
 #' Compare Annotator reliability
 #'
-#' Compare a rater from a raterData class and provide indication of quality for each annotator.
-#' In classical test theory tested annotator is retracted from the data and reliabily indicator are provided.
-#' A good annotator should should decrase the indicator after retraction.
-#' In signal detection theory a mean of precision, recal and F-score are provided by rater.
+#' Provide indication of quality for each annotator.
+#' Following classical test theory, each annotator is removed from the data and a reliability indicator is provided for the annotation as a whole.
+#' Removing a good annotator should decrease the indicator.
+#' In signal detection theory a mean of precision, recall and F-score are provided by rater.
 #'
 #' @param raterData : a raterData class
 #'
@@ -13,7 +13,7 @@
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
 #'
 #' # if no time windows is specified, this function will only return at table for all the know raters

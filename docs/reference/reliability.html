@@ -137,19 +137,21 @@
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
-<span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/namibia-data/"</span>
+<span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"</span>
 <span class='va'>CR</span> <span class='op'>=</span> <span class='fu'><a href='ChildRecordings.html'>ChildRecordings</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ###############################################
 #&gt; Hello Wellcome to the ChildRecordings R Project 
 #&gt; 
-#&gt; Your ChildRecording project path containe : 
-#&gt;  1720  annotations files 
-#&gt;  1720  are referenced in the metadata 
-#&gt;  5  coders were finded :  textgrid_m1 vtc textgrid_mm textgrid_ak textgrid_ac
-#&gt;  All files seems to be present and referenced in the metadata (good news ;) )
+#&gt; Your ChildRecording project path contained : 
+#&gt;  3619  annotations files 
+#&gt;  1559  are referenced in the metadata 
+#&gt;  7  coders were found :  textgrid/m1 alice_vtc vtc alice textgrid/ak textgrid/mm textgrid/ac 
 #&gt; 
-#&gt;   379  metadata don't have a start recording time (a.k.a start.time) 
-#&gt; 	 therefore time indicators wil not be build for those files 
+#&gt; 42  file(s) seem(s) to be unreferenced in the metadata 
+#&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
+#&gt; 
+#&gt;   427  metadata don't have a start recording time (a.k.a start.time) 
+#&gt; 	 therefore time indicators will not be built for those files 
 #&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
 #&gt;   362  files are empty 
 #&gt; 	 This should normally mean that no annotation were provided by annotator 
@@ -158,34 +160,36 @@
 <span class='co'># All the rater need to ratter any segment find</span>
 <span class='va'>search</span> <span class='op'>=</span> <span class='fu'><a href='find.rating.segment.html'>find.rating.segment</a></span><span class='op'>(</span><span class='va'>CR</span>, <span class='st'>"aiku/namibie_aiku_20160715_1.wav"</span><span class='op'>)</span>
 <span class='va'>rez</span> <span class='op'>=</span> <span class='fu'><a href='aggregate.rating.html'>aggregate.rating</a></span><span class='op'>(</span><span class='va'>search</span>, <span class='va'>CR</span>, cut<span class='op'>=</span><span class='fl'>0.100</span>, verbose<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; |==================                                                        | 25% time by step : 0s estimate duration : 0m remain : 0m 
+</div><div class='output co'>#&gt; |============                                                              | 17% time by step : 0s estimate duration : 0m remain : 0m 
+#&gt; |=========================                                                 | 33% time by step : 0s estimate duration : 0m remain : 0m 
 #&gt; |=====================================                                     | 50% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |========================================================                  | 75% time by step : 0s estimate duration : 0m remain : 0m 
+#&gt; |=================================================                         | 67% time by step : 0s estimate duration : 0m remain : 0m 
+#&gt; |==============================================================            | 83% time by step : 0s estimate duration : 0m remain : 0m 
 #&gt; |==========================================================================|100% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; number of annotators 4 
-#&gt; length of reccording annotation 240 seconds or  0.06666667 hours
-#&gt; Reccord span  60 seconds or  0.01666667 hours
+#&gt; number of annotators 6 
+#&gt; length of recording annotation 360000 ms or  0.1 hours
+#&gt; Record span  60000 ms or  0.01666667 hours
 #&gt; </div><div class='input'><span class='fu'>reliability</span><span class='op'>(</span><span class='va'>rez</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Reliability indicator by type 
 #&gt; 
 #&gt; # CHI 
 #&gt; 
 #&gt;             coeff.name        pa        pe coeff.val coeff.se      conf.int
-#&gt; 1 Krippendorff's Alpha 0.8067914 0.7809381   0.11802  0.02459  (0.07,0.166)
-#&gt; 2        Fleiss' Kappa 0.8067110 0.7809381   0.11765  0.02459 (0.069,0.166)
-#&gt; 3                  AC1 0.8067110 0.2190619   0.75249  0.01661  (0.72,0.785)
-#&gt;        p.value     w.name
-#&gt; 1 2.019498e-06 unweighted
-#&gt; 2 2.169481e-06 unweighted
-#&gt; 3 0.000000e+00 unweighted
+#&gt; 1 Krippendorff's Alpha 0.8274506 0.7928866   0.16688  0.00050 (0.166,0.168)
+#&gt; 2        Fleiss' Kappa 0.8274505 0.7928866   0.16688  0.00050 (0.166,0.168)
+#&gt; 3                  AC1 0.8274505 0.2071134   0.78238  0.00047 (0.781,0.783)
+#&gt;   p.value     w.name
+#&gt; 1       0 unweighted
+#&gt; 2       0 unweighted
+#&gt; 3       0 unweighted
 #&gt; 
 #&gt; 
 #&gt; # OCH 
 #&gt; 
-#&gt;             coeff.name        pa        pe coeff.val coeff.se      conf.int
-#&gt; 1 Krippendorff's Alpha 0.7860014 0.5893076   0.47893  0.02805 (0.424,0.534)
-#&gt; 2        Fleiss' Kappa 0.7859124 0.5893076   0.47872  0.02805 (0.424,0.534)
-#&gt; 3                  AC1 0.7859124 0.4106924   0.63671  0.02149 (0.595,0.679)
+#&gt;             coeff.name        pa       pe coeff.val coeff.se      conf.int
+#&gt; 1 Krippendorff's Alpha 0.7456276 0.603350    0.3587  0.00057  (0.358,0.36)
+#&gt; 2        Fleiss' Kappa 0.7456275 0.603350    0.3587  0.00057  (0.358,0.36)
+#&gt; 3                  AC1 0.7456275 0.198325    0.6827  0.00045 (0.682,0.684)
 #&gt;   p.value     w.name
 #&gt; 1       0 unweighted
 #&gt; 2       0 unweighted
@@ -195,9 +199,9 @@
 #&gt; # FEM 
 #&gt; 
 #&gt;             coeff.name        pa        pe coeff.val coeff.se      conf.int
-#&gt; 1 Krippendorff's Alpha 0.7801802 0.5414672   0.52060  0.02145 (0.478,0.563)
-#&gt; 2        Fleiss' Kappa 0.7800887 0.5414672   0.52040  0.02145 (0.478,0.563)
-#&gt; 3                  AC1 0.7800887 0.2292664   0.71467  0.01495 (0.685,0.744)
+#&gt; 1 Krippendorff's Alpha 0.7475508 0.6008612   0.36752  0.00052 (0.366,0.369)
+#&gt; 2        Fleiss' Kappa 0.7475508 0.6008612   0.36752  0.00052 (0.366,0.369)
+#&gt; 3                  AC1 0.7475508 0.1995694   0.68461  0.00046 (0.684,0.686)
 #&gt;   p.value     w.name
 #&gt; 1       0 unweighted
 #&gt; 2       0 unweighted
@@ -207,21 +211,21 @@
 #&gt; # MAL 
 #&gt; 
 #&gt;             coeff.name        pa        pe coeff.val coeff.se      conf.int
-#&gt; 1 Krippendorff's Alpha 0.9223839 0.8829945   0.33665  0.04128 (0.256,0.418)
-#&gt; 2        Fleiss' Kappa 0.9223516 0.8829945   0.33637  0.04128 (0.255,0.417)
-#&gt; 3                  AC1 0.9223516 0.1170055   0.91206  0.00990 (0.893,0.932)
-#&gt;        p.value     w.name
-#&gt; 1 2.220446e-15 unweighted
-#&gt; 2 2.220446e-15 unweighted
-#&gt; 3 0.000000e+00 unweighted
+#&gt; 1 Krippendorff's Alpha 0.9304884 0.8927758   0.35172  0.00083  (0.35,0.353)
+#&gt; 2        Fleiss' Kappa 0.9304883 0.8927758   0.35172  0.00083  (0.35,0.353)
+#&gt; 3                  AC1 0.9304883 0.1072242   0.92214  0.00028 (0.922,0.923)
+#&gt;   p.value     w.name
+#&gt; 1       0 unweighted
+#&gt; 2       0 unweighted
+#&gt; 3       0 unweighted
 #&gt; 
 #&gt; 
 #&gt; # composit 
 #&gt; 
 #&gt;             coeff.name        pa        pe coeff.val coeff.se      conf.int
-#&gt; 1 Krippendorff's Alpha 0.5348580 0.2217169   0.40235  0.01508 (0.373,0.432)
-#&gt; 2        Fleiss' Kappa 0.5346644 0.2217169   0.40210  0.01508 (0.372,0.432)
-#&gt; 3                  AC1 0.5346644 0.1556566   0.44888  0.01544 (0.419,0.479)
+#&gt; 1 Krippendorff's Alpha 0.4589163 0.2528483   0.27580  0.00034 (0.275,0.276)
+#&gt; 2        Fleiss' Kappa 0.4589161 0.2528483   0.27580  0.00034 (0.275,0.276)
+#&gt; 3                  AC1 0.4589161 0.1494303   0.36386  0.00042 (0.363,0.365)
 #&gt;   p.value     w.name
 #&gt; 1       0 unweighted
 #&gt; 2       0 unweighted

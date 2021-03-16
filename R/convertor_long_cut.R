@@ -1,19 +1,19 @@
-#'  Converte annotation format to long format
+#'  Converts annotation format to long format
 #'
-#'  Convert annotation data.frame to a long format sequence when the length of the
-#'  time windows is define by the cut
+#'  Convert annotation data.frame to a long format sequence where the length of the
+#'  time window bins is defined by cut (in seconds)
 #'
 #' @param data : a data.frame annotation
 #' @param onset offset : time of the data where the conversion should start and stop
-#' @param cut : length of the windows in second
+#' @param cut : length of the bins in millisecond
 #'
 #' @return  A data.frame in a long format version of the classic raw annotation file
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
-#' raw_file <- file.openner(CR$all.meta[1,],CR)
+#' raw_file <- file.opener(CR$all.meta[1,],CR)
 #' long_file <- convertor_long_cut(raw_file, onset = 1, offset = 500, cut = 1)
 #' head(long_file)
 #'

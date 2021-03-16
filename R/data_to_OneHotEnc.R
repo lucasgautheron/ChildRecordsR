@@ -1,5 +1,5 @@
 #'
-#' Create a composit verctor
+#' Create a composite vector
 #'
 #'
 #'
