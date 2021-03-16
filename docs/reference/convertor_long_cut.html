@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Converte annotation format to long format — convertor_long_cut • ChildRecordsR</title>
+<title>Converts annotation format to long format — convertor_long_cut • ChildRecordsR</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Converte annotation format to long format — convertor_long_cut" />
-<meta property="og:description" content="Convert annotation data.frame to a long format sequence when the length of the
- time windows is define by the cut" />
+<meta property="og:title" content="Converts annotation format to long format — convertor_long_cut" />
+<meta property="og:description" content="Convert annotation data.frame to a long format sequence where the length of the
+ time window bins is defined by cut (in seconds)" />
 
 
 
@@ -112,14 +112,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Converte annotation format to long format</h1>
+    <h1>Converts annotation format to long format</h1>
     <small class="dont-index">Source: <a href='https://github.com/LAAC-LSCP/ChildRecordsR/blob/master/R/convertor_long_cut.R'><code>R/convertor_long_cut.R</code></a></small>
     <div class="hidden name"><code>convertor_long_cut.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Convert annotation data.frame to a long format sequence when the length of the
- time windows is define by the cut</p>
+    <p>Convert annotation data.frame to a long format sequence where the length of the
+ time window bins is defined by cut (in seconds)</p>
     </div>
 
     <pre class="usage"><span class='fu'>convertor_long_cut</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>onset</span>, <span class='va'>offset</span>, cut <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span></pre>
@@ -137,7 +137,7 @@
     </tr>
     <tr>
       <th>cut</th>
-      <td><p>: length of the windows in second</p></td>
+      <td><p>: length of the bins in millisecond</p></td>
     </tr>
     </table>
 
@@ -152,18 +152,20 @@
 </div><div class='output co'>#&gt; ###############################################
 #&gt; Hello Wellcome to the ChildRecordings R Project 
 #&gt; 
-#&gt; Your ChildRecording project path containe : 
-#&gt;  1720  annotations files 
-#&gt;  1720  are referenced in the metadata 
-#&gt;  5  coders were finded :  textgrid_m1 vtc textgrid_mm textgrid_ak textgrid_ac
-#&gt;  All files seems to be present and referenced in the metadata (good news ;) )
+#&gt; Your ChildRecording project path contained : 
+#&gt;  3619  annotations files 
+#&gt;  1559  are referenced in the metadata 
+#&gt;  7  coders were found :  textgrid/m1 alice_vtc vtc alice textgrid/ak textgrid/mm textgrid/ac 
 #&gt; 
-#&gt;   379  metadata don't have a start recording time (a.k.a start.time) 
-#&gt; 	 therefore time indicators wil not be build for those files 
+#&gt; 42  file(s) seem(s) to be unreferenced in the metadata 
+#&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
+#&gt; 
+#&gt;   427  metadata don't have a start recording time (a.k.a start.time) 
+#&gt; 	 therefore time indicators will not be built for those files 
 #&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
 #&gt;   362  files are empty 
 #&gt; 	 This should normally mean that no annotation were provided by annotator 
-#&gt; 	 more infos in ChildRecordings$integrity_test$empty.files </div><div class='input'><span class='va'>raw_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='file.openner.html'>file.openner</a></span><span class='op'>(</span><span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>,<span class='va'>CR</span><span class='op'>)</span>
+#&gt; 	 more infos in ChildRecordings$integrity_test$empty.files </div><div class='input'><span class='va'>raw_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='file.opener.html'>file.opener</a></span><span class='op'>(</span><span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>,<span class='va'>CR</span><span class='op'>)</span>
 <span class='va'>long_file</span> <span class='op'>&lt;-</span> <span class='fu'>convertor_long_cut</span><span class='op'>(</span><span class='va'>raw_file</span>, onset <span class='op'>=</span> <span class='fl'>1</span>, offset <span class='op'>=</span> <span class='fl'>500</span>, cut <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>long_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   time.seq MAL CHI OCH FEM

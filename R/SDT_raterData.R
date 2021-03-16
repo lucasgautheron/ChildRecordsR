@@ -14,11 +14,10 @@
 #' CR = ChildRecordings(path)
 #'
 #' # finding segments on wav file for designated rater
-#' raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
-#' search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
-#' ratting1  = aggregate.rating(search, CR, 0.1)
-#' comp1 = raterComparaison(ratting1)
-#' SDT.raterData(comp1,c("textgrid_ak","textgrid_mm"))
+#' raters <- c("textgrid/ak","textgrid/mm","textgrid/m1")
+#' search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27240000)
+#' ratting1  = aggregate.rating(search, CR, 100)
+#' SDT.raterData(ratting1,c("textgrid/ak","textgrid/mm"))
 #'
 #'
 
@@ -39,12 +38,14 @@ SDT.raterData <- function(raterData,raters,plot=TRUE,summary=TRUE){
   for(i in 1:dim(conf_tab)[2]) my_conf_tab[,i]=my_conf_tab[,i]/colsums[i]
 
   prop_cat=data.frame(my_conf_tab*100) #generates precision because columns
+  names(prop_cat)[1:2] <- raters
   prop_cat$id=paste(
     lapply(prop_cat[raters[1]], as.character)[[1]],
     lapply(prop_cat[raters[2]], as.character)[[1]]
   )
   colnames(prop_cat)[3]<-"pr"
   data.frame(conf_tab)->stall
+  names(stall)[1:2] <- raters
   stall$id=paste(
     lapply(stall[raters[1]], as.character)[[1]],
     lapply(stall[raters[2]], as.character)[[1]]
@@ -60,12 +61,14 @@ SDT.raterData <- function(raterData,raters,plot=TRUE,summary=TRUE){
   for(i in 1:dim(conf_tab)[2]) my_conf_tab[,i]=my_conf_tab[,i]/rowsums[i]
 
   prop_cat=data.frame(conf_tab/rowSums(conf_tab)*100)  #generates recall because rows
+  names(prop_cat)[1:2] <- raters
   prop_cat$id=paste(
     lapply(prop_cat[raters[1]], as.character)[[1]],
     lapply(prop_cat[raters[2]], as.character)[[1]]
   )
   colnames(prop_cat)[3]<-"rec"
   data.frame(conf_tab)->stall
+  names(stall)[1:2] <- raters
   stall$id=paste(
     lapply(stall[raters[1]], as.character)[[1]],
     lapply(stall[raters[2]], as.character)[[1]]

@@ -40,7 +40,7 @@
 
 
 <meta property="og:title" content="Overlap LENA function — LENA.overlap" />
-<meta property="og:description" content="Open a annotation file and add 2 columns for LENA overlap method" />
+<meta property="og:description" content="Open an annotation file and add 2 columns to find overlap according to the LENA-style overlap definition" />
 
 
 
@@ -117,7 +117,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Open a annotation file and add 2 columns for LENA overlap method</p>
+    <p>Open an annotation file and add 2 columns to find overlap according to the LENA-style overlap definition</p>
     </div>
 
     <pre class="usage"><span class='fu'>LENA.overlap</span><span class='op'>(</span><span class='va'>meta_row</span>, <span class='va'>ChildRecordings</span><span class='op'>)</span></pre>
@@ -146,61 +146,56 @@
 </div><div class='output co'>#&gt; ###############################################
 #&gt; Hello Wellcome to the ChildRecordings R Project 
 #&gt; 
-#&gt; Your ChildRecording project path containe : 
-#&gt;  1720  annotations files 
-#&gt;  1720  are referenced in the metadata 
-#&gt;  5  coders were finded :  textgrid_m1 vtc textgrid_mm textgrid_ak textgrid_ac
-#&gt;  All files seems to be present and referenced in the metadata (good news ;) )
+#&gt; Your ChildRecording project path contained : 
+#&gt;  3619  annotations files 
+#&gt;  1559  are referenced in the metadata 
+#&gt;  7  coders were found :  textgrid/m1 alice_vtc vtc alice textgrid/ak textgrid/mm textgrid/ac 
 #&gt; 
-#&gt;   379  metadata don't have a start recording time (a.k.a start.time) 
-#&gt; 	 therefore time indicators wil not be build for those files 
+#&gt; 42  file(s) seem(s) to be unreferenced in the metadata 
+#&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
+#&gt; 
+#&gt;   427  metadata don't have a start recording time (a.k.a start.time) 
+#&gt; 	 therefore time indicators will not be built for those files 
 #&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
 #&gt;   362  files are empty 
 #&gt; 	 This should normally mean that no annotation were provided by annotator 
 #&gt; 	 more infos in ChildRecordings$integrity_test$empty.files </div><div class='input'><span class='va'>raw_file</span> <span class='op'>&lt;-</span> <span class='fu'>LENA.overlap</span><span class='op'>(</span><span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>,<span class='va'>CR</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>raw_file</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;   segment_onset segment_offset speaker_id ling_type speaker_type vcm_type
-#&gt; 1      1981.602       1982.215       CHI*         1          CHI       NA
-#&gt; 2      1982.215       1983.320         C1         1          OCH       NA
-#&gt; 3      1984.100       1985.210         C2         1          OCH       NA
-#&gt; 4      1985.593       1987.521       MOT*         1          FEM       NA
-#&gt; 5      1988.101       1989.285       LF2P         1         &lt;NA&gt;       NA
-#&gt; 6      1994.658       1996.058       CHI*         1          CHI       NA
-#&gt;   lex_type mwu_type addresseee transcription
-#&gt; 1       NA       NA         NA            NA
-#&gt; 2       NA       NA         NA            NA
-#&gt; 3       NA       NA         NA            NA
-#&gt; 4       NA       NA         NA            NA
-#&gt; 5       NA       NA         NA            NA
-#&gt; 6       NA       NA         NA            NA
-#&gt;                                        annotation_file   date_iso child_id
-#&gt; 1 textgrid/m1/namibie_aiku_20160714_1_1800_m1.TextGrid 2016-07-14     aiku
-#&gt; 2 textgrid/m1/namibie_aiku_20160714_1_1800_m1.TextGrid 2016-07-14     aiku
-#&gt; 3 textgrid/m1/namibie_aiku_20160714_1_1800_m1.TextGrid 2016-07-14     aiku
-#&gt; 4 textgrid/m1/namibie_aiku_20160714_1_1800_m1.TextGrid 2016-07-14     aiku
-#&gt; 5 textgrid/m1/namibie_aiku_20160714_1_1800_m1.TextGrid 2016-07-14     aiku
-#&gt; 6 textgrid/m1/namibie_aiku_20160714_1_1800_m1.TextGrid 2016-07-14     aiku
-#&gt;   range_offset range_onset  POSIXct_time_onset POSIXct_time_offset year month
-#&gt; 1          240         180 2016-07-14 09:44:01 2016-07-14 09:44:02 2016     7
-#&gt; 2          240         180 2016-07-14 09:44:02 2016-07-14 09:44:03 2016     7
-#&gt; 3          240         180 2016-07-14 09:44:04 2016-07-14 09:44:05 2016     7
-#&gt; 4          240         180 2016-07-14 09:44:05 2016-07-14 09:44:07 2016     7
-#&gt; 5          240         180 2016-07-14 09:44:08 2016-07-14 09:44:09 2016     7
-#&gt; 6          240         180 2016-07-14 09:44:14 2016-07-14 09:44:16 2016     7
-#&gt;   day                         filename LENA_OL_segment_onset
-#&gt; 1  14 aiku/namibie_aiku_20160714_1.wav              1981.602
-#&gt; 2  14 aiku/namibie_aiku_20160714_1.wav              1982.215
-#&gt; 3  14 aiku/namibie_aiku_20160714_1.wav              1984.100
-#&gt; 4  14 aiku/namibie_aiku_20160714_1.wav              1985.593
-#&gt; 5  14 aiku/namibie_aiku_20160714_1.wav              1988.101
-#&gt; 6  14 aiku/namibie_aiku_20160714_1.wav              1994.658
-#&gt;   LENA_OL_segment_offset
-#&gt; 1               1982.215
-#&gt; 2               1983.320
-#&gt; 3               1985.210
-#&gt; 4               1987.521
-#&gt; 5               1989.285
-#&gt; 6               1996.058</div><div class='input'>
+#&gt; 1      12780000       12780518       CHI*         1          CHI       NA
+#&gt; 2      12781478       12783294         C1         1          OCH       NA
+#&gt; 3      12783016       12783788       CHI*         1          CHI       NA
+#&gt; 4      12784160       12786039       CHI*         1          CHI       NA
+#&gt; 5      12786039       12786443       LF2P         1         &lt;NA&gt;       NA
+#&gt; 6      12786420       12787016       CHI*         1          CHI       NA
+#&gt;   lex_type mwu_type addresseee transcription phonemes syllables words
+#&gt; 1       NA       NA         NA            NA       NA        NA    NA
+#&gt; 2       NA       NA         NA            NA       NA        NA    NA
+#&gt; 3       NA       NA         NA            NA       NA        NA    NA
+#&gt; 4       NA       NA         NA            NA       NA        NA    NA
+#&gt; 5       NA       NA         NA            NA       NA        NA    NA
+#&gt; 6       NA       NA         NA            NA       NA        NA    NA
+#&gt;                                raw_filename   date_iso child_id range_offset
+#&gt; 1 namibie_aiku_20160714_1_12600_m1.TextGrid 2016-07-14     aiku       240000
+#&gt; 2 namibie_aiku_20160714_1_12600_m1.TextGrid 2016-07-14     aiku       240000
+#&gt; 3 namibie_aiku_20160714_1_12600_m1.TextGrid 2016-07-14     aiku       240000
+#&gt; 4 namibie_aiku_20160714_1_12600_m1.TextGrid 2016-07-14     aiku       240000
+#&gt; 5 namibie_aiku_20160714_1_12600_m1.TextGrid 2016-07-14     aiku       240000
+#&gt; 6 namibie_aiku_20160714_1_12600_m1.TextGrid 2016-07-14     aiku       240000
+#&gt;   range_onset  POSIXct_time_onset POSIXct_time_offset year month day
+#&gt; 1      180000 2016-12-09 06:11:00 2016-12-09 06:19:38 2016    12   9
+#&gt; 2      180000 2016-12-09 06:35:38 2016-12-09 07:05:54 2016    12   9
+#&gt; 3      180000 2016-12-09 07:01:16 2016-12-09 07:14:08 2016    12   9
+#&gt; 4      180000 2016-12-09 07:20:20 2016-12-09 07:51:39 2016    12   9
+#&gt; 5      180000 2016-12-09 07:51:39 2016-12-09 07:58:23 2016    12   9
+#&gt; 6      180000 2016-12-09 07:58:00 2016-12-09 08:07:56 2016    12   9
+#&gt;   LENA_OL_segment_onset LENA_OL_segment_offset
+#&gt; 1              12780000               12780518
+#&gt; 2              12781478               12783016
+#&gt; 3              12783294               12783788
+#&gt; 4              12784160               12786039
+#&gt; 5              12786039               12786420
+#&gt; 6              12786443               12787016</div><div class='input'>
 
 
 </div></pre>

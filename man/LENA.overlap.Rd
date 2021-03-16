@@ -15,7 +15,7 @@ LENA.overlap(meta_row, ChildRecordings)
 A data.frame with 2 added columns
 }
 \description{
-Open a annotation file and add 2 columns for LENA overlap method
+Open an annotation file and add 2 columns to find overlap according to the LENA-style overlap definition
 }
 \examples{
 library(ChildRecordsR)

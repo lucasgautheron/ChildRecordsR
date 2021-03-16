@@ -2,7 +2,7 @@
 % Please edit documentation in R/convertor_long_cut.R
 \name{convertor_long_cut}
 \alias{convertor_long_cut}
-\title{Converte annotation format to long format}
+\title{Converts annotation format to long format}
 \usage{
 convertor_long_cut(data, onset, offset, cut = 0.1)
 }
@@ -11,20 +11,20 @@ convertor_long_cut(data, onset, offset, cut = 0.1)
 
 \item{onset}{offset : time of the data where the conversion should start and stop}
 
-\item{cut}{: length of the windows in second}
+\item{cut}{: length of the bins in millisecond}
 }
 \value{
 A data.frame in a long format version of the classic raw annotation file
 }
 \description{
-Convert annotation data.frame to a long format sequence when the length of the
- time windows is define by the cut
+Convert annotation data.frame to a long format sequence where the length of the
+ time window bins is defined by cut (in seconds)
 }
 \examples{
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
-raw_file <- file.openner(CR$all.meta[1,],CR)
+raw_file <- file.opener(CR$all.meta[1,],CR)
 long_file <- convertor_long_cut(raw_file, onset = 1, offset = 500, cut = 1)
 head(long_file)
 

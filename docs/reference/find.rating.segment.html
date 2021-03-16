@@ -126,7 +126,7 @@ for common coding in raters</p>
 
     <pre class="usage"><span class='fu'>find.rating.segment</span><span class='op'>(</span>
   <span class='va'>ChildRecordings</span>,
-  <span class='va'>filename</span>,
+  <span class='va'>recording_filename</span>,
   annotators <span class='op'>=</span> <span class='cn'>NULL</span>,
   range_from <span class='op'>=</span> <span class='cn'>NULL</span>,
   range_to <span class='op'>=</span> <span class='cn'>NULL</span>
@@ -140,16 +140,16 @@ for common coding in raters</p>
       <td><p>: a ChildRecordings class</p></td>
     </tr>
     <tr>
-      <th>filename</th>
-      <td><p>: a wav file name to look</p></td>
-    </tr>
-    <tr>
       <th>annotators</th>
       <td><p>: an optional argument providing le annotators to look at</p></td>
     </tr>
     <tr>
       <th>range_from</th>
       <td><p>and range_to : an optional time windows for the search</p></td>
+    </tr>
+    <tr>
+      <th>filename</th>
+      <td><p>: a wav file name to look</p></td>
     </tr>
     </table>
 
@@ -164,14 +164,16 @@ for common coding in raters</p>
 </div><div class='output co'>#&gt; ###############################################
 #&gt; Hello Wellcome to the ChildRecordings R Project 
 #&gt; 
-#&gt; Your ChildRecording project path containe : 
-#&gt;  1720  annotations files 
-#&gt;  1720  are referenced in the metadata 
-#&gt;  5  coders were finded :  textgrid_m1 vtc textgrid_mm textgrid_ak textgrid_ac
-#&gt;  All files seems to be present and referenced in the metadata (good news ;) )
+#&gt; Your ChildRecording project path contained : 
+#&gt;  3619  annotations files 
+#&gt;  1559  are referenced in the metadata 
+#&gt;  7  coders were found :  textgrid/m1 alice_vtc vtc alice textgrid/ak textgrid/mm textgrid/ac 
 #&gt; 
-#&gt;   379  metadata don't have a start recording time (a.k.a start.time) 
-#&gt; 	 therefore time indicators wil not be build for those files 
+#&gt; 42  file(s) seem(s) to be unreferenced in the metadata 
+#&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
+#&gt; 
+#&gt;   427  metadata don't have a start recording time (a.k.a start.time) 
+#&gt; 	 therefore time indicators will not be built for those files 
 #&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
 #&gt;   362  files are empty 
 #&gt; 	 This should normally mean that no annotation were provided by annotator 
@@ -179,54 +181,70 @@ for common coding in raters</p>
 <span class='co'># if no time windows is specified, this function will only return at table for all the know raters</span>
 <span class='co'># All the rater need to ratter any segment find</span>
 <span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='st'>"aiku/namibie_aiku_20160715_1.wav"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                           filename         set
-#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid_mm
-#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid_ak
-#&gt; 3 aiku/namibie_aiku_20160715_1.wav         vtc
-#&gt; 4 aiku/namibie_aiku_20160715_1.wav textgrid_m1
-#&gt;                                      annotation_filename true_onset true_offset
-#&gt; 1 textgrid_mm/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 2 textgrid_ak/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 3               vtc/aiku/namibie_aiku_20160715_1_0_0.csv      27180       27240
-#&gt; 4 textgrid_m1/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240</div><div class='input'>
+</div><div class='output co'>#&gt;                 recording_filename         set
+#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid/ak
+#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid/m1
+#&gt; 3 aiku/namibie_aiku_20160715_1.wav   alice_vtc
+#&gt; 4 aiku/namibie_aiku_20160715_1.wav       alice
+#&gt; 5 aiku/namibie_aiku_20160715_1.wav         vtc
+#&gt; 6 aiku/namibie_aiku_20160715_1.wav textgrid/mm
+#&gt;                             annotation_filename true_onset true_offset
+#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000
+#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000
+#&gt; 3          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 4          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 5          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 6 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</div><div class='input'>
 <span class='co'># However, if a time windows is provided, this function will find all the data that</span>
 <span class='co'># overlaps with the time windows provided.</span>
 <span class='co'># For instance, you can shift the window it will give you the same result</span>
 <span class='va'>Wav_file_name</span> <span class='op'>=</span> <span class='st'>"aiku/namibie_aiku_20160715_1.wav"</span>
-<span class='va'>t1</span> <span class='op'>=</span> <span class='fl'>27180</span>
-<span class='va'>t2</span> <span class='op'>=</span> <span class='fl'>27000</span>
-<span class='va'>t3</span> <span class='op'>=</span> <span class='fl'>27240</span>
+<span class='va'>t1</span> <span class='op'>=</span> <span class='fl'>27180000</span>
+<span class='va'>t2</span> <span class='op'>=</span> <span class='fl'>27000000</span>
+<span class='va'>t3</span> <span class='op'>=</span> <span class='fl'>27240000</span>
 <span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='va'>Wav_file_name</span>, range_from <span class='op'>=</span> <span class='va'>t1</span>, range_to <span class='op'>=</span> <span class='va'>t3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                           filename         set
-#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid_mm
-#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid_ak
-#&gt; 3 aiku/namibie_aiku_20160715_1.wav         vtc
-#&gt; 4 aiku/namibie_aiku_20160715_1.wav textgrid_m1
-#&gt;                                      annotation_filename true_onset true_offset
-#&gt; 1 textgrid_mm/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 2 textgrid_ak/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 3               vtc/aiku/namibie_aiku_20160715_1_0_0.csv      27180       27240
-#&gt; 4 textgrid_m1/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240</div><div class='input'><span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='va'>Wav_file_name</span>, range_from <span class='op'>=</span> <span class='va'>t1</span>, range_to <span class='op'>=</span> <span class='va'>t3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                           filename         set
-#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid_mm
-#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid_ak
-#&gt; 3 aiku/namibie_aiku_20160715_1.wav         vtc
-#&gt; 4 aiku/namibie_aiku_20160715_1.wav textgrid_m1
-#&gt;                                      annotation_filename true_onset true_offset
-#&gt; 1 textgrid_mm/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 2 textgrid_ak/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 3               vtc/aiku/namibie_aiku_20160715_1_0_0.csv      27180       27240
-#&gt; 4 textgrid_m1/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240</div><div class='input'><span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='va'>Wav_file_name</span>, range_from <span class='op'>=</span> <span class='va'>t2</span>, range_to <span class='op'>=</span> <span class='va'>t3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                           filename         set
-#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid_mm
-#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid_ak
-#&gt; 3 aiku/namibie_aiku_20160715_1.wav         vtc
-#&gt; 4 aiku/namibie_aiku_20160715_1.wav textgrid_m1
-#&gt;                                      annotation_filename true_onset true_offset
-#&gt; 1 textgrid_mm/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 2 textgrid_ak/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 3               vtc/aiku/namibie_aiku_20160715_1_0_0.csv      27180       27240
-#&gt; 4 textgrid_m1/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240</div><div class='input'>
+</div><div class='output co'>#&gt;                 recording_filename         set
+#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid/ak
+#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid/m1
+#&gt; 3 aiku/namibie_aiku_20160715_1.wav   alice_vtc
+#&gt; 4 aiku/namibie_aiku_20160715_1.wav       alice
+#&gt; 5 aiku/namibie_aiku_20160715_1.wav         vtc
+#&gt; 6 aiku/namibie_aiku_20160715_1.wav textgrid/mm
+#&gt;                             annotation_filename true_onset true_offset
+#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000
+#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000
+#&gt; 3          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 4          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 5          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 6 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</div><div class='input'><span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='va'>Wav_file_name</span>, range_from <span class='op'>=</span> <span class='va'>t1</span>, range_to <span class='op'>=</span> <span class='va'>t3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                 recording_filename         set
+#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid/ak
+#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid/m1
+#&gt; 3 aiku/namibie_aiku_20160715_1.wav   alice_vtc
+#&gt; 4 aiku/namibie_aiku_20160715_1.wav       alice
+#&gt; 5 aiku/namibie_aiku_20160715_1.wav         vtc
+#&gt; 6 aiku/namibie_aiku_20160715_1.wav textgrid/mm
+#&gt;                             annotation_filename true_onset true_offset
+#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000
+#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000
+#&gt; 3          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 4          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 5          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 6 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</div><div class='input'><span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='va'>Wav_file_name</span>, range_from <span class='op'>=</span> <span class='va'>t2</span>, range_to <span class='op'>=</span> <span class='va'>t3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                 recording_filename         set
+#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid/ak
+#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid/m1
+#&gt; 3 aiku/namibie_aiku_20160715_1.wav   alice_vtc
+#&gt; 4 aiku/namibie_aiku_20160715_1.wav       alice
+#&gt; 5 aiku/namibie_aiku_20160715_1.wav         vtc
+#&gt; 6 aiku/namibie_aiku_20160715_1.wav textgrid/mm
+#&gt;                             annotation_filename true_onset true_offset
+#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000
+#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000
+#&gt; 3          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 4          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 5          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000
+#&gt; 6 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</div><div class='input'>
 <span class='co'># finding segments on wav file for designated rater</span>
 <span class='va'>raters</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"textgrid_ak"</span>, <span class='st'>"textgrid_mm"</span>, <span class='st'>"textgrid_m1"</span><span class='op'>)</span>
 <span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>,<span class='st'>"Wav_file_name"</span>, <span class='va'>raters</span><span class='op'>)</span>
@@ -244,31 +262,9 @@ for common coding in raters</p>
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span>
   <span class='va'>search2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/cbind.html'>rbind</a></span><span class='op'>(</span><span class='va'>search2</span>, <span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='va'>file</span>, <span class='va'>raters</span><span class='op'>)</span><span class='op'>)</span> <span class='co'># could take some time</span>
 <span class='op'>}</span>
-</div><div class='output co'>#&gt; [1] "aiku/namibie_aiku_20160714_1.wav"
-#&gt; [1] "aiku/namibie_aiku_20160714_2.wav"
-#&gt; [1] "aiku/namibie_aiku_20160715_1.wav"
-#&gt; [1] "aiku/namibie_aiku_20160715_2.wav"
-#&gt; [1] "aiku/namibie_aiku_20160716_1.wav"
-#&gt; [1] "aiku/namibie_aiku_20160716_2.wav"
-#&gt; [1] "aiku/namibie_aiku_20160717_1.wav"
-#&gt; [1] "aiku/namibie_aiku_20160717_2.wav"
-#&gt; [1] "aiku/namibie_aiku_20161109_1.wav"
-#&gt; [1] "aiku/namibie_aiku_20161109_2.wav"</div><div class='input'>
+
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>search2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                           filename         set
-#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid_mm
-#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid_ak
-#&gt; 3 aiku/namibie_aiku_20160715_1.wav textgrid_m1
-#&gt; 4 aiku/namibie_aiku_20160716_1.wav textgrid_ak
-#&gt; 5 aiku/namibie_aiku_20160716_1.wav textgrid_m1
-#&gt; 6 aiku/namibie_aiku_20160716_1.wav textgrid_mm
-#&gt;                                      annotation_filename true_onset true_offset
-#&gt; 1 textgrid_mm/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 2 textgrid_ak/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 3 textgrid_m1/aiku/namibie_aiku_20160715_1_27000_180.csv      27180       27240
-#&gt; 4 textgrid_ak/aiku/namibie_aiku_20160716_1_12600_180.csv      12780       12840
-#&gt; 5 textgrid_m1/aiku/namibie_aiku_20160716_1_12600_180.csv      12780       12840
-#&gt; 6 textgrid_mm/aiku/namibie_aiku_20160716_1_12600_180.csv      12780       12840</div><div class='input'>
+</div><div class='output co'>#&gt; data frame with 0 columns and 0 rows</div><div class='input'>
 
 
 

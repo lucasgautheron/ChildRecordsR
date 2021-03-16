@@ -23,11 +23,10 @@ path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 
 # finding segments on wav file for designated rater
-raters <- c("textgrid_ak","textgrid_mm","textgrid_m1")
-search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180, range_to = 27240)
-ratting1  = aggregate.rating(search, CR, 0.1)
-comp1 = raterComparaison(ratting1)
-SDT.raterData(comp1,c("textgrid_ak","textgrid_mm"))
+raters <- c("textgrid/ak","textgrid/mm","textgrid/m1")
+search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27240000)
+ratting1  = aggregate.rating(search, CR, 100)
+SDT.raterData(ratting1,c("textgrid/ak","textgrid/mm"))
 
 
 }
