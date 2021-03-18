@@ -70,8 +70,8 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
   ### table
   tbl <- ChildRecordings$all.meta
   tbl <- tbl[tbl$recording_filename==recording_filename,]
-  tbl$true_onset <- tbl$time_seek*1000 + tbl$range_onset
-  tbl$true_offset <- tbl$time_seek*1000 + tbl$range_offset
+  tbl$true_onset <- tbl$time_seek + tbl$range_onset
+  tbl$true_offset <- tbl$time_seek + tbl$range_offset
 
   ### select annotators
   if(is.null(annotators)){
