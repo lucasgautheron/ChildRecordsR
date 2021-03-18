@@ -25,9 +25,9 @@ ChildRecordings <- function(path) {
   ChildRecordingsPath = paste0(path,"/")
 
   ### Metadata
-  annotations <- read.csv(paste0(path, "metadata/annotations.csv"), stringsAsFactors = F)
-  recordings <- read.csv(paste0(path, "metadata/recordings.csv"), stringsAsFactors = F)
-  children <- read.csv(paste0(path, "metadata/children.csv"), stringsAsFactors = F)
+  annotations <- read.csv(paste0(ChildRecordingsPath, "metadata/annotations.csv"), stringsAsFactors = F)
+  recordings <- read.csv(paste0(ChildRecordingsPath, "metadata/recordings.csv"), stringsAsFactors = F)
+  children <- read.csv(paste0(ChildRecordingsPath, "metadata/children.csv"), stringsAsFactors = F)
   all.meta <-
     merge(recordings, annotations, by = "recording_filename")
 
@@ -71,7 +71,7 @@ ChildRecordings <- function(path) {
   for (file in paste0(all.meta$set,"/converted/",all.meta$annotation_filename)){
 
     # if(nchar(file)!=0){
-      tmp <- read.csv(paste0(path,"/annotations/",file))
+      tmp <- read.csv(paste0(ChildRecordingsPath,"/annotations/",file))
       if(nrow(tmp)==0){empty.files <-c(empty.files,file)}
     # }
   }
