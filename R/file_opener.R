@@ -40,8 +40,8 @@ file.opener <- function(meta_row,ChildRecordings){
   temps.data$range_onset <- meta_row$range_onset
 
   # Adjusting segment in regard to time seek
-  temps.data$segment_onset <- temps.data$segment_onset + meta_row$time_seek*1000
-  temps.data$segment_offset <- temps.data$segment_offset + meta_row$time_seek*1000
+  temps.data$segment_onset <- temps.data$segment_onset + meta_row$time_seek
+  temps.data$segment_offset <- temps.data$segment_offset + meta_row$time_seek
 
   # Building time variable
   if (is.na(meta_row$start_time)){
