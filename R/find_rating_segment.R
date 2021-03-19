@@ -10,7 +10,7 @@
 #' @param range_from and range_to : an optional time window to restrain the search to
 #'
 #' @return A data.frame containing sections that have been annotated by several annotations
-#'
+#' 
 #' @examples
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"

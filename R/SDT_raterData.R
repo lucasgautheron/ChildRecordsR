@@ -7,7 +7,7 @@
 #'
 #'
 #' @return a Class,  print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
-#'
+#' 
 #' @examples
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"

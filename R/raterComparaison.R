@@ -7,7 +7,7 @@
 #' In signal detection theory a mean of precision, recall and F-score are provided by rater.
 #'
 #' @param raterData : a raterData class
-#'
+#' 
 #' @return Soon
 #'
 #'
