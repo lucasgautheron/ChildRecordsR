@@ -5,23 +5,23 @@
 #' for common coding in raters
 #'
 #' @param ChildRecordings : a ChildRecordings class
-#' @param filename : a wav file name to look
-#' @param annotators : an optional argument providing le annotators to look at
-#' @param range_from and range_to : an optional time windows for the search
+#' @param filename : a wav file name to consider
+#' @param annotators : an optional argument listing the annotators to consider
+#' @param range_from and range_to : an optional time window to restrain the search to
 #'
-#' @return A data.frame containing commun annoation segment for each annotator
+#' @return A data.frame containing sections that have been annotated by several annotations
 #'
 #' @examples
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
 #'
-#' # if no time windows is specified, this function will only return at table for all the know raters
+#' # if no time window is specified, the function will return a table covering all times
 #' # All the rater need to ratter any segment find
 #' find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
 #'
-#' # However, if a time windows is provided, this function will find all the data that
-#' # overlaps with the time windows provided.
+#' # However, if a time window is provided, this function will find all the data that
+#' # overlaps with the time window provided.
 #' # For instance, you can shift the window it will give you the same result
 #' Wav_file_name = "aiku/namibie_aiku_20160715_1.wav"
 #' t1 = 27180000
