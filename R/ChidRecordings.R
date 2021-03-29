@@ -163,7 +163,7 @@ print.ChildRecordings <- function(ChildRecordings){
     cat(" ", nrow(error.conversion), " files with conversion error\n" )
     cat("\t This should normally mean that your conversion fail \n")
     cat("\t Those files are remove from package analysis \n")
-    cat("\t more infos in ChildRecordings$integrity_test$erro.convertion \n")
+    cat("\t more infos in ChildRecordings$integrity_test$error.conversion \n")
   }
 
 

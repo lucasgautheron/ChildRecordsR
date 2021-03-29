@@ -110,8 +110,8 @@ for (file in wave_file){
 #  aggregation 
 rating2  = aggregate.rating(search2,CR,100,verbose = F)
 
-rez2 = get.reliability(rating1)
 
+rez2 = get.reliability(rating2)
 comparaison = compare.rating(rating2)
 plot(comparaison)
 
