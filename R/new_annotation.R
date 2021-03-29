@@ -28,17 +28,16 @@
 
 
 
-New.annotations <- function(row.meta, time.sd = 300, change.cat.prob = 0.05, new.name = NULL, ChildRecordings){
+New.annotations <- function(row.meta, time.sd = NULL, change.cat.prob = NULL, new.name = NULL, ChildRecordings){
   path = ChildRecordings$path
   CR.name = deparse(substitute(ChildRecordings))
-  file = row.meta$annotation_filename
   tmp.file = file.opener(row.meta,ChildRecordings)
   cat = as.character(unique(tmp.file$speaker_type))
 
-  tmp.file$segment_onset = tmp.file$segment_onset + rnorm(nrow(tmp.file), 0, time.sd)
-  tmp.file$segment_offset = tmp.file$segment_onset + rnorm(nrow(tmp.file), 0, time.sd)
+  tmp.file$segment_onset = tmp.file$segment_onset + round(rnorm(nrow(tmp.file), 0, time.sd),0)
+  tmp.file$segment_offset = tmp.file$segment_offset + round(rnorm(nrow(tmp.file), 0, time.sd),0)
   change.prob <- runif(nrow(tmp.file), 0, 1)
-  tmp.file$speaker_type <- ifelse(change.prob<=change.cat.prob,sample(cat, nrow(tmp.file),replace = T),as.character(tmp.file$speaker_type))
+  tmp.file$speaker_type <- ifelse(change.prob<change.cat.prob,sample(cat, nrow(tmp.file),replace = T),as.character(tmp.file$speaker_type))
 
   N.meta <- row.meta
   N.meta$set <- new.name
@@ -47,6 +46,8 @@ New.annotations <- function(row.meta, time.sd = 300, change.cat.prob = 0.05, new
   assign(CR.name, ChildRecordings, envir = globalenv())
 
   dir.create(file.path(path, "annotations/",new.name,"/converted/" ), recursive = TRUE,showWarnings = F)
-  write.csv(tmp.file,file.path(path, "annotations/",new.name,"/converted/",N.meta$annotation_filename ))
+  write.csv(tmp.file,
+            file = file.path(path, "annotations/",new.name,"/converted/",N.meta$annotation_filename),
+            row.names = F)
 
 }
