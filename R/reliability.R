@@ -5,7 +5,7 @@
 #' @param raterData : a raterData class
 #'
 #' @return Soon
-#'
+#' 
 #' @examples
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"

@@ -6,7 +6,7 @@
 #' @param meta_row : a row from the meta containing all the info of the cvs file
 #' @param ChildRecordings : a ChildRecordings class
 #' @return A data.frame with 2 added columns
-#'
+#' 
 #' @examples
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"

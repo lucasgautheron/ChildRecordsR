@@ -10,7 +10,7 @@
 #' @param range_from and range_to : an optional time window to restrain the search to
 #'
 #' @return A data.frame containing sections that have been annotated by several annotations
-#'
+#' 
 #' @examples
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
@@ -22,7 +22,7 @@
 #'
 #' # However, if a time window is provided, this function will find all the data that
 #' # overlaps with the time window provided.
-#' # For instance, you can shift the window it will give you the same result
+#' # For instance, you can shift the window, and it will give you the same result
 #' Wav_file_name = "aiku/namibie_aiku_20160715_1.wav"
 #' t1 = 27180000
 #' t2 = 27000000
@@ -86,7 +86,7 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
     return(NULL)
   }
 
-  ### Range windows selection, if mentioned
+  ### Select window range, if mentioned
   if(!is.null(range_from) & !is.null(range_to)){
     tbl <- tbl[true_time_seg_finder(range_from,range_to,tbl),]
   }else{
@@ -99,7 +99,7 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
     return(NULL)
   }
 
-  commun.annoatation <-c()
+  common.annotation <-c()
   for(row in 1:nrow(tbl)){
     ol.with <-c()
     for(row2 in 1:nrow(tbl)){
@@ -113,12 +113,12 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
         ol.with <- c(ol.with,as.character(tbl[row2,]$set))
       }
     }
-    commun.annoatation<- c(commun.annoatation,length(unique(ol.with)))
+    common.annotation<- c(common.annotation,length(unique(ol.with)))
   }
 
   # select commun segment possible
-  tbl$commun.annoatation <- commun.annoatation
-  tbl <- tbl[tbl$commun.annoatation==n.annotator,]
+  tbl$common.annotation <- common.annotation
+  tbl <- tbl[tbl$common.annotation==n.annotator,]
   if (nrow(tbl)==0){
     return(NULL)
   }
