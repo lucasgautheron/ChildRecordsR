@@ -21,7 +21,8 @@ Imports:
 	lme4 (>= 1.1),
 	dplyr (>= 1.0.4),
 	DescTools (>= 0.99.40),
-	irrCAC (>= 1.0)
+	irrCAC (>= 1.0),
+	insight (>= 0.13.1)
 RoxygenNote: 7.1.1
 Suggests: 
     knitr,
