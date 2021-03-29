@@ -15,14 +15,14 @@ find.rating.segment(
 \arguments{
 \item{ChildRecordings}{: a ChildRecordings class}
 
-\item{annotators}{: an optional argument providing le annotators to look at}
+\item{annotators}{: an optional argument listing the annotators to consider}
 
-\item{range_from}{and range_to : an optional time windows for the search}
+\item{range_from}{and range_to : an optional time window to restrain the search to}
 
-\item{filename}{: a wav file name to look}
+\item{filename}{: a wav file name to consider}
 }
 \value{
-A data.frame containing commun annoation segment for each annotator
+A data.frame containing sections that have been annotated by several annotations
 }
 \description{
 Search function in Childrecordings class
@@ -35,12 +35,12 @@ path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 
 # if no time windows is specified, this function will only return at table for all the know raters
-# All the rater need to ratter any segment find
+# To work, all annotators must have at least one common annotation segment.
 find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
 
-# However, if a time windows is provided, this function will find all the data that
-# overlaps with the time windows provided.
-# For instance, you can shift the window it will give you the same result
+# However, if a time window is provided, this function will find all the data that
+# overlaps with the time window provided.
+# For instance, you can shift the window, and it will give you the same result
 Wav_file_name = "aiku/namibie_aiku_20160715_1.wav"
 t1 = 27180000
 t2 = 27000000

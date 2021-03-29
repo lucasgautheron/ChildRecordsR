@@ -16,7 +16,7 @@ Soon
 Provide indication of quality for each annotator.
 Following classical test theory, each annotator is removed from the data and a reliability indicator is provided for the annotation as a whole.
 Removing a good annotator should decrease the indicator.
-In signal detection theory a mean of precision, recall and F-score are provided by rater.
+Additionally, a mean of precision, recall and F-score are provided by rater.
 }
 \examples{
 library(ChildRecordsR)
