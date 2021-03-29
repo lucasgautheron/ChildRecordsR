@@ -2,7 +2,7 @@
 title: "Vandam tutorial"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ChildRecordsR}
+  %\VignetteIndexEntry{Vandam tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
