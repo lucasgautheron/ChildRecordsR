@@ -17,12 +17,12 @@
 #' raters <- c("textgrid/ak","textgrid/mm","textgrid/m1")
 #' search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27240000)
 #' ratting1  = aggregate.rating(search, CR, 100)
-#' SDT.raterData(ratting1,c("textgrid/ak","textgrid/mm"))
+#' get.classification(ratting1,c("textgrid/ak","textgrid/mm"))
 #'
 #'
 
 
-SDT.raterData <- function(raterData,raters,plot=TRUE,summary=TRUE){
+get.classification <- function(raterData,raters,plot=TRUE,summary=TRUE){
   levels = c("CHI","FEM","MAL","OCH","overlap","silence")
   rater1 <- raterData$rater[[raters[1]]]$long_file
   rater2 <- raterData$rater[[raters[2]]]$long_file

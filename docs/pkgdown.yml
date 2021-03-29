@@ -3,5 +3,6 @@ pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
   ChildRecordsR: ChildRecordsR.html
-last_built: 2021-03-16T07:50Z
+  Vandam_tutorial: Vandam_tutorial.html
+last_built: 2021-03-29T10:47Z
 

@@ -24,7 +24,7 @@ library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 rez = extractDataCR( "textgrid/m1", CR, verbose = F )
-head(rez)
+head(rez$data)
 # With LENA overlap method
 rez = extractDataCR("textgrid/m1", CR, LENA.OL = T, verbose = F)
 

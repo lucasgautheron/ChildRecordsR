@@ -15,13 +15,13 @@
 #' # All the rater need to ratter any segment find
 #' search = find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
 #' rez = aggregate.rating(search, CR, cut=0.100, verbose=T)
-#' reliability(rez)
+#' get.reliability(rez)
 #'
 
 
 
 
-reliability <- function(raterData, summary=TRUE){
+get.reliability <- function(raterData, summary=TRUE){
   ratting.type = c("CHI","OCH","FEM","MAL","composit")
 
   ratting_by_type <- list()

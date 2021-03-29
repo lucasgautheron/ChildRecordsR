@@ -21,7 +21,7 @@
 #' search = find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
 #' rez = aggregate.rating(search, CR, cut=0.100, verbose=T)
 #'
-#' comparaison = raterComparaison(rez)
+#' comparaison = compare.rating(rez)
 #' plot(comparaison)
 
 
@@ -29,16 +29,16 @@
 
 
 
-raterComparaison <- function(raterData){
+compare.rating <- function(raterData){
 
   if(!is(raterData, "raterData")){
-    print(paste( substitute(raterData), "is not a raterData class retrun null result"))
+    print(paste( substitute(raterData), "is not a raterData class"))
     return(NULL)
   }
 
 
   raters <- raterData$args$ratersID
-  global.reliability <- reliability(raterData,summary=F)
+  global.reliability <- get.reliability(raterData,summary=F)
   global.reliability <- global.reliability$reliability[["composit"]]
 
   rater.result <- list()
@@ -59,7 +59,7 @@ raterComparaison <- function(raterData){
 
       ctt.data <- cbind(ctt.data,data.frame(ratting))
 
-      tmp<-SDT.raterData(raterData,c(rater,comp.rater),plot=F,summary=F)
+      tmp<-get.classification(raterData,c(rater,comp.rater),plot=F,summary=F)
       # print(tmp)
       sdt.list[[comp.rater]]<-tmp
     }

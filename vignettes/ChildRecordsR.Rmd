@@ -75,14 +75,14 @@ Next, an analysis function can be called. We provide several. They all assume yo
 The `reliability` or `get.reliability` function provides alpha, kappa and AC1 for the whole pool of annotators in your search (so this works even if you have 10 annotators). Reliability will be computed for every speaker category and a composite of all of them.
 
 ```{r}
-rez1 = reliability(rating1)
+rez1 = get.reliability(rating1)
 ```
 
 Another possible way to investigate annotators is through classification indicators, such as precision, recall, and F-score. These can only be calculated for cases with exactly two annotators. The first annotator will be assumed as the "gold" annotator, so if you have a human and an automated annotator, or someone with more versus less experience, make sure you order them so that the more reliable annotator (more likely to be "gold") is provided first.
 
 ```{r}
 ratercomp <- c("textgrid/ak","textgrid/m1")
-SDT.raterData(rating1,ratercomp)
+get.classification(rating1,ratercomp)
 ```
 
 ### Compare annotators
@@ -90,7 +90,7 @@ SDT.raterData(rating1,ratercomp)
 Finally, the `raterComparaison` function allows you to compare the impact of annotators on reliability indicators. This is useful if you have multiple human annotators and you want to check whether one of them is doing something different, or if you want to check whether your automated annotator stands out in your pool of annotators. You can only use this function when you have more than 2 annotators. The impact of a given annotator is calculated by removing that annotator from the pool of annotators, and observing the increase or decrease in the overall reliability. If the reliability indicators increase after the deletion of a specific annotator, then that annotator should be considered as having a negative impact on the annotations. In our next example, **textgrid_mm** has a negative impact on reliability.
 
 ```{r}
-comparaison = raterComparaison(rating1)
+comparaison = compare.rating(rating1)
 plot(comparaison)
 ```
 
@@ -108,11 +108,11 @@ for (file in wave_file){
   search2 <- rbind(search2, find.rating.segment(CR, file, raters)) # could take some time
 }
 #  aggregation 
-rating2  = aggregate.rating(search2,CR,0.1,verbose = F)
+rating2  = aggregate.rating(search2,CR,100,verbose = F)
 
-rez2 = reliability(rating1)
+rez2 = get.reliability(rating1)
 
-comparaison = raterComparaison(rating2)
+comparaison = compare.rating(rating2)
 plot(comparaison)
 
 ```
