@@ -19,7 +19,7 @@ find.rating.segment(
 
 \item{range_from}{and range_to : an optional time windows for the search}
 
-\item{filename}{: a wav file name to look}
+\item{filename}{: a wav file name to consider}
 }
 \value{
 A data.frame containing commun annoation segment for each annotator
@@ -35,7 +35,7 @@ path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 
 # if no time windows is specified, this function will only return at table for all the know raters
-# All the rater need to ratter any segment find
+# To work, all annotators must have at least one common annotation segment.
 find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
 
 # However, if a time windows is provided, this function will find all the data that

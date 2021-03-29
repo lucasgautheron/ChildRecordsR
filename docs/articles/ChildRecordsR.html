@@ -224,8 +224,7 @@
 <span class="co">#&gt; |=================================================                         | 67% time by step : 0s estimate duration : 0m remain : 0m </span>
 <span class="co">#&gt; |==========================================================================|100% time by step : 0s estimate duration : 0m remain : 0m </span>
 <span class="co">#&gt; number of annotators 3 </span>
-<span class="co">#&gt; length of recording annotation 180000 ms or  0.05 hours</span>
-<span class="co">#&gt; Record span  60000 ms or  0.01666667 hours</span></code></pre></div>
+<span class="co">#&gt; length of recording annotation for each annotator  60000 ms or  0.01666667 hours</span></code></pre></div>
 <p>Next, an analysis function can be called. We provide several. They all assume you have at least two annotators. It could be two automated algorithms, two humans, or one automated and one human – this package does not treat these cases differently, so you should interpret results carefully.</p>
 <p>The <code>reliability</code> or <code>get.reliability</code> function provides alpha, kappa and AC1 for the whole pool of annotators in your search (so this works even if you have 10 annotators). Reliability will be computed for every speaker category and a composite of all of them.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
@@ -418,8 +417,7 @@
 <span class="co">#  aggregation </span>
 <span class="va">rating2</span>  <span class="op">=</span> <span class="fu"><a href="../reference/aggregate.rating.html">aggregate.rating</a></span><span class="op">(</span><span class="va">search2</span>,<span class="va">CR</span>,<span class="fl">100</span>,verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 <span class="co">#&gt; number of annotators 3 </span>
-<span class="co">#&gt; length of recording annotation 720000 ms or  0.2 hours</span>
-<span class="co">#&gt; Record span  240000 ms or  0.06666667 hours</span>
+<span class="co">#&gt; length of recording annotation for each annotator  240000 ms or  0.06666667 hours</span>
 
 <span class="va">rez2</span> <span class="op">=</span> <span class="fu"><a href="../reference/get.reliability.html">get.reliability</a></span><span class="op">(</span><span class="va">rating1</span><span class="op">)</span>
 <span class="co">#&gt; Reliability indicator by type </span>
