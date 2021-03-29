@@ -32,7 +32,7 @@
 compare.rating <- function(raterData){
 
   if(!is(raterData, "raterData")){
-    print(paste( substitute(raterData), "is not a raterData class retrun null result"))
+    print(paste( substitute(raterData), "is not a raterData class"))
     return(NULL)
   }
 

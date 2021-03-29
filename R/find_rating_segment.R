@@ -5,7 +5,7 @@
 #' for common coding in raters
 #'
 #' @param ChildRecordings : a ChildRecordings class
-#' @param filename : a wav file name to look
+#' @param filename : a wav file name to consider
 #' @param annotators : an optional argument providing le annotators to look at
 #' @param range_from and range_to : an optional time windows for the search
 #'
@@ -17,7 +17,7 @@
 #' CR = ChildRecordings(path)
 #'
 #' # if no time windows is specified, this function will only return at table for all the know raters
-#' # All the rater need to ratter any segment find
+#' # To work, all annotators must have at least one common annotation segment.
 #' find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
 #'
 #' # However, if a time windows is provided, this function will find all the data that
@@ -63,7 +63,7 @@
 find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NULL,range_from=NULL,range_to=NULL){
 
   if(!is(ChildRecordings, "ChildRecordings")){
-    print(paste( substitute(ChildRecordings), "is not a ChildRecordings class retrun null result"))
+    print(paste( substitute(ChildRecordings), "is not a ChildRecordings class"))
     return(NULL)
   }
 

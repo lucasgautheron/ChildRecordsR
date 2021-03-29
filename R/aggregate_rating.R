@@ -29,7 +29,7 @@
 aggregate.rating <- function(data, ChildRecordings, cut=100,verbose=T){
 
   if(!is(ChildRecordings, "ChildRecordings")){
-    print(paste( substitute(ChildRecordings), "is not a ChildRecordings class retrun null result"))
+    print(paste( substitute(ChildRecordings), "is not a ChildRecordings class"))
     return(NULL)
   }
   # attach(data)
@@ -118,8 +118,7 @@ print.raterData <- function(raterData){
 
 
   cat("number of annotators", length(raterData$args$ratersID),"\n")
-  cat("length of recording annotation", recording.length,"ms or ", recording.length/3600000, "hours\n")
-  cat("Record span ", recording.length/length(raterData$args$ratersID),"ms or ", recording.length/length(raterData$args$ratersID)/3600000, "hours\n\n")
+  cat("length of recording annotation for each annotator ", recording.length/length(raterData$args$ratersID),"ms or ", recording.length/length(raterData$args$ratersID)/3600000, "hours\n\n")
 
 }
 

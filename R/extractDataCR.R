@@ -22,7 +22,7 @@
 extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
 
   if(!is(ChildRecordings, "ChildRecordings")){
-    print("ChildRecordings value is not a ChildRecordings class retrun null result")
+    print("is not a ChildRecordings class")
     return(NULL)
   }
 
