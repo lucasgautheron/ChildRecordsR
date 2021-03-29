@@ -49,6 +49,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../articles/Vandam_tutorial.html">Vandam tutorial</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -123,13 +135,13 @@
 <span class="co">#&gt; 4 aiku/namibie_aiku_20160715_1.wav       alice</span>
 <span class="co">#&gt; 5 aiku/namibie_aiku_20160715_1.wav         vtc</span>
 <span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1.wav textgrid/mm</span>
-<span class="co">#&gt;                             annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 3          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 4          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 5          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span></code></pre></div>
+<span class="co">#&gt;                                annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 3             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 4             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 5             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span></code></pre></div>
 <p>Alternatively, if a specific time window is provided, the search function will find all the annotations that overlap with the time window provided.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>,<span class="st">"aiku/namibie_aiku_20160715_1.wav"</span>,range_from <span class="op">=</span> <span class="fl">27180000</span>, range_to <span class="op">=</span> <span class="fl">27240000</span><span class="op">)</span>
@@ -140,13 +152,13 @@
 <span class="co">#&gt; 4 aiku/namibie_aiku_20160715_1.wav       alice</span>
 <span class="co">#&gt; 5 aiku/namibie_aiku_20160715_1.wav         vtc</span>
 <span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1.wav textgrid/mm</span>
-<span class="co">#&gt;                             annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 3          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 4          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 5          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt;                                annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 3             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 4             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 5             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
 <span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>,<span class="st">"aiku/namibie_aiku_20160715_1.wav"</span>,range_from <span class="op">=</span> <span class="fl">27000000</span>, range_to <span class="op">=</span> <span class="fl">27250000</span><span class="op">)</span>
 <span class="co">#&gt;                 recording_filename         set</span>
 <span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid/ak</span>
@@ -155,13 +167,13 @@
 <span class="co">#&gt; 4 aiku/namibie_aiku_20160715_1.wav       alice</span>
 <span class="co">#&gt; 5 aiku/namibie_aiku_20160715_1.wav         vtc</span>
 <span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1.wav textgrid/mm</span>
-<span class="co">#&gt;                             annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 3          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 4          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 5          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt;                                annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 3             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 4             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 5             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
 <span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>,<span class="st">"aiku/namibie_aiku_20160715_1.wav"</span>,range_from <span class="op">=</span> <span class="fl">27180000</span>, range_to <span class="op">=</span> <span class="fl">27260000</span><span class="op">)</span>
 <span class="co">#&gt;                 recording_filename         set</span>
 <span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid/ak</span>
@@ -170,13 +182,13 @@
 <span class="co">#&gt; 4 aiku/namibie_aiku_20160715_1.wav       alice</span>
 <span class="co">#&gt; 5 aiku/namibie_aiku_20160715_1.wav         vtc</span>
 <span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1.wav textgrid/mm</span>
-<span class="co">#&gt;                             annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 3          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 4          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 5          aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span></code></pre></div>
+<span class="co">#&gt;                                annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 3             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 4             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 5             aiku/namibie_aiku_20160715_1_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 6 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span></code></pre></div>
 <p>It is also possible to find annotations for a specific set of annotators, by providing the list of their codenames:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"textgrid/ak"</span>,<span class="st">"textgrid/mm"</span>,<span class="st">"textgrid/m1"</span><span class="op">)</span>
@@ -185,10 +197,10 @@
 <span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid/ak</span>
 <span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid/m1</span>
 <span class="co">#&gt; 3 aiku/namibie_aiku_20160715_1.wav textgrid/mm</span>
-<span class="co">#&gt;                             annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 3 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span></code></pre></div>
+<span class="co">#&gt;                                annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 3 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span></code></pre></div>
 <p>Time window and limited annotator can also be specified jointly:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">search1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>,<span class="st">"aiku/namibie_aiku_20160715_1.wav"</span>, <span class="va">raters</span>, range_from <span class="op">=</span> <span class="fl">27180000</span>, range_to <span class="op">=</span> <span class="fl">27240000</span><span class="op">)</span>
@@ -197,10 +209,10 @@
 <span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1.wav textgrid/ak</span>
 <span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1.wav textgrid/m1</span>
 <span class="co">#&gt; 3 aiku/namibie_aiku_20160715_1.wav textgrid/mm</span>
-<span class="co">#&gt;                             annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span>
-<span class="co">#&gt; 3 aiku/namibie_aiku_20160715_1_27000_180000.csv   27180000    27240000</span></code></pre></div>
+<span class="co">#&gt;                                annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 2 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span>
+<span class="co">#&gt; 3 aiku/namibie_aiku_20160715_1_27000000_180000.csv   27180000    27240000</span></code></pre></div>
 </div>
 <div id="measuring-reliability-and-classification-agreement" class="section level3">
 <h3 class="hasAnchor">
@@ -217,7 +229,7 @@
 <p>Next, an analysis function can be called. We provide several. They all assume you have at least two annotators. It could be two automated algorithms, two humans, or one automated and one human – this package does not treat these cases differently, so you should interpret results carefully.</p>
 <p>The <code>reliability</code> or <code>get.reliability</code> function provides alpha, kappa and AC1 for the whole pool of annotators in your search (so this works even if you have 10 annotators). Reliability will be computed for every speaker category and a composite of all of them.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">rez1</span> <span class="op">=</span> <span class="fu"><a href="../reference/reliability.html">reliability</a></span><span class="op">(</span><span class="va">rating1</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">rez1</span> <span class="op">=</span> <span class="fu"><a href="../reference/get.reliability.html">get.reliability</a></span><span class="op">(</span><span class="va">rating1</span><span class="op">)</span>
 <span class="co">#&gt; Reliability indicator by type </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # CHI </span>
@@ -281,7 +293,7 @@
 <p>Another possible way to investigate annotators is through classification indicators, such as precision, recall, and F-score. These can only be calculated for cases with exactly two annotators. The first annotator will be assumed as the “gold” annotator, so if you have a human and an automated annotator, or someone with more versus less experience, make sure you order them so that the more reliable annotator (more likely to be “gold”) is provided first.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ratercomp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"textgrid/ak"</span>,<span class="st">"textgrid/m1"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/SDT.raterData.html">SDT.raterData</a></span><span class="op">(</span><span class="va">rating1</span>,<span class="va">ratercomp</span><span class="op">)</span>
+<span class="fu"><a href="../reference/get.classification.html">get.classification</a></span><span class="op">(</span><span class="va">rating1</span>,<span class="va">ratercomp</span><span class="op">)</span>
 <span class="co">#&gt; Confusion matrix : </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;            textgrid/m1</span>
@@ -335,7 +347,7 @@
 <a href="#compare-annotators" class="anchor"></a>Compare annotators</h3>
 <p>Finally, the <code>raterComparaison</code> function allows you to compare the impact of annotators on reliability indicators. This is useful if you have multiple human annotators and you want to check whether one of them is doing something different, or if you want to check whether your automated annotator stands out in your pool of annotators. You can only use this function when you have more than 2 annotators. The impact of a given annotator is calculated by removing that annotator from the pool of annotators, and observing the increase or decrease in the overall reliability. If the reliability indicators increase after the deletion of a specific annotator, then that annotator should be considered as having a negative impact on the annotations. In our next example, <strong>textgrid_mm</strong> has a negative impact on reliability.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">comparaison</span> <span class="op">=</span> <span class="fu"><a href="../reference/raterComparaison.html">raterComparaison</a></span><span class="op">(</span><span class="va">rating1</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">comparaison</span> <span class="op">=</span> <span class="fu"><a href="../reference/compare.rating.html">compare.rating</a></span><span class="op">(</span><span class="va">rating1</span><span class="op">)</span>
 <span class="co">#&gt; number of annotators 3 </span>
 <span class="co">#&gt; length of reccording annotation 180000 seconds or  50 hours</span>
 <span class="co">#&gt; Record span  60000 seconds or  16.66667 hours</span>
@@ -404,12 +416,12 @@
   <span class="va">search2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">search2</span>, <span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>, <span class="va">file</span>, <span class="va">raters</span><span class="op">)</span><span class="op">)</span> <span class="co"># could take some time</span>
 <span class="op">}</span>
 <span class="co">#  aggregation </span>
-<span class="va">rating2</span>  <span class="op">=</span> <span class="fu"><a href="../reference/aggregate.rating.html">aggregate.rating</a></span><span class="op">(</span><span class="va">search2</span>,<span class="va">CR</span>,<span class="fl">0.1</span>,verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
+<span class="va">rating2</span>  <span class="op">=</span> <span class="fu"><a href="../reference/aggregate.rating.html">aggregate.rating</a></span><span class="op">(</span><span class="va">search2</span>,<span class="va">CR</span>,<span class="fl">100</span>,verbose <span class="op">=</span> <span class="cn">F</span><span class="op">)</span>
 <span class="co">#&gt; number of annotators 3 </span>
 <span class="co">#&gt; length of recording annotation 720000 ms or  0.2 hours</span>
 <span class="co">#&gt; Record span  240000 ms or  0.06666667 hours</span>
 
-<span class="va">rez2</span> <span class="op">=</span> <span class="fu"><a href="../reference/reliability.html">reliability</a></span><span class="op">(</span><span class="va">rating1</span><span class="op">)</span>
+<span class="va">rez2</span> <span class="op">=</span> <span class="fu"><a href="../reference/get.reliability.html">get.reliability</a></span><span class="op">(</span><span class="va">rating1</span><span class="op">)</span>
 <span class="co">#&gt; Reliability indicator by type </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # CHI </span>
@@ -471,7 +483,7 @@
 <span class="co">#&gt; 2       0 unweighted</span>
 <span class="co">#&gt; 3       0 unweighted</span>
 
-<span class="va">comparaison</span> <span class="op">=</span> <span class="fu"><a href="../reference/raterComparaison.html">raterComparaison</a></span><span class="op">(</span><span class="va">rating2</span><span class="op">)</span>
+<span class="va">comparaison</span> <span class="op">=</span> <span class="fu"><a href="../reference/compare.rating.html">compare.rating</a></span><span class="op">(</span><span class="va">rating2</span><span class="op">)</span>
 <span class="co">#&gt; number of annotators 3 </span>
 <span class="co">#&gt; length of reccording annotation 720000 seconds or  200 hours</span>
 <span class="co">#&gt; Record span  240000 seconds or  66.66667 hours</span>
@@ -479,50 +491,50 @@
 <span class="co">#&gt; ### Annotator textgrid/ak ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.489   (0.488,0.489)           0.483</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.489   (0.488,0.489)           0.483</span>
-<span class="co">#&gt; AC1                             0.576   (0.576,0.577)           0.577</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.488   (0.468,0.507)           0.486</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.488   (0.468,0.507)           0.486</span>
+<span class="co">#&gt; AC1                             0.575   (0.558,0.593)           0.579</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.483,0.484)            0.005</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.483,0.484)            0.005</span>
-<span class="co">#&gt; AC1                   (0.576,0.578)           -0.001</span>
+<span class="co">#&gt; Krippendorff's Alpha   (0.46,0.511)            0.002</span>
+<span class="co">#&gt; Fleiss' Kappa          (0.46,0.511)            0.002</span>
+<span class="co">#&gt; AC1                   (0.556,0.602)           -0.003</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.521  0.637</span>
-<span class="co">#&gt; Precision    0.505  0.670</span>
-<span class="co">#&gt; F1           0.502  0.646</span>
+<span class="co">#&gt; Recall       0.524  0.635</span>
+<span class="co">#&gt; Precision    0.504  0.668</span>
+<span class="co">#&gt; F1           0.502  0.644</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ### Annotator textgrid/m1 ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.489   (0.488,0.489)           0.437</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.489   (0.488,0.489)           0.437</span>
-<span class="co">#&gt; AC1                             0.576   (0.576,0.577)           0.539</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.488   (0.468,0.507)           0.432</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.488   (0.468,0.507)           0.432</span>
+<span class="co">#&gt; AC1                             0.575   (0.558,0.593)           0.534</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.436,0.438)            0.052</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.436,0.438)            0.052</span>
-<span class="co">#&gt; AC1                    (0.538,0.54)            0.037</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.405,0.458)            0.056</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.405,0.458)            0.056</span>
+<span class="co">#&gt; AC1                   (0.511,0.557)            0.041</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.565  0.653</span>
-<span class="co">#&gt; Precision    0.536  0.685</span>
+<span class="co">#&gt; Recall       0.565  0.654</span>
+<span class="co">#&gt; Precision    0.537  0.685</span>
 <span class="co">#&gt; F1           0.526  0.656</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ### Annotator textgrid/mm ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.489   (0.488,0.489)           0.542</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.489   (0.488,0.489)           0.542</span>
-<span class="co">#&gt; AC1                             0.576   (0.576,0.577)           0.613</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.488   (0.468,0.507)           0.543</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.488   (0.468,0.507)           0.543</span>
+<span class="co">#&gt; AC1                             0.575   (0.558,0.593)           0.613</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.541,0.543)           -0.053</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.541,0.543)           -0.053</span>
-<span class="co">#&gt; AC1                   (0.612,0.614)           -0.037</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.517,0.568)           -0.055</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.517,0.568)           -0.055</span>
+<span class="co">#&gt; AC1                   (0.591,0.636)           -0.038</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.462  0.620</span>
-<span class="co">#&gt; Precision    0.508  0.625</span>
-<span class="co">#&gt; F1           0.461  0.608</span>
+<span class="co">#&gt; Recall       0.461  0.619</span>
+<span class="co">#&gt; Precision    0.509  0.623</span>
+<span class="co">#&gt; F1           0.460  0.607</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span><span class="op">(</span><span class="va">comparaison</span><span class="op">)</span></code></pre></div>
 <p><img src="ChildRecordsR_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 </div>
