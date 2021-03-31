@@ -94,29 +94,35 @@
     
     
 <p>The ChildRecordsR package is an R package dedicated to the analysis of annotations of daylong recordings in ChildRecordsData format. The objective of our package is to provide data aggregation functions and to analyze the reliability of annotations and annotators.</p>
+<div id="install-the-vandam-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#install-the-vandam-data" class="anchor"></a>Install the Vandam data</h3>
+<p>Vandam daylong recording is a public data set, a childrecordsData format and install procedure is available at (<a href="https://github.com/LAAC-LSCP/vandam-daylong-demo" class="uri">https://github.com/LAAC-LSCP/vandam-daylong-demo</a>)</p>
+</div>
 <div id="create-a-childrecordings-class" class="section level3">
 <h3 class="hasAnchor">
 <a href="#create-a-childrecordings-class" class="anchor"></a>Create a ChildRecordings class</h3>
 <p>Here you will create a <a href="https://www.datacamp.com/community/tutorials/r-objects-and-classes">class</a> by specifying the root folder of your corpus, which needs to be formatted using ChildRecordingData specifications. By using a class, we standardize all the references to the information in your corpus. Additionally, we provide basic checks such as missing files or unreferenced files in the meta data. Try to add, misplace or erase some files to see how these checks work.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://laac-lscp.github.io/ChildRecordsR/">ChildRecordsR</a></span><span class="op">)</span>
-<span class="va">ChildRecordingsPath</span> <span class="op">=</span> <span class="st">"/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"</span>
+<span class="va">ChildRecordingsPath</span> <span class="op">=</span> <span class="st">"/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"</span> <span class="co"># Use your  own path to Vandam data </span>
 <span class="va">CR</span> <span class="op">=</span> <span class="fu"><a href="../reference/ChildRecordings.html">ChildRecordings</a></span><span class="op">(</span><span class="va">ChildRecordingsPath</span><span class="op">)</span>
 <span class="co">#&gt; ###############################################</span>
 <span class="co">#&gt; Hello Wellcome to the ChildRecordings R Project </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; Your ChildRecording project path contained : </span>
-<span class="co">#&gt;  8  annotations files </span>
+<span class="co">#&gt;  9  annotations files </span>
 <span class="co">#&gt;  1  are referenced in the metadata </span>
 <span class="co">#&gt;  2  coders were found :  its vtc </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; 4  file(s) seem(s) to be unreferenced in the metadata </span>
+<span class="co">#&gt; 5  file(s) seem(s) to be unreferenced in the metadata </span>
 <span class="co">#&gt;   more infos in  ChildRecordings$integrity_test$files.unreferenced</span></code></pre></div>
 <p>All functions are based on the class (i.e., <code>CR</code> in our example above) to avoid problems of reference, since the class is always set up in the same way.</p>
-<p>For the purpose of the tutorial we will need more annotation than provided initially. The next function will help us to add some dummy annotations with distortion in the rating. The first dummy annotation will be a slightly modification and the second one will have important modification.</p>
+<p>For the purpose of the tutorial we will need more annotation than provided initially. The next function will help us to add some dummy annotations with distortion in the rating. The first dummy annotation will have slightly modified and will be very close to the original; the second and third on will have important modifiable and could be considered as a bad annotator.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/New.annotations.html">New.annotations</a></span><span class="op">(</span>row.meta <span class="op">=</span> <span class="va">CR</span><span class="op">$</span><span class="va">all.meta</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>, time.sd <span class="op">=</span> <span class="fl">10</span>, change.cat.prob <span class="op">=</span> <span class="fl">0.001</span>, new.name <span class="op">=</span> <span class="st">"vtc_mod"</span>, <span class="va">CR</span><span class="op">)</span>
-<span class="fu"><a href="../reference/New.annotations.html">New.annotations</a></span><span class="op">(</span>row.meta <span class="op">=</span> <span class="va">CR</span><span class="op">$</span><span class="va">all.meta</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>, time.sd <span class="op">=</span> <span class="fl">1500</span>, change.cat.prob <span class="op">=</span> <span class="fl">0.10</span>, new.name <span class="op">=</span> <span class="st">"vtc_BAD"</span>, <span class="va">CR</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/New.annotations.html">New.annotations</a></span><span class="op">(</span>row.meta <span class="op">=</span> <span class="va">CR</span><span class="op">$</span><span class="va">all.meta</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>, time.sd <span class="op">=</span> <span class="fl">1500</span>, change.cat.prob <span class="op">=</span> <span class="fl">0.10</span>, new.name <span class="op">=</span> <span class="st">"vtc_BAD"</span>, <span class="va">CR</span><span class="op">)</span>
+<span class="fu"><a href="../reference/New.annotations.html">New.annotations</a></span><span class="op">(</span>row.meta <span class="op">=</span> <span class="va">CR</span><span class="op">$</span><span class="va">all.meta</span><span class="op">[</span><span class="fl">2</span>,<span class="op">]</span>, time.sd <span class="op">=</span> <span class="fl">1800</span>, change.cat.prob <span class="op">=</span> <span class="fl">0.15</span>, new.name <span class="op">=</span> <span class="st">"vtc_VeryBAD"</span>, <span class="va">CR</span><span class="op">)</span></code></pre></div>
 </div>
 <div id="finding-annotations-search-function" class="section level3">
 <h3 class="hasAnchor">
@@ -127,31 +133,35 @@
 <code class="sourceCode R"><span class="va">record.file</span> <span class="op">&lt;-</span> <span class="va">CR</span><span class="op">$</span><span class="va">all.meta</span><span class="op">$</span><span class="va">recording_filename</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>
 
 <span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>,<span class="va">record.file</span><span class="op">)</span>
-<span class="co">#&gt;   recording_filename     set annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1    BN32_010007.mp3     its BN32_010007_0_0.csv          0    50464000</span>
-<span class="co">#&gt; 2    BN32_010007.mp3     vtc BN32_010007_0_0.csv          0    50464000</span>
-<span class="co">#&gt; 3    BN32_010007.mp3 vtc_mod BN32_010007_0_0.csv          0    50464000</span>
-<span class="co">#&gt; 4    BN32_010007.mp3 vtc_BAD BN32_010007_0_0.csv          0    50464000</span></code></pre></div>
+<span class="co">#&gt;   recording_filename         set annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1    BN32_010007.mp3         its BN32_010007_0_0.csv          0    50464000</span>
+<span class="co">#&gt; 2    BN32_010007.mp3         vtc BN32_010007_0_0.csv          0    50464000</span>
+<span class="co">#&gt; 3    BN32_010007.mp3     vtc_mod BN32_010007_0_0.csv          0    50464000</span>
+<span class="co">#&gt; 4    BN32_010007.mp3     vtc_BAD BN32_010007_0_0.csv          0    50464000</span>
+<span class="co">#&gt; 5    BN32_010007.mp3 vtc_VeryBAD BN32_010007_0_0.csv          0    50464000</span></code></pre></div>
 <p>Alternatively, if a specific time window is provided, the search function will find all the annotations that overlap with the time window provided.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>,<span class="va">record.file</span>,range_from <span class="op">=</span> <span class="fl">27180000</span>, range_to <span class="op">=</span> <span class="fl">27240000</span><span class="op">)</span>
-<span class="co">#&gt;   recording_filename     set annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1    BN32_010007.mp3     its BN32_010007_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 2    BN32_010007.mp3     vtc BN32_010007_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 3    BN32_010007.mp3 vtc_mod BN32_010007_0_0.csv   27180000    27240000</span>
-<span class="co">#&gt; 4    BN32_010007.mp3 vtc_BAD BN32_010007_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt;   recording_filename         set annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1    BN32_010007.mp3         its BN32_010007_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 2    BN32_010007.mp3         vtc BN32_010007_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 3    BN32_010007.mp3     vtc_mod BN32_010007_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 4    BN32_010007.mp3     vtc_BAD BN32_010007_0_0.csv   27180000    27240000</span>
+<span class="co">#&gt; 5    BN32_010007.mp3 vtc_VeryBAD BN32_010007_0_0.csv   27180000    27240000</span>
 <span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>,<span class="va">record.file</span>,range_from <span class="op">=</span> <span class="fl">27000000</span>, range_to <span class="op">=</span> <span class="fl">50464000</span><span class="op">)</span>
-<span class="co">#&gt;   recording_filename     set annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1    BN32_010007.mp3     its BN32_010007_0_0.csv    2.7e+07    50464000</span>
-<span class="co">#&gt; 2    BN32_010007.mp3     vtc BN32_010007_0_0.csv    2.7e+07    50464000</span>
-<span class="co">#&gt; 3    BN32_010007.mp3 vtc_mod BN32_010007_0_0.csv    2.7e+07    50464000</span>
-<span class="co">#&gt; 4    BN32_010007.mp3 vtc_BAD BN32_010007_0_0.csv    2.7e+07    50464000</span>
+<span class="co">#&gt;   recording_filename         set annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1    BN32_010007.mp3         its BN32_010007_0_0.csv    2.7e+07    50464000</span>
+<span class="co">#&gt; 2    BN32_010007.mp3         vtc BN32_010007_0_0.csv    2.7e+07    50464000</span>
+<span class="co">#&gt; 3    BN32_010007.mp3     vtc_mod BN32_010007_0_0.csv    2.7e+07    50464000</span>
+<span class="co">#&gt; 4    BN32_010007.mp3     vtc_BAD BN32_010007_0_0.csv    2.7e+07    50464000</span>
+<span class="co">#&gt; 5    BN32_010007.mp3 vtc_VeryBAD BN32_010007_0_0.csv    2.7e+07    50464000</span>
 <span class="fu"><a href="../reference/find.rating.segment.html">find.rating.segment</a></span><span class="op">(</span><span class="va">CR</span>,<span class="va">record.file</span>,range_from <span class="op">=</span> <span class="fl">0</span>, range_to <span class="op">=</span> <span class="fl">27260000</span><span class="op">)</span>
-<span class="co">#&gt;   recording_filename     set annotation_filename true_onset true_offset</span>
-<span class="co">#&gt; 1    BN32_010007.mp3     its BN32_010007_0_0.csv          0    27260000</span>
-<span class="co">#&gt; 2    BN32_010007.mp3     vtc BN32_010007_0_0.csv          0    27260000</span>
-<span class="co">#&gt; 3    BN32_010007.mp3 vtc_mod BN32_010007_0_0.csv          0    27260000</span>
-<span class="co">#&gt; 4    BN32_010007.mp3 vtc_BAD BN32_010007_0_0.csv          0    27260000</span></code></pre></div>
+<span class="co">#&gt;   recording_filename         set annotation_filename true_onset true_offset</span>
+<span class="co">#&gt; 1    BN32_010007.mp3         its BN32_010007_0_0.csv          0    27260000</span>
+<span class="co">#&gt; 2    BN32_010007.mp3         vtc BN32_010007_0_0.csv          0    27260000</span>
+<span class="co">#&gt; 3    BN32_010007.mp3     vtc_mod BN32_010007_0_0.csv          0    27260000</span>
+<span class="co">#&gt; 4    BN32_010007.mp3     vtc_BAD BN32_010007_0_0.csv          0    27260000</span>
+<span class="co">#&gt; 5    BN32_010007.mp3 vtc_VeryBAD BN32_010007_0_0.csv          0    27260000</span></code></pre></div>
 <p>It is also possible to find annotations for a specific set of annotators, by providing the list of their codenames:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">raters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"its"</span>,<span class="st">"vtc"</span>,<span class="st">"vtc_mod"</span>,<span class="st">"vtc_BAD"</span><span class="op">)</span>
@@ -178,7 +188,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rating1</span>  <span class="op">=</span> <span class="fu"><a href="../reference/aggregate.rating.html">aggregate.rating</a></span><span class="op">(</span><span class="va">search1</span>, <span class="va">CR</span>, cut <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="co">#&gt; |==================                                                        | 25% time by step : 13s estimate duration : 1m remain : 1m </span>
-<span class="co">#&gt; |=====================================                                     | 50% time by step : 20s estimate duration : 1m remain : 1m </span>
+<span class="co">#&gt; |=====================================                                     | 50% time by step : 19s estimate duration : 1m remain : 1m </span>
 <span class="co">#&gt; |========================================================                  | 75% time by step : 21s estimate duration : 1m remain : 0m </span>
 <span class="co">#&gt; |==========================================================================|100% time by step : 21s estimate duration : 1m remain : 0m </span>
 <span class="co">#&gt; number of annotators 4 </span>
@@ -192,9 +202,9 @@
 <span class="co">#&gt; # CHI </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.9101714 0.81887575   0.50405  0.00175 (0.501,0.507)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.9101713 0.81887575   0.50405  0.00175 (0.501,0.507)</span>
-<span class="co">#&gt; 3                  AC1 0.9101713 0.04528106   0.90591  0.00044 (0.905,0.907)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.9092863 0.81798067   0.50163  0.00175 (0.498,0.505)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.9092862 0.81798067   0.50163  0.00175 (0.498,0.505)</span>
+<span class="co">#&gt; 3                  AC1 0.9092862 0.04550483   0.90496  0.00044 (0.904,0.906)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -204,9 +214,9 @@
 <span class="co">#&gt; # OCH </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.9749037 0.96331878   0.31583  0.00430 (0.307,0.324)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.9749037 0.96331878   0.31583  0.00430 (0.307,0.324)</span>
-<span class="co">#&gt; 3                  AC1 0.9749037 0.01222707   0.97459  0.00023 (0.974,0.975)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.9741104 0.96311315   0.29813  0.00412  (0.29,0.306)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.9741104 0.96311315   0.29813  0.00412  (0.29,0.306)</span>
+<span class="co">#&gt; 3                  AC1 0.9741104 0.01844343   0.97362  0.00024 (0.973,0.974)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -215,10 +225,10 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt; # FEM </span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt;             coeff.name        pa        pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.9229058 0.8652709   0.42778  0.00201 (0.424,0.432)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.9229057 0.8652709   0.42778  0.00201 (0.424,0.432)</span>
-<span class="co">#&gt; 3                  AC1 0.9229057 0.0449097   0.91928  0.00041  (0.918,0.92)</span>
+<span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.9212862 0.86375280   0.42227  0.00201 (0.418,0.426)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.9212861 0.86375280   0.42227  0.00201 (0.418,0.426)</span>
+<span class="co">#&gt; 3                  AC1 0.9212861 0.04541573   0.91754  0.00042 (0.917,0.918)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -228,9 +238,9 @@
 <span class="co">#&gt; # MAL </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.9497889 0.89089395   0.53980  0.00235 (0.535,0.544)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.9497888 0.89089395   0.53979  0.00235 (0.535,0.544)</span>
-<span class="co">#&gt; 3                  AC1 0.9497888 0.03636868   0.94789  0.00033 (0.947,0.949)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.9482188 0.88985908   0.52986  0.00230 (0.525,0.534)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.9482187 0.88985908   0.52986  0.00230 (0.525,0.534)</span>
+<span class="co">#&gt; 3                  AC1 0.9482187 0.02753523   0.94675  0.00033 (0.946,0.947)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -240,9 +250,9 @@
 <span class="co">#&gt; # composit </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.8076566 0.62046806   0.49321  0.00105 (0.491,0.495)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.8076564 0.62046806   0.49321  0.00105 (0.491,0.495)</span>
-<span class="co">#&gt; 3                  AC1 0.8076564 0.07590639   0.79186  0.00064 (0.791,0.793)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.8051650 0.61822427   0.48966  0.00104 (0.488,0.492)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.8051648 0.61822427   0.48966  0.00104 (0.488,0.492)</span>
+<span class="co">#&gt; 3                  AC1 0.8051648 0.07635515   0.78906  0.00065  (0.788,0.79)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -312,66 +322,66 @@
 <span class="co">#&gt; ### Annotator its ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.493   (0.491,0.495)           0.550</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.493   (0.491,0.495)           0.550</span>
-<span class="co">#&gt; AC1                             0.792   (0.791,0.793)           0.799</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.490   (0.488,0.492)           0.547</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.490   (0.488,0.492)           0.547</span>
+<span class="co">#&gt; AC1                             0.789    (0.788,0.79)           0.796</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.548,0.552)           -0.057</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.548,0.552)           -0.057</span>
-<span class="co">#&gt; AC1                     (0.798,0.8)           -0.007</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.544,0.549)           -0.057</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.544,0.549)           -0.057</span>
+<span class="co">#&gt; AC1                   (0.794,0.797)           -0.007</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.397  0.800</span>
-<span class="co">#&gt; Precision    0.459  0.768</span>
-<span class="co">#&gt; F1           0.392  0.773</span>
+<span class="co">#&gt; Recall       0.393  0.798</span>
+<span class="co">#&gt; Precision    0.456  0.765</span>
+<span class="co">#&gt; F1           0.389  0.770</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ### Annotator vtc ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.493   (0.491,0.495)           0.368</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.493   (0.491,0.495)           0.368</span>
-<span class="co">#&gt; AC1                             0.792   (0.791,0.793)           0.741</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.490   (0.488,0.492)           0.363</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.490   (0.488,0.492)           0.363</span>
+<span class="co">#&gt; AC1                             0.789    (0.788,0.79)           0.737</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha   (0.365,0.37)            0.125</span>
-<span class="co">#&gt; Fleiss' Kappa          (0.365,0.37)            0.125</span>
-<span class="co">#&gt; AC1                    (0.74,0.743)            0.051</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.361,0.366)            0.126</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.361,0.366)            0.126</span>
+<span class="co">#&gt; AC1                   (0.735,0.739)            0.052</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.621  0.855</span>
-<span class="co">#&gt; Precision    0.619  0.861</span>
-<span class="co">#&gt; F1           0.601  0.854</span>
+<span class="co">#&gt; Recall       0.619  0.853</span>
+<span class="co">#&gt; Precision    0.619  0.859</span>
+<span class="co">#&gt; F1           0.600  0.852</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ### Annotator vtc_BAD ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.493   (0.491,0.495)           0.696</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.493   (0.491,0.495)           0.696</span>
-<span class="co">#&gt; AC1                             0.792   (0.791,0.793)           0.886</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.490   (0.488,0.492)           0.696</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.490   (0.488,0.492)           0.696</span>
+<span class="co">#&gt; AC1                             0.789    (0.788,0.79)           0.886</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.694,0.698)           -0.203</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.694,0.698)           -0.203</span>
-<span class="co">#&gt; AC1                   (0.885,0.887)           -0.094</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.694,0.698)           -0.207</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.694,0.698)           -0.207</span>
+<span class="co">#&gt; AC1                   (0.885,0.887)           -0.097</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.395  0.721</span>
-<span class="co">#&gt; Precision    0.337  0.788</span>
-<span class="co">#&gt; F1           0.343  0.751</span>
+<span class="co">#&gt; Recall       0.389  0.716</span>
+<span class="co">#&gt; Precision    0.330  0.787</span>
+<span class="co">#&gt; F1           0.336  0.747</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ### Annotator vtc_mod ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.493   (0.491,0.495)           0.368</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.493   (0.491,0.495)           0.368</span>
-<span class="co">#&gt; AC1                             0.792   (0.791,0.793)           0.741</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.490   (0.488,0.492)           0.363</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.490   (0.488,0.492)           0.363</span>
+<span class="co">#&gt; AC1                             0.789    (0.788,0.79)           0.737</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha   (0.366,0.37)            0.125</span>
-<span class="co">#&gt; Fleiss' Kappa          (0.366,0.37)            0.125</span>
-<span class="co">#&gt; AC1                    (0.74,0.743)            0.051</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.361,0.366)            0.126</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.361,0.366)            0.126</span>
+<span class="co">#&gt; AC1                   (0.735,0.739)            0.052</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.621  0.855</span>
-<span class="co">#&gt; Precision    0.619  0.861</span>
-<span class="co">#&gt; F1           0.601  0.854</span>
+<span class="co">#&gt; Recall       0.620  0.853</span>
+<span class="co">#&gt; Precision    0.616  0.859</span>
+<span class="co">#&gt; F1           0.600  0.852</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span><span class="op">(</span><span class="va">comparaison</span><span class="op">)</span></code></pre></div>
 <p><img src="Vandam_tutorial_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 </div>
