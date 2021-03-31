@@ -1,3 +1,39 @@
 authors:
   Nicolas Rochat:
     href: nicolas.r.rochat@gmail.com
+
+
+articles:
+- title: "Tutorial"
+  navbar: ~
+  contents:
+  - Vandam_tutorial
+  - ChildRecordsR
+
+
+
+
+
+reference:
+- title: "Data functions"
+- contents:
+  - ChildRecordings
+  - aggregate.rating
+  - extractDataCR
+  - New.annotations
+
+- title: "Analysis functions"
+- contents :
+  - summary.extractDataCR
+  - find.rating.segment
+  - compare.rating
+  - get.reliability
+  - get.classification
+
+- title: "Secondary functions"
+- contents:
+  - data_to_OneHotEnc
+  - convertor_long_cut
+  - file.opener
+  - LENA.overlap
+
