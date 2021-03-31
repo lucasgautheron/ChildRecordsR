@@ -10,7 +10,7 @@
 #' @param range_from and range_to : an optional time window to restrain the search to
 #'
 #' @return A data.frame containing sections that have been annotated by several annotations
-#' 
+#'
 #' @examples
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
@@ -22,7 +22,7 @@
 #'
 #' # However, if a time window is provided, this function will find all the data that
 #' # overlaps with the time window provided.
-#' # For instance, you can shift the window, and it will give you the same result
+#' # For instance, you can shift the window
 #' Wav_file_name = "aiku/namibie_aiku_20160715_1.wav"
 #' t1 = 27180000
 #' t2 = 27000000
@@ -30,6 +30,9 @@
 #' find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
 #' find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
 #' find.rating.segment(CR, Wav_file_name, range_from = t2, range_to = t3)
+#' Since the annotation segment is still the same size and time the function will return the appropriate time withing the range provided
+#'
+#'
 #'
 #' # finding segments on wav file for designated rater
 #' raters <-  c("textgrid_ak", "textgrid_mm", "textgrid_m1")

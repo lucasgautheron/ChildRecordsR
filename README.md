@@ -29,7 +29,9 @@ install_github("LAAC-LSCP/ChildRecordsR")
 
 ## Tutorial 
 
-An R tutorial/vignette can be found [here](https://laac-lscp.github.io/ChildRecordsR/articles/ChildRecordsR.html), which provides you a guide to the basic functions and analyses from the package.
+An R tutorial/vignette can be found [here](https://laac-lscp.github.io/ChildRecordsR/articles/Vandam_tutorial.html), which provides you a guide to the basic functions and analyses from the package.
+Member of the LAAC or who have restricted access to the Namibia data can use the Namibia tutorial [here](https://laac-lscp.github.io/ChildRecordsR/articles/Namibia_tutorial.html)
+
 
 ## Help
 At any point, you can also use the help in R and Rstudio, using `?function_name` where function_name is the name of a function or in the help panel if you are using Rstudio. You can also found functions' documentation on the [https://laac-lscp.github.io/ChildRecordsR](https://laac-lscp.github.io/ChildRecordsR/reference/index.html).

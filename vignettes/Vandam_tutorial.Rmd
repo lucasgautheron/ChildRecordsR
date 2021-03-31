@@ -17,23 +17,29 @@ knitr::opts_chunk$set(
 
 The ChildRecordsR package is an R package dedicated to the analysis of annotations of daylong recordings in ChildRecordsData format. The objective of our package is to provide data aggregation functions and to analyze the reliability of annotations and annotators.
 
+### Install the Vandam data 
+
+Vandam daylong recording is a public data set, a childrecordsData format and install procedure is available at (https://github.com/LAAC-LSCP/vandam-daylong-demo)
+
+
 ### Create a ChildRecordings class
 
 Here you will create a [class](https://www.datacamp.com/community/tutorials/r-objects-and-classes) by specifying the root folder of your corpus, which needs to be formatted using ChildRecordingData specifications. By using a class, we standardize all the references to the information in your corpus. Additionally, we provide basic checks such as missing files or unreferenced files in the meta data. Try to add, misplace or erase some files to see how these checks work. 
 
 ```{r setup}
 library(ChildRecordsR)
-ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
+ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo" # Use your  own path to Vandam data 
 CR = ChildRecordings(ChildRecordingsPath)
 ```
 
 All functions are based on the class (i.e., `CR` in our example above) to avoid problems of reference, since the class is always set up in the same way.
 
-For the purpose of the tutorial we will need more annotation than provided initially. The next function will help us to add some dummy annotations with distortion in the rating. The first dummy annotation will be a slightly modification and the second one will have important modification.
+For the purpose of the tutorial we will need more annotation than provided initially. The next function will help us to add some dummy annotations with distortion in the rating. The first dummy annotation will have slightly modified and will be very close to the original; the second and third on  will have important modifiable and could be considered as a bad annotator.
 
 ```{r}
 New.annotations(row.meta = CR$all.meta[2,], time.sd = 10, change.cat.prob = 0.001, new.name = "vtc_mod", CR)
 New.annotations(row.meta = CR$all.meta[2,], time.sd = 1500, change.cat.prob = 0.10, new.name = "vtc_BAD", CR)
+New.annotations(row.meta = CR$all.meta[2,], time.sd = 1800, change.cat.prob = 0.15, new.name = "vtc_VeryBAD", CR)
 ```
 
 
