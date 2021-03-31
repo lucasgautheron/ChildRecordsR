@@ -3,12 +3,12 @@ authors:
     href: nicolas.r.rochat@gmail.com
 
 
-articles:
-- title: "Tutorial"
-  navbar: ~
-  contents:
-  - Vandam_tutorial
-  - Namibia_tutorial
+# articles:
+# - title: "Tutorial"
+#   navbar: ~
+#   contents:
+#   - Vandam_tutorial
+#   - Namibia_tutorial
 
 
 
