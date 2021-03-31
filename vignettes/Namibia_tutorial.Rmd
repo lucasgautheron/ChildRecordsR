@@ -1,8 +1,8 @@
 ---
-title: "ChildRecordsR"
+title: "Namibia tutorial"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ChildRecordsR}
+  %\VignetteIndexEntry{Namibia_tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
