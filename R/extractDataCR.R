@@ -11,12 +11,12 @@
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
-#' rez = extractDataCR( "textgrid/m1", CR, verbose = F )
+#' rez = extractDataCR( "vtc", CR, verbose = F )
 #' head(rez$data)
 #' # With LENA overlap method
-#' rez = extractDataCR("textgrid/m1", CR, LENA.OL = T, verbose = F)
+#' rez = extractDataCR("vtc", CR, LENA.OL = T, verbose = F)
 #'
 #'
 extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {

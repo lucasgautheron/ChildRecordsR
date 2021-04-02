@@ -33,9 +33,9 @@ library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
 
-time.sd = 300
-change.cat.prob = 0.05
-row.meta = CR$all.meta[2,]
-new.name = "vtc_mod"
-New.annotations(row.meta, time.sd, change.cat.prob, new.name, CR)
+CR$all.meta
+
+New.annotations(row.meta = CR$all.meta[2,], time.sd = 1500, change.cat.prob = 0.10, new.name = "vtc_BAD", CR)
+
+CR$all.meta
 }

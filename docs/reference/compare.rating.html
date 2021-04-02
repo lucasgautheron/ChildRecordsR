@@ -155,140 +155,69 @@ Additionally, a mean of precision, recall and F-score are provided by rater.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
-<span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"</span>
+<span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"</span>
 <span class='va'>CR</span> <span class='op'>=</span> <span class='fu'><a href='ChildRecordings.html'>ChildRecordings</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ###############################################
 #&gt; Hello Wellcome to the ChildRecordings R Project 
 #&gt; 
 #&gt; Your ChildRecording project path contained : 
-#&gt;  3619  annotations files 
-#&gt;  1559  are referenced in the metadata 
-#&gt;  7  coders were found :  textgrid/m1 alice_vtc vtc alice textgrid/ak textgrid/mm textgrid/ac 
+#&gt;  9  annotations files 
+#&gt;  1  are referenced in the metadata 
+#&gt;  2  coders were found :  its vtc 
 #&gt; 
-#&gt; 42  file(s) seem(s) to be unreferenced in the metadata 
+#&gt; 5  file(s) seem(s) to be unreferenced in the metadata 
 #&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
-#&gt; 
-#&gt;   427  metadata don't have a start recording time (a.k.a start.time) 
-#&gt; 	 therefore time indicators will not be built for those files 
-#&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
-#&gt;   362  files are empty 
-#&gt; 	 This should normally mean that no annotation were provided by annotator 
-#&gt; 	 more infos in ChildRecordings$integrity_test$empty.files </div><div class='input'>
+#&gt; </div><div class='input'>
+<span class='co'># Add a dummy anotation for the example</span>
+<span class='fu'><a href='New.annotations.html'>New.annotations</a></span><span class='op'>(</span>row.meta <span class='op'>=</span> <span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>[</span><span class='fl'>2</span>,<span class='op'>]</span>, time.sd <span class='op'>=</span> <span class='fl'>1500</span>, change.cat.prob <span class='op'>=</span> <span class='fl'>0.10</span>, new.name <span class='op'>=</span> <span class='st'>"vtc_BAD"</span>, <span class='va'>CR</span><span class='op'>)</span>
+
 <span class='co'># if no time windows is specified, this function will only return at table for all the know raters</span>
 <span class='co'># All the rater need to ratter any segment find</span>
-<span class='va'>search</span> <span class='op'>=</span> <span class='fu'><a href='find.rating.segment.html'>find.rating.segment</a></span><span class='op'>(</span><span class='va'>CR</span>, <span class='st'>"aiku/namibie_aiku_20160715_1.wav"</span><span class='op'>)</span>
-<span class='va'>rez</span> <span class='op'>=</span> <span class='fu'><a href='aggregate.rating.html'>aggregate.rating</a></span><span class='op'>(</span><span class='va'>search</span>, <span class='va'>CR</span>, cut<span class='op'>=</span><span class='fl'>0.100</span>, verbose<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; |============                                                              | 17% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |=========================                                                 | 33% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |=====================================                                     | 50% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |=================================================                         | 67% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |==============================================================            | 83% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |==========================================================================|100% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; number of annotators 6 
-#&gt; length of recording annotation for each annotator  60000 ms or  0.01666667 hours
+<span class='va'>search</span> <span class='op'>=</span> <span class='fu'><a href='find.rating.segment.html'>find.rating.segment</a></span><span class='op'>(</span><span class='va'>CR</span>, <span class='st'>"BN32_010007.mp3"</span><span class='op'>)</span>
+<span class='va'>rez</span> <span class='op'>=</span> <span class='fu'><a href='aggregate.rating.html'>aggregate.rating</a></span><span class='op'>(</span><span class='va'>search</span>, <span class='va'>CR</span>, cut<span class='op'>=</span><span class='fl'>1000</span>, verbose<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; |=====================================                                     | 50% time by step : 5s estimate duration : 0m remain : 0m 
+#&gt; |==========================================================================|100% time by step : 6s estimate duration : 0m remain : 0m 
+#&gt; number of annotators 2 
+#&gt; length of recording annotation for each annotator  50464000 ms or  14.01778 hours
 #&gt; </div><div class='input'>
 <span class='va'>comparaison</span> <span class='op'>=</span> <span class='fu'>compare.rating</span><span class='op'>(</span><span class='va'>rez</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; number of annotators 6 
-#&gt; length of reccording annotation 360000 seconds or  100 hours
-#&gt; Record span  60000 seconds or  16.66667 hours
+</div><div class='output co'>#&gt; number of annotators 2 
+#&gt; length of reccording annotation 100928000 seconds or  28035.56 hours
+#&gt; Record span  50464000 seconds or  14017.78 hours
 #&gt; 
-#&gt; ### Annotator alice ###
-#&gt; 
-#&gt;                      coeff.val before conf.int before coeff.val after
-#&gt; Krippendorff's Alpha            0.276   (0.275,0.276)           0.428
-#&gt; Fleiss' Kappa                   0.276   (0.275,0.276)           0.428
-#&gt; AC1                             0.364   (0.363,0.365)           0.467
-#&gt;                      conf.int after coeff.difference
-#&gt; Krippendorff's Alpha  (0.428,0.429)           -0.153
-#&gt; Fleiss' Kappa         (0.428,0.429)           -0.153
-#&gt; AC1                   (0.466,0.468)           -0.103
-#&gt; 
-#&gt;           unweight weight
-#&gt; Recall       0.167  0.275
-#&gt; Precision    0.046  0.079
-#&gt; F1           0.072  0.122
-#&gt; 
-#&gt; ### Annotator alice_vtc ###
+#&gt; ### Annotator its ###
 #&gt; 
 #&gt;                      coeff.val before conf.int before coeff.val after
-#&gt; Krippendorff's Alpha            0.276   (0.275,0.276)           0.220
-#&gt; Fleiss' Kappa                   0.276   (0.275,0.276)           0.220
-#&gt; AC1                             0.364   (0.363,0.365)           0.338
+#&gt; Krippendorff's Alpha            0.511   (0.504,0.519)             NaN
+#&gt; Fleiss' Kappa                   0.511   (0.503,0.519)             NaN
+#&gt; AC1                             0.805   (0.801,0.809)             NaN
 #&gt;                      conf.int after coeff.difference
-#&gt; Krippendorff's Alpha   (0.22,0.221)            0.055
-#&gt; Fleiss' Kappa          (0.22,0.221)            0.055
-#&gt; AC1                   (0.337,0.339)            0.026
+#&gt; Krippendorff's Alpha        (NA,NA)              NaN
+#&gt; Fleiss' Kappa             (NaN,NaN)              NaN
+#&gt; AC1                       (NaN,NaN)              NaN
 #&gt; 
 #&gt;           unweight weight
-#&gt; Recall       0.471  0.509
-#&gt; Precision    0.502  0.746
-#&gt; F1           0.454  0.558
-#&gt; 
-#&gt; ### Annotator textgrid/ak ###
-#&gt; 
-#&gt;                      coeff.val before conf.int before coeff.val after
-#&gt; Krippendorff's Alpha            0.276   (0.275,0.276)           0.232
-#&gt; Fleiss' Kappa                   0.276   (0.275,0.276)           0.232
-#&gt; AC1                             0.364   (0.363,0.365)           0.324
-#&gt;                      conf.int after coeff.difference
-#&gt; Krippendorff's Alpha  (0.232,0.233)            0.043
-#&gt; Fleiss' Kappa         (0.232,0.233)            0.043
-#&gt; AC1                   (0.323,0.325)            0.040
-#&gt; 
-#&gt;           unweight weight
-#&gt; Recall       0.411  0.526
-#&gt; Precision    0.443  0.637
-#&gt; F1           0.399  0.531
-#&gt; 
-#&gt; ### Annotator textgrid/m1 ###
-#&gt; 
-#&gt;                      coeff.val before conf.int before coeff.val after
-#&gt; Krippendorff's Alpha            0.276   (0.275,0.276)           0.235
-#&gt; Fleiss' Kappa                   0.276   (0.275,0.276)           0.235
-#&gt; AC1                             0.364   (0.363,0.365)           0.339
-#&gt;                      conf.int after coeff.difference
-#&gt; Krippendorff's Alpha  (0.234,0.236)            0.041
-#&gt; Fleiss' Kappa         (0.234,0.236)            0.041
-#&gt; AC1                    (0.338,0.34)            0.025
-#&gt; 
-#&gt;           unweight weight
-#&gt; Recall       0.474  0.504
-#&gt; Precision    0.454  0.651
-#&gt; F1           0.430  0.520
-#&gt; 
-#&gt; ### Annotator textgrid/mm ###
-#&gt; 
-#&gt;                      coeff.val before conf.int before coeff.val after
-#&gt; Krippendorff's Alpha            0.276   (0.275,0.276)           0.282
-#&gt; Fleiss' Kappa                   0.276   (0.275,0.276)           0.282
-#&gt; AC1                             0.364   (0.363,0.365)           0.383
-#&gt;                      conf.int after coeff.difference
-#&gt; Krippendorff's Alpha  (0.281,0.283)           -0.006
-#&gt; Fleiss' Kappa         (0.281,0.283)           -0.006
-#&gt; AC1                   (0.382,0.384)           -0.019
-#&gt; 
-#&gt;           unweight weight
-#&gt; Recall       0.327  0.430
-#&gt; Precision    0.375  0.611
-#&gt; F1           0.329  0.466
+#&gt; Recall       0.443  0.819
+#&gt; Precision    0.507  0.795
+#&gt; F1           0.441  0.798
 #&gt; 
 #&gt; ### Annotator vtc ###
 #&gt; 
 #&gt;                      coeff.val before conf.int before coeff.val after
-#&gt; Krippendorff's Alpha            0.276   (0.275,0.276)           0.220
-#&gt; Fleiss' Kappa                   0.276   (0.275,0.276)           0.220
-#&gt; AC1                             0.364   (0.363,0.365)           0.338
+#&gt; Krippendorff's Alpha            0.511   (0.504,0.519)             NaN
+#&gt; Fleiss' Kappa                   0.511   (0.503,0.519)             NaN
+#&gt; AC1                             0.805   (0.801,0.809)             NaN
 #&gt;                      conf.int after coeff.difference
-#&gt; Krippendorff's Alpha   (0.22,0.221)            0.055
-#&gt; Fleiss' Kappa          (0.22,0.221)            0.055
-#&gt; AC1                   (0.337,0.339)            0.026
+#&gt; Krippendorff's Alpha        (NA,NA)              NaN
+#&gt; Fleiss' Kappa             (NaN,NaN)              NaN
+#&gt; AC1                       (NaN,NaN)              NaN
 #&gt; 
 #&gt;           unweight weight
-#&gt; Recall       0.471  0.509
-#&gt; Precision    0.502  0.746
-#&gt; F1           0.454  0.558
+#&gt; Recall       0.507  0.819
+#&gt; Precision    0.443  0.875
+#&gt; F1           0.441  0.841
 #&gt; </div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span><span class='op'>(</span><span class='va'>comparaison</span><span class='op'>)</span>
-</div><div class='img'><img src='compare.rating-1.png' alt='' width='700' height='433' /></div></pre>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: NAs introduced by coercion</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Removed 6 rows containing missing values (geom_point).</span></div><div class='img'><img src='compare.rating-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
