@@ -22,7 +22,7 @@ Convert annotation data.frame to a long format sequence where the length of the
 }
 \examples{
 library(ChildRecordsR)
-path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
+path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
 raw_file <- file.opener(CR$all.meta[1,],CR)
 long_file <- convertor_long_cut(raw_file, onset = 1, offset = 500, cut = 1)

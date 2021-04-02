@@ -13,29 +13,23 @@
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
 #'
 #' # if no time windows is specified, this function will only return at table for all the know raters
 #' # To work, all annotators must have at least one common annotation segment.
-#' find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
+#' find.rating.segment(CR, "BN32_010007.mp3")
 #'
 #' # However, if a time window is provided, this function will find all the data that
 #' # overlaps with the time window provided.
-#' # For instance, you can shift the window
-#' Wav_file_name = "aiku/namibie_aiku_20160715_1.wav"
-#' t1 = 27180000
-#' t2 = 27000000
-#' t3 = 27240000
-#' find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
-#' find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t3)
-#' find.rating.segment(CR, Wav_file_name, range_from = t2, range_to = t3)
-#' Since the annotation segment is still the same size and time the function will return the appropriate time withing the range provided
-#'
+#' Wav_file_name = "BN32_010007.mp3"
+#' t1 = 500000
+#' t2 = 500000*2
+#' find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t2)
 #'
 #'
 #' # finding segments on wav file for designated rater
-#' raters <-  c("textgrid_ak", "textgrid_mm", "textgrid_m1")
+#' raters <-  c("its", "vtc")
 #' find.rating.segment(CR,"Wav_file_name", raters)
 #'
 #' # finding segments on wav file for the designated windows in second and rater
@@ -43,7 +37,7 @@
 #'
 #' # try to analyse a larger number of file
 #' wave_file <- unique(CR$all.meta$filename) # get all the wav files
-#' raters <- c("textgrid_ak", "textgrid_mm", "textgrid_m1") # Define raters you are interested in
+#' raters <- c("its", "vtc") # Define raters you are interested in
 #'
 #' # bind all the results
 #' search2 <- data.frame()

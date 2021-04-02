@@ -184,12 +184,34 @@ directly add info to the ChildRecordings class</p>
 #&gt; 5  file(s) seem(s) to be unreferenced in the metadata 
 #&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
 #&gt; </div><div class='input'>
-<span class='va'>time.sd</span> <span class='op'>=</span> <span class='fl'>300</span>
-<span class='va'>change.cat.prob</span> <span class='op'>=</span> <span class='fl'>0.05</span>
-<span class='va'>row.meta</span> <span class='op'>=</span> <span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>[</span><span class='fl'>2</span>,<span class='op'>]</span>
-<span class='va'>new.name</span> <span class='op'>=</span> <span class='st'>"vtc_mod"</span>
-<span class='fu'>New.annotations</span><span class='op'>(</span><span class='va'>row.meta</span>, <span class='va'>time.sd</span>, <span class='va'>change.cat.prob</span>, <span class='va'>new.name</span>, <span class='va'>CR</span><span class='op'>)</span>
-</div></pre>
+<span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span>
+</div><div class='output co'>#&gt;   child_id recording_filename   experiment.x   date_iso start_time
+#&gt; 1        1    BN32_010007.mp3 vandam-daylong 2010-07-24      11:58
+#&gt; 2        1    BN32_010007.mp3 vandam-daylong 2010-07-24      11:58
+#&gt;   recording_device_type duration set time_seek range_onset range_offset
+#&gt; 1                  lena 50464512 its         0           0     50464512
+#&gt; 2                  lena 50464512 vtc         0           0     50464512
+#&gt;       raw_filename   format filter annotation_filename         imported_at
+#&gt; 1  BN32_010007.its      its     NA BN32_010007_0_0.csv 2021-03-06 22:55:06
+#&gt; 2 BN32_010007.rttm vtc_rttm     NA BN32_010007_0_0.csv 2021-03-08 13:05:51
+#&gt;   error package_version   experiment.y  child_dob dob_criterion dob_accuracy
+#&gt; 1    NA           0.0.1 vandam-daylong 2009-07-24  extrapolated        month
+#&gt; 2    NA           0.0.1 vandam-daylong 2009-07-24  extrapolated        month</div><div class='input'>
+<span class='fu'>New.annotations</span><span class='op'>(</span>row.meta <span class='op'>=</span> <span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>[</span><span class='fl'>2</span>,<span class='op'>]</span>, time.sd <span class='op'>=</span> <span class='fl'>1500</span>, change.cat.prob <span class='op'>=</span> <span class='fl'>0.10</span>, new.name <span class='op'>=</span> <span class='st'>"vtc_BAD"</span>, <span class='va'>CR</span><span class='op'>)</span>
+
+<span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span>
+</div><div class='output co'>#&gt;   child_id recording_filename   experiment.x   date_iso start_time
+#&gt; 1        1    BN32_010007.mp3 vandam-daylong 2010-07-24      11:58
+#&gt; 2        1    BN32_010007.mp3 vandam-daylong 2010-07-24      11:58
+#&gt;   recording_device_type duration set time_seek range_onset range_offset
+#&gt; 1                  lena 50464512 its         0           0     50464512
+#&gt; 2                  lena 50464512 vtc         0           0     50464512
+#&gt;       raw_filename   format filter annotation_filename         imported_at
+#&gt; 1  BN32_010007.its      its     NA BN32_010007_0_0.csv 2021-03-06 22:55:06
+#&gt; 2 BN32_010007.rttm vtc_rttm     NA BN32_010007_0_0.csv 2021-03-08 13:05:51
+#&gt;   error package_version   experiment.y  child_dob dob_criterion dob_accuracy
+#&gt; 1    NA           0.0.1 vandam-daylong 2009-07-24  extrapolated        month
+#&gt; 2    NA           0.0.1 vandam-daylong 2009-07-24  extrapolated        month</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

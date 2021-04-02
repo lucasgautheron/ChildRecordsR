@@ -188,7 +188,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rating1</span>  <span class="op">=</span> <span class="fu"><a href="../reference/aggregate.rating.html">aggregate.rating</a></span><span class="op">(</span><span class="va">search1</span>, <span class="va">CR</span>, cut <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 <span class="co">#&gt; |==================                                                        | 25% time by step : 13s estimate duration : 1m remain : 1m </span>
-<span class="co">#&gt; |=====================================                                     | 50% time by step : 19s estimate duration : 1m remain : 1m </span>
+<span class="co">#&gt; |=====================================                                     | 50% time by step : 20s estimate duration : 1m remain : 1m </span>
 <span class="co">#&gt; |========================================================                  | 75% time by step : 21s estimate duration : 1m remain : 0m </span>
 <span class="co">#&gt; |==========================================================================|100% time by step : 21s estimate duration : 1m remain : 0m </span>
 <span class="co">#&gt; number of annotators 4 </span>
@@ -202,9 +202,9 @@
 <span class="co">#&gt; # CHI </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.9092863 0.81798067   0.50163  0.00175 (0.498,0.505)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.9092862 0.81798067   0.50163  0.00175 (0.498,0.505)</span>
-<span class="co">#&gt; 3                  AC1 0.9092862 0.04550483   0.90496  0.00044 (0.904,0.906)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.9114773 0.82022227   0.50760  0.00176 (0.504,0.511)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.9114772 0.82022227   0.50760  0.00176 (0.504,0.511)</span>
+<span class="co">#&gt; 3                  AC1 0.9114772 0.04494443   0.90731  0.00044 (0.906,0.908)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -214,9 +214,9 @@
 <span class="co">#&gt; # OCH </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.9741104 0.96311315   0.29813  0.00412  (0.29,0.306)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.9741104 0.96311315   0.29813  0.00412  (0.29,0.306)</span>
-<span class="co">#&gt; 3                  AC1 0.9741104 0.01844343   0.97362  0.00024 (0.973,0.974)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.9745721 0.96326061   0.30788  0.00421   (0.3,0.316)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.9745721 0.96326061   0.30788  0.00421   (0.3,0.316)</span>
+<span class="co">#&gt; 3                  AC1 0.9745721 0.01224646   0.97426  0.00023 (0.974,0.975)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -226,9 +226,9 @@
 <span class="co">#&gt; # FEM </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.9212862 0.86375280   0.42227  0.00201 (0.418,0.426)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.9212861 0.86375280   0.42227  0.00201 (0.418,0.426)</span>
-<span class="co">#&gt; 3                  AC1 0.9212861 0.04541573   0.91754  0.00042 (0.917,0.918)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.9213674 0.86301782   0.42597  0.00201  (0.422,0.43)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.9213674 0.86301782   0.42596  0.00201  (0.422,0.43)</span>
+<span class="co">#&gt; 3                  AC1 0.9213674 0.03424555   0.91858  0.00041 (0.918,0.919)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -238,9 +238,9 @@
 <span class="co">#&gt; # MAL </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.9482188 0.88985908   0.52986  0.00230 (0.525,0.534)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.9482187 0.88985908   0.52986  0.00230 (0.525,0.534)</span>
-<span class="co">#&gt; 3                  AC1 0.9482187 0.02753523   0.94675  0.00033 (0.946,0.947)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.9480253 0.88860193   0.53343  0.00233 (0.529,0.538)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.9480252 0.88860193   0.53343  0.00233 (0.529,0.538)</span>
+<span class="co">#&gt; 3                  AC1 0.9480252 0.02784952   0.94654  0.00034 (0.946,0.947)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -250,9 +250,9 @@
 <span class="co">#&gt; # composit </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;             coeff.name        pa         pe coeff.val coeff.se      conf.int</span>
-<span class="co">#&gt; 1 Krippendorff's Alpha 0.8051650 0.61822427   0.48966  0.00104 (0.488,0.492)</span>
-<span class="co">#&gt; 2        Fleiss' Kappa 0.8051648 0.61822427   0.48966  0.00104 (0.488,0.492)</span>
-<span class="co">#&gt; 3                  AC1 0.8051648 0.07635515   0.78906  0.00065  (0.788,0.79)</span>
+<span class="co">#&gt; 1 Krippendorff's Alpha 0.8056829 0.61836079   0.49084  0.00105 (0.489,0.493)</span>
+<span class="co">#&gt; 2        Fleiss' Kappa 0.8056827 0.61836079   0.49084  0.00105 (0.489,0.493)</span>
+<span class="co">#&gt; 3                  AC1 0.8056827 0.07632784   0.78963  0.00065 (0.788,0.791)</span>
 <span class="co">#&gt;   p.value     w.name</span>
 <span class="co">#&gt; 1       0 unweighted</span>
 <span class="co">#&gt; 2       0 unweighted</span>
@@ -322,66 +322,66 @@
 <span class="co">#&gt; ### Annotator its ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.490   (0.488,0.492)           0.547</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.490   (0.488,0.492)           0.547</span>
-<span class="co">#&gt; AC1                             0.789    (0.788,0.79)           0.796</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.491   (0.489,0.493)           0.548</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.491   (0.489,0.493)           0.548</span>
+<span class="co">#&gt; AC1                             0.790   (0.788,0.791)           0.796</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.544,0.549)           -0.057</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.544,0.549)           -0.057</span>
-<span class="co">#&gt; AC1                   (0.794,0.797)           -0.007</span>
+<span class="co">#&gt; Krippendorff's Alpha   (0.545,0.55)           -0.057</span>
+<span class="co">#&gt; Fleiss' Kappa          (0.545,0.55)           -0.057</span>
+<span class="co">#&gt; AC1                   (0.795,0.798)           -0.007</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.393  0.798</span>
-<span class="co">#&gt; Precision    0.456  0.765</span>
-<span class="co">#&gt; F1           0.389  0.770</span>
+<span class="co">#&gt; Recall       0.395  0.798</span>
+<span class="co">#&gt; Precision    0.462  0.767</span>
+<span class="co">#&gt; F1           0.391  0.770</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ### Annotator vtc ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.490   (0.488,0.492)           0.363</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.490   (0.488,0.492)           0.363</span>
-<span class="co">#&gt; AC1                             0.789    (0.788,0.79)           0.737</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.491   (0.489,0.493)           0.365</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.491   (0.489,0.493)           0.365</span>
+<span class="co">#&gt; AC1                             0.790   (0.788,0.791)           0.738</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.361,0.366)            0.126</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.361,0.366)            0.126</span>
-<span class="co">#&gt; AC1                   (0.735,0.739)            0.052</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.363,0.367)            0.126</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.363,0.367)            0.126</span>
+<span class="co">#&gt; AC1                   (0.736,0.739)            0.052</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.619  0.853</span>
-<span class="co">#&gt; Precision    0.619  0.859</span>
-<span class="co">#&gt; F1           0.600  0.852</span>
+<span class="co">#&gt; Recall       0.621  0.854</span>
+<span class="co">#&gt; Precision    0.623  0.860</span>
+<span class="co">#&gt; F1           0.602  0.852</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ### Annotator vtc_BAD ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.490   (0.488,0.492)           0.696</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.490   (0.488,0.492)           0.696</span>
-<span class="co">#&gt; AC1                             0.789    (0.788,0.79)           0.886</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.491   (0.489,0.493)           0.696</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.491   (0.489,0.493)           0.696</span>
+<span class="co">#&gt; AC1                             0.790   (0.788,0.791)           0.886</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.694,0.698)           -0.207</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.694,0.698)           -0.207</span>
-<span class="co">#&gt; AC1                   (0.885,0.887)           -0.097</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.694,0.698)           -0.205</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.694,0.698)           -0.205</span>
+<span class="co">#&gt; AC1                   (0.885,0.887)           -0.096</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.389  0.716</span>
-<span class="co">#&gt; Precision    0.330  0.787</span>
-<span class="co">#&gt; F1           0.336  0.747</span>
+<span class="co">#&gt; Recall       0.405  0.717</span>
+<span class="co">#&gt; Precision    0.335  0.788</span>
+<span class="co">#&gt; F1           0.344  0.748</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; ### Annotator vtc_mod ###</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;                      coeff.val before conf.int before coeff.val after</span>
-<span class="co">#&gt; Krippendorff's Alpha            0.490   (0.488,0.492)           0.363</span>
-<span class="co">#&gt; Fleiss' Kappa                   0.490   (0.488,0.492)           0.363</span>
-<span class="co">#&gt; AC1                             0.789    (0.788,0.79)           0.737</span>
+<span class="co">#&gt; Krippendorff's Alpha            0.491   (0.489,0.493)           0.365</span>
+<span class="co">#&gt; Fleiss' Kappa                   0.491   (0.489,0.493)           0.365</span>
+<span class="co">#&gt; AC1                             0.790   (0.788,0.791)           0.738</span>
 <span class="co">#&gt;                      conf.int after coeff.difference</span>
-<span class="co">#&gt; Krippendorff's Alpha  (0.361,0.366)            0.126</span>
-<span class="co">#&gt; Fleiss' Kappa         (0.361,0.366)            0.126</span>
-<span class="co">#&gt; AC1                   (0.735,0.739)            0.052</span>
+<span class="co">#&gt; Krippendorff's Alpha  (0.363,0.368)            0.126</span>
+<span class="co">#&gt; Fleiss' Kappa         (0.363,0.368)            0.126</span>
+<span class="co">#&gt; AC1                   (0.736,0.739)            0.052</span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt;           unweight weight</span>
-<span class="co">#&gt; Recall       0.620  0.853</span>
-<span class="co">#&gt; Precision    0.616  0.859</span>
-<span class="co">#&gt; F1           0.600  0.852</span>
+<span class="co">#&gt; Recall       0.621  0.853</span>
+<span class="co">#&gt; Precision    0.623  0.860</span>
+<span class="co">#&gt; F1           0.602  0.852</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span><span class="op">(</span><span class="va">comparaison</span><span class="op">)</span></code></pre></div>
 <p><img src="Vandam_tutorial_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 </div>

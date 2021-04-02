@@ -17,16 +17,3 @@ a Class,  print a graph and return a list containing a confusion matrix class fr
 \description{
 Provide a SDT indicator to compare two rater and graph
 }
-\examples{
-library(ChildRecordsR)
-path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
-CR = ChildRecordings(path)
-
-# finding segments on wav file for designated rater
-raters <- c("textgrid/ak","textgrid/mm","textgrid/m1")
-search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27240000)
-ratting1  = aggregate.rating(search, CR, 100)
-get.classification(ratting1,c("textgrid/ak","textgrid/mm"))
-
-
-}

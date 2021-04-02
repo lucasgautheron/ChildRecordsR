@@ -163,37 +163,27 @@ the function will extract data from annotation file in a raterData Class</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
-<span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"</span>
+<span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"</span>
 <span class='va'>CR</span> <span class='op'>=</span> <span class='fu'><a href='ChildRecordings.html'>ChildRecordings</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; ###############################################
 #&gt; Hello Wellcome to the ChildRecordings R Project 
 #&gt; 
 #&gt; Your ChildRecording project path contained : 
-#&gt;  3619  annotations files 
-#&gt;  1559  are referenced in the metadata 
-#&gt;  7  coders were found :  textgrid/m1 alice_vtc vtc alice textgrid/ak textgrid/mm textgrid/ac 
+#&gt;  9  annotations files 
+#&gt;  1  are referenced in the metadata 
+#&gt;  2  coders were found :  its vtc 
 #&gt; 
-#&gt; 42  file(s) seem(s) to be unreferenced in the metadata 
+#&gt; 5  file(s) seem(s) to be unreferenced in the metadata 
 #&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
-#&gt; 
-#&gt;   427  metadata don't have a start recording time (a.k.a start.time) 
-#&gt; 	 therefore time indicators will not be built for those files 
-#&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
-#&gt;   362  files are empty 
-#&gt; 	 This should normally mean that no annotation were provided by annotator 
-#&gt; 	 more infos in ChildRecordings$integrity_test$empty.files </div><div class='input'>
+#&gt; </div><div class='input'>
 <span class='co'># if no time windows is specified, this function will only return at table for all the know raters</span>
 <span class='co'># All the rater need to ratter any segment find</span>
-<span class='va'>search</span> <span class='op'>=</span> <span class='fu'><a href='find.rating.segment.html'>find.rating.segment</a></span><span class='op'>(</span><span class='va'>CR</span>, <span class='st'>"aiku/namibie_aiku_20160715_1.wav"</span><span class='op'>)</span>
-<span class='va'>rez</span> <span class='op'>=</span> <span class='fu'>aggregate.rating</span><span class='op'>(</span><span class='va'>search</span>, <span class='va'>CR</span>, cut<span class='op'>=</span><span class='fl'>0.100</span>, verbose<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; |============                                                              | 17% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |=========================                                                 | 33% time by step : 1s estimate duration : 0m remain : 0m 
-#&gt; |=====================================                                     | 50% time by step : 1s estimate duration : 0m remain : 0m 
-#&gt; |=================================================                         | 67% time by step : 1s estimate duration : 0m remain : 0m 
-#&gt; |==============================================================            | 83% time by step : 0s estimate duration : 0m remain : 0m 
-#&gt; |==========================================================================|100% time by step : 1s estimate duration : 0m remain : 0m 
-#&gt; number of annotators 6 
-#&gt; length of recording annotation for each annotator  60000 ms or  0.01666667 hours
+<span class='va'>search</span> <span class='op'>=</span> <span class='fu'><a href='find.rating.segment.html'>find.rating.segment</a></span><span class='op'>(</span><span class='va'>CR</span>, <span class='st'>"BN32_010007.mp3"</span><span class='op'>)</span>
+<span class='va'>rez</span> <span class='op'>=</span> <span class='fu'>aggregate.rating</span><span class='op'>(</span><span class='va'>search</span>, <span class='va'>CR</span>, cut<span class='op'>=</span><span class='fl'>100</span>, verbose<span class='op'>=</span><span class='cn'>T</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; |=====================================                                     | 50% time by step : 82s estimate duration : 3m remain : 1m 
+#&gt; |==========================================================================|100% time by step : 100s estimate duration : 3m remain : 0m 
+#&gt; number of annotators 2 
+#&gt; length of recording annotation for each annotator  50464000 ms or  14.01778 hours
 #&gt; </div><div class='input'>
 </div></pre>
   </div>

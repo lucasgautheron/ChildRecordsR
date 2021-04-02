@@ -7,15 +7,15 @@
 #'
 #'
 #' @return a Class,  print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
-#' 
+#'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
 #'
 #' # finding segments on wav file for designated rater
-#' raters <- c("textgrid/ak","textgrid/mm","textgrid/m1")
-#' search <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27240000)
+#' raters <- c("its", "vtc")
+#' search <- find.rating.segment(CR,""BN32_010007.mp3",range_from = 0, range_to = 5000000)
 #' ratting1  = aggregate.rating(search, CR, 100)
 #' get.classification(ratting1,c("textgrid/ak","textgrid/mm"))
 #'

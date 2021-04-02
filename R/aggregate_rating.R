@@ -14,13 +14,13 @@
 #'
 #' @examples
 #' library(ChildRecordsR)
-#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
+#' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
 #'
 #' # if no time windows is specified, this function will only return at table for all the know raters
 #' # All the rater need to ratter any segment find
-#' search = find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
-#' rez = aggregate.rating(search, CR, cut=0.100, verbose=T)
+#' search = find.rating.segment(CR, "BN32_010007.mp3")
+#' rez = aggregate.rating(search, CR, cut=100, verbose=T)
 #'
 
 
