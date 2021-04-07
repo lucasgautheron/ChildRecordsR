@@ -4,25 +4,41 @@
 #' Provide a SDT indicator to compare two rater and graph
 #' @param raterData : a raterData class
 #' @param raters : a vector containing two string with the names of the two raters
+#' @param plot a boolean. If TRUE then the plot will be returned
+#' @param summary a boolean. If TRUE then the summary statistics will be printed out in the console
 #'
+#' @return a Class to print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
 #'
-#' @return a Class,  print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
+#' @importFrom caret confusionMatrix
+#' @importFrom forcats fct_rev
+#' @importFrom gridExtra grid.arrange
+#' @import ggplot2
+#'
+#' @export
 #'
 #' @examples
+#'
+#' \dontrun{
+#'
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
 #'
 #' # finding segments on wav file for designated rater
+#'
 #' raters <- c("its", "vtc")
 #' search <- find.rating.segment(CR,""BN32_010007.mp3",range_from = 0, range_to = 5000000)
-#' ratting1  = aggregate.rating(search, CR, 100)
-#' get.classification(ratting1,c("textgrid/ak","textgrid/mm"))
+#' ratting1  = aggregate.rating(search, CR, 100, use_data_table = TRUE, threads = 2)
+#' get.classification(ratting1, c("textgrid/ak","textgrid/mm"))
 #'
-#'
+#' }
 
 
-get.classification <- function(raterData,raters,plot=TRUE,summary=TRUE){
+get.classification <- function(raterData,
+                               raters,
+                               plot=TRUE,
+                               summary=TRUE){
+
   levels = c("CHI","FEM","MAL","OCH","overlap","silence")
   rater1 <- raterData$rater[[raters[1]]]$long_file
   rater2 <- raterData$rater[[raters[2]]]$long_file
@@ -54,7 +70,6 @@ get.classification <- function(raterData,raters,plot=TRUE,summary=TRUE){
 
   cof_mat[["precision"]]<- stall
 
-
   # repeat for recall
   rowsums=rowSums(conf_tab)
   my_conf_tab=conf_tab
@@ -76,7 +91,6 @@ get.classification <- function(raterData,raters,plot=TRUE,summary=TRUE){
   stall=merge(stall,prop_cat[c("id","rec")])
   cof_mat[["recall"]]<- stall
 
-
   tbl <- data.frame(t(cof_mat[["byClass"]]))
 
   macro.recall <- sum(tbl["Recall",],na.rm=T)/length(tbl["Recall",])
@@ -91,11 +105,7 @@ get.classification <- function(raterData,raters,plot=TRUE,summary=TRUE){
   weight <- c(macro.recall.w,macro.precision.w,macro.f1.w)
 
   type <- c("Recall","Precision","F1")
-
   macro <- data.frame(type, unweight, weight)
-
-
-
 
   value <- list(
     table = list("Confusion Matrix" = cof_mat$table,
@@ -107,16 +117,14 @@ get.classification <- function(raterData,raters,plot=TRUE,summary=TRUE){
   )
   class(value)="SDT.rater"
 
-
-
   if(summary) print.SDT.rater(value)
   if(plot) plot(value)
 
-
   invisible(value)
-
 }
 
+
+#' @export
 
 print.SDT.rater <- function(SDT.rater){
 
@@ -130,11 +138,7 @@ print.SDT.rater <- function(SDT.rater){
 
   cat("STD macro indicators : \n\n")
   print(SDT.rater$macro)
-
 }
-
-
-
 
 
 setClass("SDT.rater")
@@ -169,13 +173,6 @@ setMethod("plot",signature = "SDT.rater",
               ggplot2::ggtitle("Recall")+ ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
 
             gridExtra::grid.arrange(prec_plot,rec_plot)
-
           }
 )
-
-
-
-
-
-
 

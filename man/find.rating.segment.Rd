@@ -15,11 +15,13 @@ find.rating.segment(
 \arguments{
 \item{ChildRecordings}{: a ChildRecordings class}
 
+\item{recording_filename}{: a wav file name to consider}
+
 \item{annotators}{: an optional argument listing the annotators to consider}
 
-\item{range_from}{and range_to : an optional time window to restrain the search to}
+\item{range_from}{: an optional time window to restrain the search from}
 
-\item{filename}{: a wav file name to consider}
+\item{range_to}{: an optional time window to restrain the search to}
 }
 \value{
 A data.frame containing sections that have been annotated by several annotations
@@ -30,16 +32,21 @@ This search function will help you to provide file name and time windows
 for common coding in raters
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
 
 # if no time windows is specified, this function will only return at table for all the know raters
 # To work, all annotators must have at least one common annotation segment.
+
 find.rating.segment(CR, "BN32_010007.mp3")
 
 # However, if a time window is provided, this function will find all the data that
 # overlaps with the time window provided.
+
 Wav_file_name = "BN32_010007.mp3"
 t1 = 500000
 t2 = 500000*2
@@ -47,17 +54,21 @@ find.rating.segment(CR, Wav_file_name, range_from = t1, range_to = t2)
 
 
 # finding segments on wav file for designated rater
+
 raters <-  c("its", "vtc")
 find.rating.segment(CR,"Wav_file_name", raters)
 
 # finding segments on wav file for the designated windows in second and rater
+
 search <- find.rating.segment(CR,"Wav_file_name", raters, range_from = t1, range_to = t2)
 
 # try to analyse a larger number of file
+
 wave_file <- unique(CR$all.meta$filename) # get all the wav files
 raters <- c("its", "vtc") # Define raters you are interested in
 
 # bind all the results
+
 search2 <- data.frame()
 for (file in wave_file[1:10]){
   print(file)
@@ -66,8 +77,5 @@ for (file in wave_file[1:10]){
 
 head(search2)
 
-
-
-
-
+}
 }

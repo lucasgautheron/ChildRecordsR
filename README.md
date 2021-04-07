@@ -1,3 +1,7 @@
+
+[![tic](https://github.com/LAAC-LSCP/ChildRecordsR/workflows/tic/badge.svg?branch=master)](https://github.com/LAAC-LSCP/ChildRecordsR/actions)
+
+
 # ChildRecordsR
 
 ChildRecordsR is an R package that provides and facilitates the analysis of annotations (often from daylong recordings) formatted using [ChildRecordsData](https://github.com/LAAC-LSCP/ChildRecordsData). The main functions in this package are data aggregation and analysis of the reliability of (human or machine) annotators. 

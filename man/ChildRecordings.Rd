@@ -18,14 +18,12 @@ organization. Only provide the path folder of the childrecordings project.
 Provid some integrity check such as missing files or missing meta
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
 
-
-
-
-
-
-
+}
 }

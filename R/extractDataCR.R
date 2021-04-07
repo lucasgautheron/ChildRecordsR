@@ -3,25 +3,47 @@
 #'
 #' Import all the files from a specific annotator
 #'
-#' @param ChildRecordings : a ChildRecordings class
 #' @param set.type : a string containing th name of the annotator present in the "set" column meta
+#' @param ChildRecordings : a ChildRecordings class
 #' @param LENA.OL : add the LENA overlap method. The overlap method will correct onset and offset when speech overlap by removing part that overlap.
+#' @param verbose : if TRUE information will be printed out in the console
+#' @param use_data_table : use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')
+#' @param threads the number of threads to run in parallel
 #'
-#' @return  A class extractDataCR with a data.frame with all the aggregated data
+#' @return A class extractDataCR with a data.frame with all the aggregated data
+#' 
+#' @importFrom data.table rbindlist
+#' @importFrom methods is
+#' 
+#' @export
 #'
 #' @examples
+#' 
+#' \dontrun{
+#' 
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
-#' rez = extractDataCR( "vtc", CR, verbose = F )
+#' 
+#' rez = extractDataCR( "vtc", CR, verbose = T, use_data_table = T, threads = 2)
 #' head(rez$data)
+#' 
 #' # With LENA overlap method
-#' rez = extractDataCR("vtc", CR, LENA.OL = T, verbose = F)
+#' 
+#' rez = extractDataCR("vtc", CR, LENA.OL = T, verbose = T, use_data_table = T, threads = 2)
 #'
-#'
-extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
+#' }
 
-  if(!is(ChildRecordings, "ChildRecordings")){
+extractDataCR <- function(set.type,
+                          ChildRecordings,
+                          LENA.OL = FALSE,
+                          verbose = TRUE,
+                          use_data_table = FALSE,
+                          threads = 1) {
+  
+  if (verbose) start <- proc.time()
+
+  if(!methods::is(ChildRecordings, "ChildRecordings")){
     print("is not a ChildRecordings class")
     return(NULL)
   }
@@ -31,67 +53,39 @@ extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
   all.meta = all.meta[grepl(set.type, all.meta$set), ]
 
   ### Data extraction loop
-  data <- data.frame()
-  start <- Sys.time()
-  rez.list <- vector("list", nrow(all.meta))
-  for (row in 1:nrow(all.meta)) {
-
+  rez = parallel::mclapply(1:nrow(all.meta), function(row) {
 
     ### aggregate data
-
-
-    # if (LENA.OL){
-    #   temps.data <- LENA.overlap(all.meta[row, ],ChildRecordings)
-    # }else{
-    #   temps.data <- file.openner(all.meta[row, ],ChildRecordings)
-    # }
-    #
-    # # bind data
-    # data <- rbind(data, temps.data)
-
     if (LENA.OL){
-      tmp <- LENA.overlap(all.meta[row, ],ChildRecordings)
-    }else{
-      tmp <- file.opener(all.meta[row, ],ChildRecordings)
+      tmp <- LENA.overlap(all.meta[row, ],ChildRecordings, use_data_table = use_data_table, verbose = FALSE, threads = 1)
+    }
+    else{
+      tmp <- file.opener(all.meta[row, ],ChildRecordings, use_data_table = use_data_table, threads = 1)
     }
     tmp <- merge(tmp, ChildRecordings$children, by = "child_id")
     tmp$date_iso <- as.Date(tmp$date_iso, format = "%Y-%m-%d")
     tmp$child_dob <- as.Date(tmp$child_dob, format = "%Y-%m-%d")
     tmp$age_in_day <- as.numeric(difftime(tmp$date_iso, tmp$child_dob, units = "days"))
-
-    rez.list[[row]] <- tmp
-
-    ### Progress bar
-    if(verbose){
-      t <- Sys.time()
-      extra <- nchar('||100%')
-      width <- options(width = 80)$width
-      step <- round(row / nrow(all.meta) * (width - extra))
-      step.time <- as.numeric(difftime(t, start, units = "secs")/row)
-      est.duration = step.time*nrow(all.meta)/60
-      est.remain=step.time*(nrow(all.meta)-row)/60
-      text <- sprintf('|%s%s|% 3s%% time by step : %ss estimate duration : %sm remain : %sm', strrep('=', step),
-                      strrep(' ', width - step - extra), round(row / nrow(all.meta) * 100),
-                      round(step.time) ,
-                      round(est.duration),
-                      round(est.remain)
-      )
-      cat(text,"\n")
-    }
-
-
+    tmp
+  }, mc.cores = threads)
+  
+  if (use_data_table) {
+    rez = data.table::rbindlist(rez)
+  }
+  else {
+    rez <- do.call(rbind, rez)
+  }
+  
+  rez <-  list(data = rez)
+  attr(rez, "class") <- "extractDataCR"
+  
+  if (verbose) {
+    end_t = proc.time()
+    cat('Time to compute the all.meta object of the ChildRecordings:', round(((end_t['elapsed'] - start['elapsed']) / 60) %% 60, 4), 'minutes.\n')
   }
 
-  data <- do.call("rbind", rez.list)
-  rez <-  list(data= data)
-  attr(rez, "class") <- "extractDataCR"
-
-  rez
-
+  return(rez)
 }
-
-
-
 
 
 
@@ -105,19 +99,29 @@ extractDataCR <- function(set.type,ChildRecordings,LENA.OL = F,verbose=T) {
 #' The ICC should indicate how similar the units in the same group are.
 #' The indicators will also be analyzed in a mixed LME4 model to provide insight into the impact of age on these indicators.
 #' In this model, the indicator and age in days are scaled to provide a comparison between the indicators.
+#' 
+#' @importFrom lme4 lmer  
+#' @importFrom insight get_variance_intercept get_variance_residual
+#' @importFrom stats as.formula 
+#' @import ggplot2 
+#' @import magrittr
+#' @import dplyr
+#' 
+#' @export
 #'
 #' @return  A list with summary data and indicators,  ICC and regression for child speaker.
 #'
 #' @examples
+#' 
+#' \dontrun{
+#' 
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
 #' rez = extractDataCR( "textgrid/m1", CR, verbose = F )
 #' summary(rez)
 #'
-
-
-
+#' }
 
 summary.extractDataCR <- function(extractDataCR){
   `%>%` <- magrittr::`%>%`
@@ -140,15 +144,11 @@ summary.extractDataCR <- function(extractDataCR){
     ) %>%
     dplyr::ungroup()
 
-
   outputs <- c("voc","prop_voc", "voc_ph", "avg_voc_dur", "voc_dur", "voc_dur_ph")
-
-
 
   table_icc <- data.frame()
   modelfits <- list()
   for(output in outputs) {
-
 
     if(length(unique(data$experiment))>1){
       Formula <- paste(output," ~ (1|experiment) + (1 | experiment:child_id)")
@@ -170,13 +170,10 @@ summary.extractDataCR <- function(extractDataCR){
                                              indicator=output,
                                              ICC = as.numeric(icc_corp_chi ),
                                              formulat = Formula))
-
-
-
     if(length(unique(data$experiment))>1){
 
       for(thiscor in unique(data$experiment)){
-        LMM <- lme4::lmer(as.formula(Formula), data = data %>% dplyr::filter(speaker_type == "CHI"),
+        LMM <- lme4::lmer(stats::as.formula(Formula), data = data %>% dplyr::filter(speaker_type == "CHI"),
                           subset = c(experiment!=thiscor))
 
         icc_corp_chi <- sum(insight::get_variance_intercept(LMM))/
@@ -191,7 +188,6 @@ summary.extractDataCR <- function(extractDataCR){
                                                  indicator=output,
                                                  ICC = as.numeric(icc_corp_chi ),
                                                  formulat = Formula))
-
       }
     }
   }
@@ -205,9 +201,7 @@ summary.extractDataCR <- function(extractDataCR){
       Formula <- paste("scale(",output,") ~ scale(age_in_day) + (1|child_id)")
     }
 
-
-    LMM <- lme4::lmer(as.formula(Formula), data = data %>% dplyr::filter(speaker_type == "CHI"))
-
+    LMM <- lme4::lmer(stats::as.formula(Formula), data = data %>% dplyr::filter(speaker_type == "CHI"))
 
     # cat(output,"beta : ", LMM@beta[2],"\n")
     regression_table <- rbind(regression_table,
@@ -216,7 +210,6 @@ summary.extractDataCR <- function(extractDataCR){
                                          "intercept" = LMM@beta[1],
                                          formulat = Formula)
     )
-
   }
   Plot = ggplot2::ggplot(table_icc,
                          ggplot2::aes(x= indicator, y = ICC, color = corpus))+
@@ -226,8 +219,6 @@ summary.extractDataCR <- function(extractDataCR){
     ggplot2::coord_flip()+
     ggplot2::theme(legend.text=ggplot2::element_text(size=14),axis.text.y=ggplot2::element_text(size=14))+
     ggplot2::labs(title= "Indicator Intraclass correlation for child_id and corpus")
-
-
 
   cat("###########################","\n")
   cat("ExtractDataCR data analysis","\n")
@@ -251,24 +242,5 @@ summary.extractDataCR <- function(extractDataCR){
        regression = as.data.frame(regression_table),
        modelfits_icc = modelfits)
   )
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -10,9 +10,13 @@ get.classification(raterData, raters, plot = TRUE, summary = TRUE)
 \item{raterData}{: a raterData class}
 
 \item{raters}{: a vector containing two string with the names of the two raters}
+
+\item{plot}{a boolean. If TRUE then the plot will be returned}
+
+\item{summary}{a boolean. If TRUE then the summary statistics will be printed out in the console}
 }
 \value{
-a Class,  print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
+a Class to print a graph and return a list containing a confusion matrix class from caret package and a macro SDT indicator
 }
 \description{
 Provide a SDT indicator to compare two rater and graph

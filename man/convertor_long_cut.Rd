@@ -9,7 +9,9 @@ convertor_long_cut(data, onset, offset, cut = 0.1)
 \arguments{
 \item{data}{: a data.frame annotation}
 
-\item{onset}{offset : time of the data where the conversion should start and stop}
+\item{onset}{: time of the data where the conversion should start}
+
+\item{offset}{: time of the data where the conversion should stop}
 
 \item{cut}{: length of the bins in millisecond}
 }
@@ -21,16 +23,16 @@ Convert annotation data.frame to a long format sequence where the length of the
  time window bins is defined by cut (in seconds)
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
-raw_file <- file.opener(CR$all.meta[1,],CR)
-long_file <- convertor_long_cut(raw_file, onset = 1, offset = 500, cut = 1)
+raw_file <- file.opener(CR$all.meta[1,],CR, use_data_table = TRUE,
+                        threads = parallel::detectCores())
+long_file <- convertor_long_cut(raw_file, onset = 1, offset = 100000, cut = 1)
 head(long_file)
-
-
-
-
-
-
+colSums(long_file)
+}
 }

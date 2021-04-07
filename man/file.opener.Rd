@@ -4,12 +4,16 @@
 \alias{file.opener}
 \title{Opening a data file in ChildRecordingsData class}
 \usage{
-file.opener(meta_row, ChildRecordings)
+file.opener(meta_row, ChildRecordings, use_data_table = FALSE, threads = 1)
 }
 \arguments{
 \item{meta_row}{: a row from the meta containing all the info of the cvs file}
 
 \item{ChildRecordings}{: a ChildRecordingsData class}
+
+\item{use_data_table}{: use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')}
+
+\item{threads}{the number of threads to run in parallel}
 }
 \value{
 A data.frame
@@ -21,10 +25,15 @@ and segment_offset based on meta data. It will also provide POSIXct time info if
 start_time of the recording is provided in the meta
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
-raw_file <- file.opener(CR$all.meta[1,],CR)
+raw_file <- file.opener(CR$all.meta[1,],CR, use_data_table = TRUE, 
+                        threads = parallel::detectCores())
 head(raw_file)
 
+}
 }

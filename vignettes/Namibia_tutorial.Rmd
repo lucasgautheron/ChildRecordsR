@@ -21,7 +21,7 @@ The ChildRecordsR package is an R package dedicated to the analysis of annotatio
 
 Here you will create a [class](https://www.datacamp.com/community/tutorials/r-objects-and-classes) by specifying the root folder of your corpus, which needs to be formatted using ChildRecordingData specifications. By using a class, we standardize all the references to the information in your corpus. Additionally, we provide basic checks such as missing files or unreferenced files in the meta data. Try to add, misplace or erase some files to see how these checks work. 
 
-```{r setup}
+```{r setup, eval = F}
 library(ChildRecordsR)
 ChildRecordingsPath = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(ChildRecordingsPath)
@@ -35,13 +35,13 @@ Before it can provide any statistical reliability, the current package will need
 
 At a minimum, you need to provide to the search function the class (i.e., `CR` in our example above) and the relative path to one or several wav files. The function will then find every segment annotated by any annotators in the wav files. In the following example, we provide the path to a single wav file (to speed things up, see section `Analyze a corpus` for an example with multiple files):
 
-```{r}
+```{r, eval = F}
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav")
 ```
 
 Alternatively, if a specific time window is provided, the search function will find all the annotations that overlap with the time window provided.
 
-```{r}
+```{r, eval = F}
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27240000)
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27000000, range_to = 27250000)
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000, range_to = 27260000)
@@ -49,14 +49,14 @@ find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",range_from = 27180000,
 
 It is also possible to find annotations for a specific set of annotators, by providing the list of their codenames:
 
-```{r}
+```{r, eval = F}
 raters <- c("textgrid/ak","textgrid/mm","textgrid/m1")
 find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav",raters)
 ```
 
 Time window and limited annotator can also be specified jointly:
 
-```{r}
+```{r, eval = F}
 search1 <- find.rating.segment(CR,"aiku/namibie_aiku_20160715_1.wav", raters, range_from = 27180000, range_to = 27240000)
 search1
 ```
@@ -66,7 +66,7 @@ search1
 Once you have obtained information on a set of annotations with the search function and stored it in an object (`search1` above), you can use the aggregate function. This function will create a table with the annotation information, and additionally convert your data into a long format, where annotations are split up into temporal bins. For instance, imagine that an annotator said FEM spoke between .5s and 1s of the wav file. This would be one row in the table format. To convert this to long format, a bin size (in seconds) can be provided using the `cut` argument. For instance, if you specify `cut = .01`, then that 500 millisecond vocalization by FEM becomes 50 rows, each representing 10 milliseconds of speech. By default `cut` is set to 0.1 second. The function will return a **raterData** class with the original format and a long format for every annotator.
 
 
-```{r}
+```{r, eval = F}
 rating1  = aggregate.rating(search1, CR, cut = 100)
 ```
 
@@ -74,13 +74,13 @@ Next, an analysis function can be called. We provide several. They all assume yo
 
 The `reliability` or `get.reliability` function provides alpha, kappa and AC1 for the whole pool of annotators in your search (so this works even if you have 10 annotators). Reliability will be computed for every speaker category and a composite of all of them.
 
-```{r}
+```{r, eval = F}
 rez1 = get.reliability(rating1)
 ```
 
 Another possible way to investigate annotators is through classification indicators, such as precision, recall, and F-score. These can only be calculated for cases with exactly two annotators. The first annotator will be assumed as the "gold" annotator, so if you have a human and an automated annotator, or someone with more versus less experience, make sure you order them so that the more reliable annotator (more likely to be "gold") is provided first.
 
-```{r}
+```{r, eval = F}
 ratercomp <- c("textgrid/ak","textgrid/m1")
 get.classification(rating1,ratercomp)
 ```
@@ -89,7 +89,7 @@ get.classification(rating1,ratercomp)
 
 Finally, the `raterComparaison` function allows you to compare the impact of annotators on reliability indicators. This is useful if you have multiple human annotators and you want to check whether one of them is doing something different, or if you want to check whether your automated annotator stands out in your pool of annotators. You can only use this function when you have more than 2 annotators. The impact of a given annotator is calculated by removing that annotator from the pool of annotators, and observing the increase or decrease in the overall reliability. If the reliability indicators increase after the deletion of a specific annotator, then that annotator should be considered as having a negative impact on the annotations. In our next example, **textgrid_mm** has a negative impact on reliability.
 
-```{r}
+```{r, eval = F}
 comparaison = compare.rating(rating1)
 plot(comparaison)
 ```
@@ -98,7 +98,7 @@ plot(comparaison)
 
 The previous examples used a path to a single wave file. Typical, in order to have a general idea of the annotations, the preceding analyses must be carried out on the whole corpus, and thus multiple wave files. This is the analysis we try in the present example. The result in this case confirms our previous conclusion, that the **textgrid_mm** annotator had a negative impact on reliability.
 
-```{r, cache=F}
+```{r, cache=F, eval = F}
 wave_file <- unique(CR$all.meta$recording_filename)[1:10] # get all the wav files
 raters <- c("textgrid/ak","textgrid/mm","textgrid/m1") # Define raters you are interested in
 

@@ -1,4 +1,4 @@
-#'
+
 #' Opening a data file in ChildRecordingsData class
 #'
 #' Open a csv file from a ChildRecordingsData class.
@@ -8,19 +8,42 @@
 #'
 #' @param meta_row : a row from the meta containing all the info of the cvs file
 #' @param ChildRecordings : a ChildRecordingsData class
+#' @param use_data_table : use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')
+#' @param threads the number of threads to run in parallel
+#' 
 #' @return A data.frame
+#' 
+#' @importFrom data.table fread
+#' @importFrom utils read.csv
+#' 
+#' @export
 #'
 #' @examples
+#' 
+#' \dontrun{
+#' 
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
-#' raw_file <- file.opener(CR$all.meta[1,],CR)
+#' raw_file <- file.opener(CR$all.meta[1,],CR, use_data_table = TRUE, 
+#'                         threads = parallel::detectCores())
 #' head(raw_file)
 #'
+#' }
 
-file.opener <- function(meta_row,ChildRecordings){
-  path =  paste0(ChildRecordings$path,"annotations/",meta_row$set,"/converted/",meta_row$annotation_filename)
-  temps.data <- read.csv(path)
+file.opener <- function(meta_row, 
+                        ChildRecordings, 
+                        use_data_table = FALSE, 
+                        threads = 1){
+  
+  path =  file.path(ChildRecordings$path, "annotations", meta_row$set, "converted", meta_row$annotation_filename)
+
+  if (use_data_table) {
+    temps.data <- data.table::fread(path, stringsAsFactors = F, header = T, nThread = threads)
+  }
+  else {
+    temps.data <- utils::read.csv(path)
+  }
 
   if (nrow(temps.data) == 0) {
     # print(paste("no row (i.e., no annotated speech) in ", path))
@@ -68,11 +91,11 @@ file.opener <- function(meta_row,ChildRecordings){
     temps.data$year <- lubridate::year(temps.data$POSIXct_time_onset)
     temps.data$month <- lubridate::month(temps.data$POSIXct_time_onset)
     temps.data$day <- lubridate::day(temps.data$POSIXct_time_onset)
-
   }
 
-  temps.data$filename <- meta_row$filename
+  if ('filename' %in% colnames(meta_row)) {
+    temps.data$filename <- meta_row$filename
+  }
 
   return(temps.data)
-
 }

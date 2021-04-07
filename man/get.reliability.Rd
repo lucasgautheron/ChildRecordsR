@@ -4,26 +4,35 @@
 \alias{get.reliability}
 \title{Reliability analyse}
 \usage{
-get.reliability(raterData, summary = TRUE)
+get.reliability(raterData, summary = TRUE, threads = 1)
 }
 \arguments{
 \item{raterData}{: a raterData class}
+
+\item{summary}{a boolean. If TRUE then the Reliability indicator will be printed out in the console}
+
+\item{threads}{the number of threads to run in parallel}
 }
 \value{
-Soon
+an object of class analyse
 }
 \description{
-Provide a reliability analyse returnin Krippen alpha, fleiss kappa and gwet AC1
+Provide a reliability analyse return in Krippen alpha, fleiss kappa and gwet AC1
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
-path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
+path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
 
 # if no time windows is specified, this function will only return at table for all the know raters
 # All the rater need to ratter any segment find
-search = find.rating.segment(CR, "aiku/namibie_aiku_20160715_1.wav")
-rez = aggregate.rating(search, CR, cut=0.100, verbose=T)
-get.reliability(rez)
 
+search = find.rating.segment(CR, "BN32_010007.mp3")
+rez = aggregate.rating(search, CR, cut=100, verbose=T, use_data_table = TRUE, threads = 2)
+get.reliability(rez, summary = TRUE, threads = 5)
+
+}
 }

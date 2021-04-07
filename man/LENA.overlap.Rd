@@ -4,12 +4,24 @@
 \alias{LENA.overlap}
 \title{Overlap LENA function}
 \usage{
-LENA.overlap(meta_row, ChildRecordings)
+LENA.overlap(
+  meta_row,
+  ChildRecordings,
+  use_data_table = FALSE,
+  verbose = FALSE,
+  threads = 1
+)
 }
 \arguments{
 \item{meta_row}{: a row from the meta containing all the info of the cvs file}
 
 \item{ChildRecordings}{: a ChildRecordings class}
+
+\item{use_data_table}{: use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')}
+
+\item{verbose}{: if TRUE information will be printed out in the console}
+
+\item{threads}{the number of threads to run in parallel}
 }
 \value{
 A data.frame with 2 added columns
@@ -18,12 +30,15 @@ A data.frame with 2 added columns
 Open an annotation file and add 2 columns to find overlap according to the LENA-style overlap definition
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
-raw_file <- LENA.overlap(CR$all.meta[1,],CR)
+raw_file <- LENA.overlap(CR$all.meta[1,], CR, use_data_table = TRUE,
+                         verbose = TRUE, threads = parallel::detectCores())
 head(raw_file)
 
-
-
+}
 }

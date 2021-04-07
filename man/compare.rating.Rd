@@ -4,13 +4,17 @@
 \alias{compare.rating}
 \title{Compare Annotator reliability}
 \usage{
-compare.rating(raterData)
+compare.rating(raterData, verbose = FALSE, threads = 1)
 }
 \arguments{
 \item{raterData}{: a raterData class}
+
+\item{verbose}{: if TRUE information will be printed out in the console}
+
+\item{threads}{the number of threads to run in parallel}
 }
 \value{
-Soon
+an object of class 'raterComp'
 }
 \description{
 Provide indication of quality for each annotator.
@@ -19,18 +23,26 @@ Removing a good annotator should decrease the indicator.
 Additionally, a mean of precision, recall and F-score are provided by rater.
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
 
 # Add a dummy anotation for the example
-New.annotations(row.meta = CR$all.meta[2,], time.sd = 1500, change.cat.prob = 0.10, new.name = "vtc_BAD", CR)
+
+New.annotations(row.meta = CR$all.meta[2,], ChildRecordings = CR, time.sd = 1500,
+                change.cat.prob = 0.10, new.name = "vtc_BAD")
 
 # if no time windows is specified, this function will only return at table for all the know raters
 # All the rater need to ratter any segment find
-search = find.rating.segment(CR, "BN32_010007.mp3")
-rez = aggregate.rating(search, CR, cut=1000, verbose=T)
 
-comparaison = compare.rating(rez)
+search = find.rating.segment(CR, "BN32_010007.mp3")
+rez = aggregate.rating(search, CR, cut=100, verbose=T, use_data_table = TRUE, threads = 2)
+
+comparaison = compare.rating(rez, verbose = TRUE, threads = 5)
 plot(comparaison)
+
+}
 }
