@@ -10,39 +10,39 @@
 #' @param ChildRecordings : a ChildRecordingsData class
 #' @param use_data_table : use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')
 #' @param threads the number of threads to run in parallel
-#' 
+#'
 #' @return A data.frame
-#' 
+#'
 #' @importFrom data.table fread
 #' @importFrom utils read.csv
-#' 
+#'
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' \dontrun{
-#' 
+#'
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
-#' raw_file <- file.opener(CR$all.meta[1,],CR, use_data_table = TRUE, 
+#' raw_file <- file.opener(CR$all.meta[1,],CR, use_data_table = TRUE,
 #'                         threads = parallel::detectCores())
 #' head(raw_file)
 #'
 #' }
 
-file.opener <- function(meta_row, 
-                        ChildRecordings, 
-                        use_data_table = FALSE, 
+file.opener <- function(meta_row,
+                        ChildRecordings,
+                        use_data_table = FALSE,
                         threads = 1){
-  
+
   path =  file.path(ChildRecordings$path, "annotations", meta_row$set, "converted", meta_row$annotation_filename)
 
   if (use_data_table) {
     temps.data <- data.table::fread(path, stringsAsFactors = F, header = T, nThread = threads)
   }
   else {
-    temps.data <- utils::read.csv(path)
+    temps.data <- utils::read.csv(path, stringsAsFactors = FALSE)
   }
 
   if (nrow(temps.data) == 0) {
