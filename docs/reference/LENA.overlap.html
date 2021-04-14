@@ -132,7 +132,13 @@
     <p>Open an annotation file and add 2 columns to find overlap according to the LENA-style overlap definition</p>
     </div>
 
-    <pre class="usage"><span class='fu'>LENA.overlap</span><span class='op'>(</span><span class='va'>meta_row</span>, <span class='va'>ChildRecordings</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>LENA.overlap</span><span class='op'>(</span>
+  <span class='va'>meta_row</span>,
+  <span class='va'>ChildRecordings</span>,
+  use_data_table <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  threads <span class='op'>=</span> <span class='fl'>1</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,6 +151,18 @@
       <th>ChildRecordings</th>
       <td><p>: a ChildRecordings class</p></td>
     </tr>
+    <tr>
+      <th>use_data_table</th>
+      <td><p>: use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>: if TRUE information will be printed out in the console</p></td>
+    </tr>
+    <tr>
+      <th>threads</th>
+      <td><p>the number of threads to run in parallel</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -152,79 +170,17 @@
     <p>A data.frame with 2 added columns</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
 <span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"</span>
 <span class='va'>CR</span> <span class='op'>=</span> <span class='fu'><a href='ChildRecordings.html'>ChildRecordings</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ###############################################
-#&gt; Hello Wellcome to the ChildRecordings R Project 
-#&gt; 
-#&gt; Your ChildRecording project path contained : 
-#&gt;  9  annotations files 
-#&gt;  1  are referenced in the metadata 
-#&gt;  2  coders were found :  its vtc 
-#&gt; 
-#&gt; 5  file(s) seem(s) to be unreferenced in the metadata 
-#&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
-#&gt; </div><div class='input'><span class='va'>raw_file</span> <span class='op'>&lt;-</span> <span class='fu'>LENA.overlap</span><span class='op'>(</span><span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>,<span class='va'>CR</span><span class='op'>)</span>
+<span class='va'>raw_file</span> <span class='op'>&lt;-</span> <span class='fu'>LENA.overlap</span><span class='op'>(</span><span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>[</span><span class='fl'>1</span>,<span class='op'>]</span>, <span class='va'>CR</span>, use_data_table <span class='op'>=</span> <span class='cn'>TRUE</span>,
+                         verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, threads <span class='op'>=</span> <span class='fu'>parallel</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/r/parallel/detectCores.html'>detectCores</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>raw_file</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   segment_onset segment_offset speaker_id ling_type speaker_type vcm_type
-#&gt; 1             0           9730         NA        NA          TVF       NA
-#&gt; 2          9730          10540         NA        NA          OCH       NA
-#&gt; 3         10540          11570         NA        NA          TVF       NA
-#&gt; 4         11570          12580         NA        NA          SIL       NA
-#&gt; 5         12580          15640         NA        NA          TVF       NA
-#&gt; 6         15640          16510         NA        NA          SIL       NA
-#&gt;   lex_type mwu_type addresseee transcription phonemes syllables words
-#&gt; 1       NA       NA         NA            NA       NA        NA     0
-#&gt; 2       NA       NA         NA            NA       NA        NA     0
-#&gt; 3       NA       NA         NA            NA       NA        NA     0
-#&gt; 4       NA       NA         NA            NA       NA        NA     0
-#&gt; 5       NA       NA         NA            NA       NA        NA     0
-#&gt; 6       NA       NA         NA            NA       NA        NA     0
-#&gt;   lena_block_number lena_block_type lena_conv_status lena_response_count
-#&gt; 1                 1           pause             &lt;NA&gt;                  NA
-#&gt; 2                 1              XM               EC                   0
-#&gt; 3                 2           pause             &lt;NA&gt;                  NA
-#&gt; 4                 2           pause             &lt;NA&gt;                  NA
-#&gt; 5                 2           pause             &lt;NA&gt;                  NA
-#&gt; 6                 2           pause             &lt;NA&gt;                  NA
-#&gt;   lena_conv_turn_type lena_conv_floor_type utterances_count utterances_length
-#&gt; 1                &lt;NA&gt;                 &lt;NA&gt;                0                 0
-#&gt; 2                  NT                   FI                0                 0
-#&gt; 3                &lt;NA&gt;                 &lt;NA&gt;                0                 0
-#&gt; 4                &lt;NA&gt;                 &lt;NA&gt;                0                 0
-#&gt; 5                &lt;NA&gt;                 &lt;NA&gt;                0                 0
-#&gt; 6                &lt;NA&gt;                 &lt;NA&gt;                0                 0
-#&gt;   average_db peak_db utterances non_speech_length child_cry_vfx_len cries vfxs
-#&gt; 1     -50.79  -24.91         []                 0                 0    []   []
-#&gt; 2     -42.65  -36.15         []                 0                 0    []   []
-#&gt; 3     -57.68  -48.75         []                 0                 0    []   []
-#&gt; 4     -63.36  -53.82         []                 0                 0    []   []
-#&gt; 5     -51.54  -35.72         []                 0                 0    []   []
-#&gt; 6     -67.78  -57.05         []                 0                 0    []   []
-#&gt;      raw_filename   date_iso child_id range_offset range_onset
-#&gt; 1 BN32_010007.its 2010-07-24        1     50464512           0
-#&gt; 2 BN32_010007.its 2010-07-24        1     50464512           0
-#&gt; 3 BN32_010007.its 2010-07-24        1     50464512           0
-#&gt; 4 BN32_010007.its 2010-07-24        1     50464512           0
-#&gt; 5 BN32_010007.its 2010-07-24        1     50464512           0
-#&gt; 6 BN32_010007.its 2010-07-24        1     50464512           0
-#&gt;    POSIXct_time_onset POSIXct_time_offset year month day LENA_OL_segment_onset
-#&gt; 1 2010-07-24 11:58:00 2010-07-24 14:40:10 2010     7  24                     0
-#&gt; 2 2010-07-24 14:40:10 2010-07-24 14:53:40 2010     7  24                  9730
-#&gt; 3 2010-07-24 14:53:40 2010-07-24 15:10:50 2010     7  24                 10540
-#&gt; 4 2010-07-24 15:10:50 2010-07-24 15:27:40 2010     7  24                 11570
-#&gt; 5 2010-07-24 15:27:40 2010-07-24 16:18:40 2010     7  24                 12580
-#&gt; 6 2010-07-24 16:18:40 2010-07-24 16:33:10 2010     7  24                 15640
-#&gt;   LENA_OL_segment_offset
-#&gt; 1                   9730
-#&gt; 2                  10540
-#&gt; 3                  11570
-#&gt; 4                  12580
-#&gt; 5                  15640
-#&gt; 6                  16510</div><div class='input'>
 
-
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

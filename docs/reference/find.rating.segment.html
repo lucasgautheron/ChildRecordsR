@@ -152,16 +152,20 @@ for common coding in raters</p>
       <td><p>: a ChildRecordings class</p></td>
     </tr>
     <tr>
+      <th>recording_filename</th>
+      <td><p>: a wav file name to consider</p></td>
+    </tr>
+    <tr>
       <th>annotators</th>
       <td><p>: an optional argument listing the annotators to consider</p></td>
     </tr>
     <tr>
       <th>range_from</th>
-      <td><p>and range_to : an optional time window to restrain the search to</p></td>
+      <td><p>: an optional time window to restrain the search from</p></td>
     </tr>
     <tr>
-      <th>filename</th>
-      <td><p>: a wav file name to consider</p></td>
+      <th>range_to</th>
+      <td><p>: an optional time window to restrain the search to</p></td>
     </tr>
     </table>
 
@@ -170,48 +174,43 @@ for common coding in raters</p>
     <p>A data.frame containing sections that have been annotated by several annotations</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
 <span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"</span>
 <span class='va'>CR</span> <span class='op'>=</span> <span class='fu'><a href='ChildRecordings.html'>ChildRecordings</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ###############################################
-#&gt; Hello Wellcome to the ChildRecordings R Project 
-#&gt; 
-#&gt; Your ChildRecording project path contained : 
-#&gt;  9  annotations files 
-#&gt;  1  are referenced in the metadata 
-#&gt;  2  coders were found :  its vtc 
-#&gt; 
-#&gt; 5  file(s) seem(s) to be unreferenced in the metadata 
-#&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
-#&gt; </div><div class='input'>
+
 <span class='co'># if no time windows is specified, this function will only return at table for all the know raters</span>
 <span class='co'># To work, all annotators must have at least one common annotation segment.</span>
+
 <span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='st'>"BN32_010007.mp3"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   recording_filename set annotation_filename true_onset true_offset
-#&gt; 1    BN32_010007.mp3 its BN32_010007_0_0.csv          0    50464000
-#&gt; 2    BN32_010007.mp3 vtc BN32_010007_0_0.csv          0    50464000</div><div class='input'>
+
 <span class='co'># However, if a time window is provided, this function will find all the data that</span>
 <span class='co'># overlaps with the time window provided.</span>
+
 <span class='va'>Wav_file_name</span> <span class='op'>=</span> <span class='st'>"BN32_010007.mp3"</span>
 <span class='va'>t1</span> <span class='op'>=</span> <span class='fl'>500000</span>
 <span class='va'>t2</span> <span class='op'>=</span> <span class='fl'>500000</span><span class='op'>*</span><span class='fl'>2</span>
 <span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>, <span class='va'>Wav_file_name</span>, range_from <span class='op'>=</span> <span class='va'>t1</span>, range_to <span class='op'>=</span> <span class='va'>t2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   recording_filename set annotation_filename true_onset true_offset
-#&gt; 1    BN32_010007.mp3 its BN32_010007_0_0.csv      5e+05       1e+06
-#&gt; 2    BN32_010007.mp3 vtc BN32_010007_0_0.csv      5e+05       1e+06</div><div class='input'>
+
 
 <span class='co'># finding segments on wav file for designated rater</span>
+
 <span class='va'>raters</span> <span class='op'>&lt;-</span>  <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"its"</span>, <span class='st'>"vtc"</span><span class='op'>)</span>
 <span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>,<span class='st'>"Wav_file_name"</span>, <span class='va'>raters</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; NULL</div><div class='input'>
+
 <span class='co'># finding segments on wav file for the designated windows in second and rater</span>
+
 <span class='va'>search</span> <span class='op'>&lt;-</span> <span class='fu'>find.rating.segment</span><span class='op'>(</span><span class='va'>CR</span>,<span class='st'>"Wav_file_name"</span>, <span class='va'>raters</span>, range_from <span class='op'>=</span> <span class='va'>t1</span>, range_to <span class='op'>=</span> <span class='va'>t2</span><span class='op'>)</span>
 
 <span class='co'># try to analyse a larger number of file</span>
+
 <span class='va'>wave_file</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/unique.html'>unique</a></span><span class='op'>(</span><span class='va'>CR</span><span class='op'>$</span><span class='va'>all.meta</span><span class='op'>$</span><span class='va'>filename</span><span class='op'>)</span> <span class='co'># get all the wav files</span>
 <span class='va'>raters</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"its"</span>, <span class='st'>"vtc"</span><span class='op'>)</span> <span class='co'># Define raters you are interested in</span>
 
 <span class='co'># bind all the results</span>
+
 <span class='va'>search2</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span><span class='op'>)</span>
 <span class='kw'>for</span> <span class='op'>(</span><span class='va'>file</span> <span class='kw'>in</span> <span class='va'>wave_file</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span><span class='op'>]</span><span class='op'>)</span><span class='op'>{</span>
   <span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span>
@@ -219,11 +218,8 @@ for common coding in raters</p>
 <span class='op'>}</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>search2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; data frame with 0 columns and 0 rows</div><div class='input'>
 
-
-
-
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

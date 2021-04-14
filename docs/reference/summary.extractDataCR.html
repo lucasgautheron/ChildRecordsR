@@ -156,57 +156,16 @@ The indicators will also be analyzed in a mixed LME4 model to provide insight in
 In this model, the indicator and age in days are scaled to provide a comparison between the indicators.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
+    <pre class="examples"><div class='input'>
+<span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+
+<span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://laac-lscp.github.io/ChildRecordsR/'>ChildRecordsR</a></span><span class='op'>)</span>
 <span class='va'>path</span> <span class='op'>=</span> <span class='st'>"/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"</span>
 <span class='va'>CR</span> <span class='op'>=</span> <span class='fu'><a href='ChildRecordings.html'>ChildRecordings</a></span><span class='op'>(</span><span class='va'>path</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ###############################################
-#&gt; Hello Wellcome to the ChildRecordings R Project 
-#&gt; 
-#&gt; Your ChildRecording project path contained : 
-#&gt;  3619  annotations files 
-#&gt;  1559  are referenced in the metadata 
-#&gt;  7  coders were found :  textgrid/m1 alice_vtc vtc alice textgrid/ak textgrid/mm textgrid/ac 
-#&gt; 
-#&gt; 42  file(s) seem(s) to be unreferenced in the metadata 
-#&gt; 	 more infos in  ChildRecordings$integrity_test$files.unreferenced 
-#&gt; 
-#&gt;   427  metadata don't have a start recording time (a.k.a start.time) 
-#&gt; 	 therefore time indicators will not be built for those files 
-#&gt; 	 more infos in ChildRecordings$integrity_test$missing.start.time 
-#&gt;   362  files are empty 
-#&gt; 	 This should normally mean that no annotation were provided by annotator 
-#&gt; 	 more infos in ChildRecordings$integrity_test$empty.files </div><div class='input'><span class='va'>rez</span> <span class='op'>=</span> <span class='fu'><a href='extractDataCR.html'>extractDataCR</a></span><span class='op'>(</span> <span class='st'>"textgrid/m1"</span>, <span class='va'>CR</span>, verbose <span class='op'>=</span> <span class='cn'>F</span> <span class='op'>)</span>
+<span class='va'>rez</span> <span class='op'>=</span> <span class='fu'><a href='extractDataCR.html'>extractDataCR</a></span><span class='op'>(</span> <span class='st'>"textgrid/m1"</span>, <span class='va'>CR</span>, verbose <span class='op'>=</span> <span class='cn'>F</span> <span class='op'>)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>rez</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; ########################### 
-#&gt; ExtractDataCR data analysis 
-#&gt; 
-#&gt; Indicator Intraclass correlation for child speaker type only : 
-#&gt; 
-#&gt;   corpus   indicator       ICC                    formulat
-#&gt; 1    all         voc 0.1787680         voc  ~ (1|child_id)
-#&gt; 2    all    prop_voc 0.3566834    prop_voc  ~ (1|child_id)
-#&gt; 3    all      voc_ph 0.1787680      voc_ph  ~ (1|child_id)
-#&gt; 4    all avg_voc_dur 0.1210601 avg_voc_dur  ~ (1|child_id)
-#&gt; 5    all     voc_dur 0.2190244     voc_dur  ~ (1|child_id)
-#&gt; 6    all  voc_dur_ph 0.2190244  voc_dur_ph  ~ (1|child_id)
-#&gt; 
-#&gt; Regression on scaled variables for child speaker type only : 
-#&gt; 
-#&gt;   predicted.variable  Beta.age   intercept
-#&gt; 1                voc 0.4016068 0.061609014
-#&gt; 2           prop_voc 0.3229911 0.083991226
-#&gt; 3             voc_ph 0.4016068 0.061609014
-#&gt; 4        avg_voc_dur 0.1290197 0.003977853
-#&gt; 5            voc_dur 0.3555931 0.055539832
-#&gt; 6         voc_dur_ph 0.3555931 0.055539832
-#&gt;                                                  formulat
-#&gt; 1         scale( voc ) ~ scale(age_in_day) + (1|child_id)
-#&gt; 2    scale( prop_voc ) ~ scale(age_in_day) + (1|child_id)
-#&gt; 3      scale( voc_ph ) ~ scale(age_in_day) + (1|child_id)
-#&gt; 4 scale( avg_voc_dur ) ~ scale(age_in_day) + (1|child_id)
-#&gt; 5     scale( voc_dur ) ~ scale(age_in_day) + (1|child_id)
-#&gt; 6  scale( voc_dur_ph ) ~ scale(age_in_day) + (1|child_id)
-#&gt; </div><div class='img'><img src='summary.extractDataCR-1.png' alt='' width='700' height='433' /></div><div class='input'>
+
+<span class='op'>}</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

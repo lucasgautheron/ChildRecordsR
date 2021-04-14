@@ -37,7 +37,7 @@ CR = ChildRecordings(path)
 
 CR$all.meta
 
-New.annotations(row.meta = CR$all.meta[2,], ChildRecordings = CR, time.sd = 1500, 
+New.annotations(row.meta = CR$all.meta[2,], ChildRecordings = CR, time.sd = 1500,
                 change.cat.prob = 0.10, new.name = "vtc_BAD")
 
 CR$all.meta

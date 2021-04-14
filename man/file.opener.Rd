@@ -31,7 +31,7 @@ start_time of the recording is provided in the meta
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
-raw_file <- file.opener(CR$all.meta[1,],CR, use_data_table = TRUE, 
+raw_file <- file.opener(CR$all.meta[1,],CR, use_data_table = TRUE,
                         threads = parallel::detectCores())
 head(raw_file)
 

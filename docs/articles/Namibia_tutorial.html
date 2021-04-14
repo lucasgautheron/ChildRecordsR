@@ -115,10 +115,7 @@
 <span class="co">#&gt; </span>
 <span class="co">#&gt;   427  metadata don't have a start recording time (a.k.a start.time) </span>
 <span class="co">#&gt;   therefore time indicators will not be built for those files </span>
-<span class="co">#&gt;   more infos in ChildRecordings$integrity_test$missing.start.time </span>
-<span class="co">#&gt;   362  files are empty </span>
-<span class="co">#&gt;   This should normally mean that no annotation were provided by annotator </span>
-<span class="co">#&gt;   more infos in ChildRecordings$integrity_test$empty.files</span></code></pre></div>
+<span class="co">#&gt;   more infos in ChildRecordings$integrity_test$missing.start.time</span></code></pre></div>
 <p>All functions are based on the class (i.e., <code>CR</code> in our example above) to avoid problems of reference, since the class is always set up in the same way.</p>
 </div>
 <div id="finding-annotations-search-function" class="section level3">
@@ -220,9 +217,6 @@
 <p>Once you have obtained information on a set of annotations with the search function and stored it in an object (<code>search1</code> above), you can use the aggregate function. This function will create a table with the annotation information, and additionally convert your data into a long format, where annotations are split up into temporal bins. For instance, imagine that an annotator said FEM spoke between .5s and 1s of the wav file. This would be one row in the table format. To convert this to long format, a bin size (in seconds) can be provided using the <code>cut</code> argument. For instance, if you specify <code>cut = .01</code>, then that 500 millisecond vocalization by FEM becomes 50 rows, each representing 10 milliseconds of speech. By default <code>cut</code> is set to 0.1 second. The function will return a <strong>raterData</strong> class with the original format and a long format for every annotator.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rating1</span>  <span class="op">=</span> <span class="fu"><a href="../reference/aggregate.rating.html">aggregate.rating</a></span><span class="op">(</span><span class="va">search1</span>, <span class="va">CR</span>, cut <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
-<span class="co">#&gt; |=========================                                                 | 33% time by step : 0s estimate duration : 0m remain : 0m </span>
-<span class="co">#&gt; |=================================================                         | 67% time by step : 0s estimate duration : 0m remain : 0m </span>
-<span class="co">#&gt; |==========================================================================|100% time by step : 0s estimate duration : 0m remain : 0m </span>
 <span class="co">#&gt; number of annotators 3 </span>
 <span class="co">#&gt; length of recording annotation for each annotator  60000 ms or  0.01666667 hours</span></code></pre></div>
 <p>Next, an analysis function can be called. We provide several. They all assume you have at least two annotators. It could be two automated algorithms, two humans, or one automated and one human – this package does not treat these cases differently, so you should interpret results carefully.</p>
