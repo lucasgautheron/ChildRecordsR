@@ -4,7 +4,14 @@
 \alias{extractDataCR}
 \title{file importation from annotator}
 \usage{
-extractDataCR(set.type, ChildRecordings, LENA.OL = F, verbose = T)
+extractDataCR(
+  set.type,
+  ChildRecordings,
+  LENA.OL = FALSE,
+  verbose = TRUE,
+  use_data_table = FALSE,
+  threads = 1
+)
 }
 \arguments{
 \item{set.type}{: a string containing th name of the annotator present in the "set" column meta}
@@ -12,6 +19,12 @@ extractDataCR(set.type, ChildRecordings, LENA.OL = F, verbose = T)
 \item{ChildRecordings}{: a ChildRecordings class}
 
 \item{LENA.OL}{: add the LENA overlap method. The overlap method will correct onset and offset when speech overlap by removing part that overlap.}
+
+\item{verbose}{: if TRUE information will be printed out in the console}
+
+\item{use_data_table}{: use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')}
+
+\item{threads}{the number of threads to run in parallel}
 }
 \value{
 A class extractDataCR with a data.frame with all the aggregated data
@@ -20,13 +33,19 @@ A class extractDataCR with a data.frame with all the aggregated data
 Import all the files from a specific annotator
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
-rez = extractDataCR( "vtc", CR, verbose = F )
+
+rez = extractDataCR( "vtc", CR, verbose = T, use_data_table = T, threads = 2)
 head(rez$data)
+
 # With LENA overlap method
-rez = extractDataCR("vtc", CR, LENA.OL = T, verbose = F)
 
+rez = extractDataCR("vtc", CR, LENA.OL = T, verbose = T, use_data_table = T, threads = 2)
 
+}
 }

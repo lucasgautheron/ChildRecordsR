@@ -1,3 +1,29 @@
+
+utils::globalVariables(c('segment_offset',
+                         'segment_onset',
+                         'child_id',
+                         'age_in_day',
+                         'speaker_type',
+                         'experiment',
+                         'range_offset',
+                         'duration',
+                         'voc',
+                         'indicator',
+                         'ICC',
+                         'corpus',
+                         'pr',
+                         'Freq',
+                         'rec',
+                         'rater',
+                         'coeff.val after',
+                         'coeff.name',
+                         'conf.inf',
+                         'conf.sup',
+                         'weight',
+                         'indic'))
+
+
+
 #' Building childrecordings class
 #'
 #' Main class of the package. Help to check data integrity and provide data
@@ -6,44 +32,38 @@
 #'
 #' @param path path to the childrecoding project folder
 #' @return  A ChildRecordings class containing meta data path
-#'
+#' 
+#' @export
+#' 
+#' @importFrom utils read.csv
 #'
 #' @examples
+#' 
+#' \dontrun{
+#' 
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
 #'
-#'
-#'
-#'
-#'
-#'
-#'
+#' }
 
 
 ChildRecordings <- function(path) {
-  ChildRecordingsPath = paste0(path,"/")
 
   ### Metadata
-  annotations <- read.csv(paste0(ChildRecordingsPath, "metadata/annotations.csv"), stringsAsFactors = F)
-  recordings <- read.csv(paste0(ChildRecordingsPath, "metadata/recordings.csv"), stringsAsFactors = F)
-  children <- read.csv(paste0(ChildRecordingsPath, "metadata/children.csv"), stringsAsFactors = F)
-  all.meta <-
-    merge(recordings, annotations, by = "recording_filename")
-
-  all.meta <-
-    merge(all.meta, children, by= "child_id")
+  annotations <- utils::read.csv(file.path(path, "metadata", "annotations.csv"), stringsAsFactors = F)
+  recordings <- utils::read.csv(file.path(path, "metadata", "recordings.csv"), stringsAsFactors = F)
+  children <- utils::read.csv(file.path(path, "metadata", "children.csv"), stringsAsFactors = F)
+  
+  all.meta <- merge(recordings, annotations, by = "recording_filename")
+  all.meta <- merge(all.meta, children, by= "child_id")
 
   error.conversion <- all.meta[ nchar(all.meta$error)>=1 & !is.na(nchar(all.meta$error)),]
   all.meta <- all.meta[is.na(all.meta$error) | all.meta$error=="",]
 
-
   ### Check data test
-
   ## Meta file
-
   ## referenced files
-
   n.referenced.file.raw <-length(unique(all.meta$raw_filename))
   path.referenced.file.raw <- paste0(all.meta$set,"/raw/",all.meta$raw_filename)
 
@@ -52,13 +72,12 @@ ChildRecordings <- function(path) {
 
   n.referenced.file =  n.referenced.file.annotation
 
-
   ## Files
-  path.file <- list.files(paste0(ChildRecordingsPath,"annotations/"),recursive = T)
+  path.file <- list.files(file.path(path, "annotations"), recursive = T)
   n.file <- length(path.file)
 
   # Check file
-  files.missing <-path.referenced.file.annotation[!path.referenced.file.annotation %in% path.file]
+  files.missing <- path.referenced.file.annotation[!path.referenced.file.annotation %in% path.file]
   files.unreferenced <- path.file[!(path.file %in% path.referenced.file.annotation |path.file %in% path.referenced.file.raw)]
 
   # check time start
@@ -67,31 +86,31 @@ ChildRecordings <- function(path) {
   missing.start.time <- all.meta[test, ]$annotation_filename
 
   # check empty file
+  vec_files = file.path(all.meta$set, "converted", all.meta$annotation_filename)
   empty.files <- c()
-  for (file in paste0(all.meta$set,"/converted/",all.meta$annotation_filename)){
-
-    # if(nchar(file)!=0){
-      tmp <- read.csv(paste0(ChildRecordingsPath,"/annotations/",file))
-      if(nrow(tmp)==0){empty.files <-c(empty.files,file)}
-    # }
+  
+  for (file in vec_files){
+    
+    iter_file = file.path(path, 'annotations', file)
+    if (!file.exists(iter_file)) {
+      empty.files <- c(empty.files, file)
+    }
   }
 
-
-  value <-
-    list(
-      annotations = annotations,
-      recordings = recordings,
-      children = children,
-      all.meta = all.meta,
-      path = ChildRecordingsPath,
-      integrity_test = list("nbr.file"=n.file,
-                            "referenced.file"= n.referenced.file,
-                            "files.missing"=files.missing,
-                            "files.unreferenced"=files.unreferenced,
-                            "missing.start.time"=missing.start.time,
-                            "empty.files"=empty.files,
-                            "error.conversion"=error.conversion)
-    )
+  value <- list(annotations = annotations,
+                recordings = recordings,
+                children = children,
+                all.meta = all.meta,
+                path = paste0(path,"/"),
+                integrity_test = list("nbr.file"=n.file,
+                                      "referenced.file"= n.referenced.file,
+                                      "files.missing"=files.missing,
+                                      "files.unreferenced"=files.unreferenced,
+                                      "missing.start.time"=missing.start.time,
+                                      "empty.files"=empty.files,
+                                      "error.conversion"=error.conversion)
+  )
+  
   attr(value, "class") <- "ChildRecordings"
 
   print.ChildRecordings(value)
@@ -99,10 +118,9 @@ ChildRecordings <- function(path) {
 }
 
 
-
+#' @export
 
 print.ChildRecordings <- function(ChildRecordings){
-
 
   # Meta file
   nbr.file <- ChildRecordings$integrity_test$nbr.file
@@ -113,14 +131,12 @@ print.ChildRecordings <- function(ChildRecordings){
   error.conversion <- ChildRecordings$integrity_test$error.conversion
 
   # check time start
-
   missing.start.time <- ChildRecordings$integrity_test$missing.start.time
 
   # check empty file
   empty.files <- ChildRecordings$integrity_test$empty.files
 
   ### Print Info summary
-
   cat("###############################################\n")
   cat("Hello Wellcome to the ChildRecordings R Project \n\n")
 
@@ -134,7 +150,6 @@ print.ChildRecordings <- function(ChildRecordings){
   }
 
   cat("\n")
-
   if(length(files.missing)!=0 ){
     cat(" ", length(files.missing), " file(s) seem(s) to be missing in the annotations folders")
     cat("\t more infos in ChildRecordings$integrity_test$files.missing \n")
@@ -146,7 +161,6 @@ print.ChildRecordings <- function(ChildRecordings){
   }
 
   cat("\n")
-
   if(length(missing.start.time)!=0){
     cat(" ", length(missing.start.time), " metadata don't have a start recording time (a.k.a start.time) \n" )
     cat("\t therefore time indicators will not be built for those files \n")
@@ -165,24 +179,5 @@ print.ChildRecordings <- function(ChildRecordings){
     cat("\t Those files are remove from package analysis \n")
     cat("\t more infos in ChildRecordings$integrity_test$error.conversion \n")
   }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

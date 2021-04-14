@@ -23,10 +23,14 @@ The indicators will also be analyzed in a mixed LME4 model to provide insight in
 In this model, the indicator and age in days are scaled to provide a comparison between the indicators.
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 CR = ChildRecordings(path)
 rez = extractDataCR( "textgrid/m1", CR, verbose = F )
 summary(rez)
 
+}
 }

@@ -9,3 +9,4 @@ data_to_OneHotEnc(data)
 \description{
 Create a composite vector
 }
+\keyword{internal}

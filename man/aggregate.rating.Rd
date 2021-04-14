@@ -4,7 +4,14 @@
 \alias{aggregate.rating}
 \title{aggregation of annnotations data}
 \usage{
-\method{aggregate}{rating}(data, ChildRecordings, cut = 100, verbose = T)
+\method{aggregate}{rating}(
+  data,
+  ChildRecordings,
+  cut = 100,
+  verbose = FALSE,
+  use_data_table = FALSE,
+  threads = 1
+)
 }
 \arguments{
 \item{data}{: find.ratting.segment return or similar data.frame}
@@ -12,6 +19,12 @@
 \item{ChildRecordings}{: a ChildRecordings class}
 
 \item{cut}{: time size in millisecond for the unit segment}
+
+\item{verbose}{: if TRUE information will be printed out in the console}
+
+\item{use_data_table}{: use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')}
+
+\item{threads}{the number of threads to run in parallel}
 }
 \value{
 A raterData class containing with original format and long format for every annotators.
@@ -24,13 +37,18 @@ the function will extract data from annotation file in a raterData Class
 the data will be organize un raw annotation format and a long segmented format
 }
 \examples{
+
+\dontrun{
+
 library(ChildRecordsR)
 path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 CR = ChildRecordings(path)
 
 # if no time windows is specified, this function will only return at table for all the know raters
 # All the rater need to ratter any segment find
-search = find.rating.segment(CR, "BN32_010007.mp3")
-rez = aggregate.rating(search, CR, cut=100, verbose=T)
 
+search = find.rating.segment(CR, "BN32_010007.mp3")
+rez = aggregate.rating(search, CR, cut=100, verbose=T, use_data_table = TRUE, threads = 2)
+
+}
 }

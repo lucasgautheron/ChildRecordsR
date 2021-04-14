@@ -1,17 +1,20 @@
 Package: ChildRecordsR
 Type: Package
-Title: ChildRecordsR reliability analysis (ChildRecordsR)
+Title: ChildRecordsR Reliability Analysis
 Version: 0.1.0
-Date: 2020-12-11
+Date: 2021-04-07
 Authors@R: person("Nicolas", "Rochat", email = "nicolas.r.rochat@gmail.com", role = c("aut", "cre"))
 Maintainer: Nicolas Rochat <nicolas.r.rochat@gmail.com>
-Description: The ChildRecordsR package is an R package dedicated to the analysis of daily record annotations in ChildRecord-data format. The objective is to provide both data aggregation functions and to analyze the reliability of the annotators on the whole corpus. https://laac-lscp.github.io/ChildRecordsR/
+Description: The ChildRecordsR package is an R package dedicated to the analysis of daily record annotations in ChildRecord-data format. The objective is to provide both data aggregation functions and to analyze the reliability of the annotators on the whole corpus <https://laac-lscp.github.io/ChildRecordsR/>
 URL: https://laac-lscp.github.io/ChildRecordsR/, https://github.com/LAAC-LSCP/ChildRecordsR
 BugReports: https://github.com/LAAC-LSCP/ChildRecordsR/issues
-License: What license is it under?
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
+Depends:
+    R(>= 3.0.2)
 Imports:
+    Rcpp (>= 0.12.5),
 	lubridate (>= 1.7.9.2), 
 	ggplot2 (>= 3.3.3), 
 	gridExtra (>= 2.3),
@@ -22,9 +25,18 @@ Imports:
 	dplyr (>= 1.0.4),
 	DescTools (>= 0.99.40),
 	irrCAC (>= 1.0),
-	insight (>= 0.13.1)
+	insight (>= 0.13.1),
+    data.table,
+    stringr,
+    stats,
+    magrittr,
+    methods,
+    utils
+LinkingTo: Rcpp, RcppArmadillo (>= 0.9.1)
 RoxygenNote: 7.1.1
 Suggests: 
+    testthat (>= 3.0.0),
     knitr,
     rmarkdown
 VignetteBuilder: knitr
+Config/testthat/edition: 3

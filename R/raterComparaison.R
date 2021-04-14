@@ -1,4 +1,5 @@
 
+
 #' Compare Annotator reliability
 #'
 #' Provide indication of quality for each annotator.
@@ -7,50 +8,62 @@
 #' Additionally, a mean of precision, recall and F-score are provided by rater.
 #'
 #' @param raterData : a raterData class
+#' @param verbose : if TRUE information will be printed out in the console
+#' @param threads the number of threads to run in parallel
 #'
-#' @return Soon
-#'
+#' @return an object of class 'raterComp'
+#' 
+#' @export
+#' 
+#' @importFrom irrCAC krippen.alpha.raw fleiss.kappa.raw gwet.ac1.raw
+#' @importFrom stringr str_remove str_split
+#' @importFrom gridExtra grid.arrange
+#' @importFrom methods is
+#' @import ggplot2
 #'
 #' @examples
+#' 
+#' \dontrun{
+#' 
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
 #'
 #' # Add a dummy anotation for the example
-#' New.annotations(row.meta = CR$all.meta[2,], time.sd = 1500, change.cat.prob = 0.10, new.name = "vtc_BAD", CR)
+#' 
+#' New.annotations(row.meta = CR$all.meta[2,], ChildRecordings = CR, time.sd = 1500,
+#'                 change.cat.prob = 0.10, new.name = "vtc_BAD")
 #'
 #' # if no time windows is specified, this function will only return at table for all the know raters
 #' # All the rater need to ratter any segment find
+#' 
 #' search = find.rating.segment(CR, "BN32_010007.mp3")
-#' rez = aggregate.rating(search, CR, cut=1000, verbose=T)
+#' rez = aggregate.rating(search, CR, cut=100, verbose=T, use_data_table = TRUE, threads = 2)
 #'
-#' comparaison = compare.rating(rez)
+#' comparaison = compare.rating(rez, verbose = TRUE, threads = 5)
 #' plot(comparaison)
+#' 
+#' }
 
+compare.rating <- function(raterData, 
+                           verbose = FALSE, 
+                           threads = 1){
 
-
-
-
-
-compare.rating <- function(raterData){
-
-  if(!is(raterData, "raterData")){
+  if (verbose) start <- proc.time()
+  
+  if(!methods::is(raterData, "raterData")){
     print(paste( substitute(raterData), "is not a raterData class"))
     return(NULL)
   }
 
-
   raters <- raterData$args$ratersID
-  global.reliability <- get.reliability(raterData,summary=F)
+  global.reliability <- get.reliability(raterData,summary=F, threads = threads)
   global.reliability <- global.reliability$reliability[["composit"]]
 
-  rater.result <- list()
-
-
-  for (rater in raters){
-    tmp.data=data.frame()
+  rater.result = parallel::mclapply(1:length(raters), function(idx_r) {
+    
+    rater = raters[idx_r]
     comp.raters <- raters[!raters %in% rater]
-
 
     ## CTT data build
     ctt.data<- data.frame(row.names=1:length(raterData[["rater"]][[rater]]$long_file$composit))
@@ -59,9 +72,7 @@ compare.rating <- function(raterData){
     for(comp.rater in comp.raters){
 
       ratting = raterData[["rater"]][[comp.rater]]$long_file$composit
-
       ctt.data <- cbind(ctt.data,data.frame(ratting))
-
       tmp<-get.classification(raterData,c(rater,comp.rater),plot=F,summary=F)
       # print(tmp)
       sdt.list[[comp.rater]]<-tmp
@@ -72,19 +83,17 @@ compare.rating <- function(raterData){
     k = irrCAC::fleiss.kappa.raw(ctt.data)
     ac1 = irrCAC::gwet.ac1.raw(ctt.data)
 
-
-    substract.reliability<-rbind(a$est,k$est,ac1$est)
-
-    rater.result[[rater]] <-list(
-      substract.reliability=substract.reliability,
-      sdt.list=sdt.list)
-
-  }
+    substract.reliability<-rbind(a$est, k$est, ac1$est)
+    iter_rater <- list(substract.reliability = substract.reliability, sdt.list = sdt.list)
+    iter_rater
+  }, mc.cores = threads)
+  
+  names(rater.result) = raters
 
   ###### Build print dataframe
-
   ### CTT
   ctt <- data.frame()
+  
   for (rater in raters){
     ### Global
     tmp <- global.reliability[,c("coeff.val","conf.int")]
@@ -99,9 +108,7 @@ compare.rating <- function(raterData){
     ctt.rez$coeff.difference <- ctt.rez$"coeff.val before" - ctt.rez$"coeff.val after"
     ctt <-rbind(ctt,ctt.rez)
   }
-
-
-
+  
   ### SDT
   sdt <- data.frame()
   for (rater in raters){
@@ -112,42 +119,41 @@ compare.rating <- function(raterData){
       tmp <- rater.result[[rater]][["sdt.list"]][[comp.rater]]$macro
       # tmp <- as.matrix(tmp)
       # print(tmp[,2:3])
-      rater.sdt = rater.sdt+tmp[,2:3]
+      rater.sdt = rater.sdt + tmp[,2:3]
       indic <-tmp[,1]
     }
     rater.sdt <- cbind(rater,indic,rater.sdt/length(comp.raters))
     sdt <-rbind(sdt,rater.sdt)
   }
 
-
   ### Print results
   recording.length <- sum(raterData$args$search$true_offset -raterData$args$search$true_onset)
-
 
   # cat("number of annotators", length(raters),"\n")
   # cat("length of reccording annotation", recording.length,"seconds or ", recording.length/3600, "hours\n")
   # cat("Record span ", recording.length/length(raters),"seconds or ", recording.length/length(raters)/3600, "hours\n\n")
-
-
   # print(sdt)
   # print(ctt)
+  
   value <- list(global.reliability=global.reliability,
                 rater.result=rater.result,
                 ctt = ctt,
                 sdt=sdt,
                 args = list(raters = raters,
                             recording.length = recording.length,
-                            raterData = deparse(substitute(raterData))
-
-                ))
-
+                            raterData = deparse(substitute(raterData))))
+  if (verbose) {
+    end_t = proc.time()
+    cat('Time to compute the', length(raters), 'ratersID:', round(((end_t['elapsed'] - start['elapsed']) / 60) %% 60, 4), 'minutes.\n')
+  }
 
   class(value) <- "raterComp"
   print.raterComp(value)
   invisible(value)
-
 }
 
+
+#' @export
 
 print.raterComp <- function(raterComp){
   raters = raterComp$args$raters
@@ -166,7 +172,6 @@ print.raterComp <- function(raterComp){
   for (rater in raters){
 
     cat("### Annotator",rater,"###\n\n")
-
     tmp.ctt <- ctt[ctt$rater==rater,]
     rownames(tmp.ctt) <- tmp.ctt[,2]
     print(tmp.ctt[,c(-1,-2)])
@@ -176,10 +181,9 @@ print.raterComp <- function(raterComp){
     rownames(tmp.sdt) <- tmp.sdt[,2]
     print(tmp.sdt[,c(-1,-2)])
     cat("\n")
-
   }
-
 }
+
 
 setClass("raterComp")
 setGeneric("plot")
@@ -211,8 +215,6 @@ setMethod("plot",signature = "raterComp",
               ggplot2::ggtitle("Mean Weighted Signal Detection Theory after rater retraction")
 
             gridExtra::grid.arrange(a,b)
-
           }
 )
-
 

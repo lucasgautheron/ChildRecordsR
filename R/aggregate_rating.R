@@ -1,3 +1,4 @@
+
 #' aggregation of annnotations data
 #'
 #' Base on the result of an find.ratting.segment return or similar data.frame
@@ -5,30 +6,45 @@
 #'
 #' the data will be organize un raw annotation format and a long segmented format
 #'
-
 #' @param ChildRecordings : a ChildRecordings class
 #' @param data : find.ratting.segment return or similar data.frame
 #' @param cut : time size in millisecond for the unit segment
+#' @param verbose : if TRUE information will be printed out in the console
+#' @param use_data_table : use the data.table package to read the .csv annotation data (depending on the operating system and the number of threads used it can be 3 to 5 times faster than 'read.csv')
+#' @param threads the number of threads to run in parallel
 #'
+#' @export
+#' 
 #' @return A raterData class containing with original format and long format for every annotators.
+#' 
+#' @importFrom methods is
 #'
 #' @examples
+#' 
+#' \dontrun{
+#' 
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
 #'
 #' # if no time windows is specified, this function will only return at table for all the know raters
 #' # All the rater need to ratter any segment find
+#' 
 #' search = find.rating.segment(CR, "BN32_010007.mp3")
-#' rez = aggregate.rating(search, CR, cut=100, verbose=T)
+#' rez = aggregate.rating(search, CR, cut=100, verbose=T, use_data_table = TRUE, threads = 2)
 #'
+#' }
 
+aggregate.rating <- function(data, 
+                             ChildRecordings, 
+                             cut=100, 
+                             verbose=FALSE,
+                             use_data_table = FALSE,
+                             threads = 1){
+  
+  if (verbose) start <- proc.time()
 
-
-
-aggregate.rating <- function(data, ChildRecordings, cut=100,verbose=T){
-
-  if(!is(ChildRecordings, "ChildRecordings")){
+  if(!methods::is(ChildRecordings, "ChildRecordings")){
     print(paste( substitute(ChildRecordings), "is not a ChildRecordings class"))
     return(NULL)
   }
@@ -37,65 +53,46 @@ aggregate.rating <- function(data, ChildRecordings, cut=100,verbose=T){
   # detach(data)
   all.meta <- ChildRecordings$all.meta
   ratersID <- as.character(unique(data$set))
-
-  rater <- list()
-
-  ### init progress bar
-  start <- Sys.time()
   Nrow <- 1
 
-  for(rat in ratersID){
+  rater = parallel::mclapply(1:length(ratersID), function(idx) {
+    
+    rat = ratersID[idx]
     tmp.data <- data[data$set==rat,]
-    raw_files <- data.frame()
-    long_files <- data.frame()
+    
+    raw_files = long_files = list()
 
-
-    for (row in 1:nrow(tmp.data)){
-      row <- tmp.data[row,]
+    for (idx_row in 1:nrow(tmp.data)) {
+      row <- tmp.data[idx_row,]
       annotation_filename <- row$annotation_filename
       true_onset <- row$true_onset
       true_offset <- row$true_offset
-
-
-
+      
       meta.row <- all.meta[all.meta$annotation_filename==annotation_filename & all.meta$set==rat,]
-      raw_file <- file.opener(meta.row,ChildRecordings)
-      long_file <- convertor_long_cut(raw_file,true_onset,true_offset,cut=cut)
+      raw_file <- file.opener(meta.row, ChildRecordings, use_data_table = use_data_table, threads = 1)      # use by default a single thread because I already run mclapply-parallel
+      long_file <- convertor_long_cut(raw_file, true_onset, true_offset, cut=cut)                           # this takes the longest depending on the input data size
       long_file <- data_to_OneHotEnc(long_file)
-
-      raw_files<-rbind(raw_files,raw_file[raw_file$segment_onset>=true_onset & raw_file$segment_offset<=true_offset,])
-      long_files <- rbind(long_files,long_file)
-
-
-      ### Progress bar
-
-      if(verbose){
-        t <- Sys.time()
-        extra <- nchar('||100%')
-        width <- options(width = 80)$width
-        step <- round(Nrow / nrow(data) * (width - extra))
-        step.time <- as.numeric(difftime(t, start, units = "secs")/Nrow)
-        est.duration = step.time*nrow(data)/60
-        est.remain=step.time*(nrow(data)-Nrow)/60
-        text <- sprintf('|%s%s|% 3s%% time by step : %ss estimate duration : %sm remain : %sm', strrep('=', step),
-                        strrep(' ', width - step - extra), round(Nrow / nrow(data) * 100),
-                        round(step.time) ,
-                        round(est.duration),
-                        round(est.remain))
-        cat(text,"\n")
-        Nrow = Nrow + 1
-      }
-      ###
-
-
-
+      
+      raw_file <- raw_file[raw_file$segment_onset>=true_onset & raw_file$segment_offset<=true_offset,]
+      
+      raw_files[[idx_row]] = raw_file
+      long_files[[idx_row]] = long_file
     }
-
-    rater[[rat]]$raw_file <- raw_files
-    rater[[rat]]$long_file <- long_files
-
-  }
-
+    
+    if (use_data_table) {
+      raw_files = data.table::rbindlist(raw_files)
+      long_files = data.table::rbindlist(long_files)
+    }
+    else {
+      raw_files = do.call(rbind, raw_files)
+      long_files = do.call(rbind, long_files)
+    }
+    
+    tmp_rater = list(raw_file = raw_files, long_file = long_files)
+    tmp_rater
+  }, mc.cores = threads)
+  
+  names(rater) = ratersID
 
   value <- list(
     rater= rater,
@@ -104,23 +101,26 @@ aggregate.rating <- function(data, ChildRecordings, cut=100,verbose=T){
                 search = data)
   )
   attr(value, "class") <- "raterData"
-
+  
+  if (verbose) {
+    end_t = proc.time()
+    cat('Time to compute the', nrow(data), 'rows of the input data:', round(((end_t['elapsed'] - start['elapsed']) / 60) %% 60, 4), 'minutes.\n')
+  }
 
   print.raterData(value)
   invisible(value)
 }
 
 
+#' @export
+
 print.raterData <- function(raterData){
 
   ### Print results
   recording.length <- sum(raterData$args$search$true_offset -raterData$args$search$true_onset)
 
-
   cat("number of annotators", length(raterData$args$ratersID),"\n")
   cat("length of recording annotation for each annotator ", recording.length/length(raterData$args$ratersID),"ms or ", recording.length/length(raterData$args$ratersID)/3600000, "hours\n\n")
 
 }
-
-
 

@@ -1,3 +1,4 @@
+
 #' Search function on Childrecordings class
 #'
 #' Search function in Childrecordings class
@@ -5,23 +6,34 @@
 #' for common coding in raters
 #'
 #' @param ChildRecordings : a ChildRecordings class
-#' @param filename : a wav file name to consider
+#' @param recording_filename : a wav file name to consider
 #' @param annotators : an optional argument listing the annotators to consider
-#' @param range_from and range_to : an optional time window to restrain the search to
+#' @param range_from : an optional time window to restrain the search from 
+#' @param range_to : an optional time window to restrain the search to
+#' 
+#' @importFrom DescTools Overlap
+#' @importFrom methods is
 #'
 #' @return A data.frame containing sections that have been annotated by several annotations
+#' 
+#' @export
 #'
 #' @examples
+#' 
+#' \dontrun{
+#' 
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
 #'
 #' # if no time windows is specified, this function will only return at table for all the know raters
 #' # To work, all annotators must have at least one common annotation segment.
+#' 
 #' find.rating.segment(CR, "BN32_010007.mp3")
 #'
 #' # However, if a time window is provided, this function will find all the data that
 #' # overlaps with the time window provided.
+#' 
 #' Wav_file_name = "BN32_010007.mp3"
 #' t1 = 500000
 #' t2 = 500000*2
@@ -29,17 +41,21 @@
 #'
 #'
 #' # finding segments on wav file for designated rater
+#' 
 #' raters <-  c("its", "vtc")
 #' find.rating.segment(CR,"Wav_file_name", raters)
 #'
 #' # finding segments on wav file for the designated windows in second and rater
+#' 
 #' search <- find.rating.segment(CR,"Wav_file_name", raters, range_from = t1, range_to = t2)
 #'
 #' # try to analyse a larger number of file
+#' 
 #' wave_file <- unique(CR$all.meta$filename) # get all the wav files
 #' raters <- c("its", "vtc") # Define raters you are interested in
 #'
 #' # bind all the results
+#' 
 #' search2 <- data.frame()
 #' for (file in wave_file[1:10]){
 #'   print(file)
@@ -48,18 +64,15 @@
 #'
 #' head(search2)
 #'
-#'
-#'
-#'
-#'
+#' }
 
+find.rating.segment <- function(ChildRecordings,
+                                recording_filename,
+                                annotators=NULL,
+                                range_from=NULL,
+                                range_to=NULL){
 
-
-
-
-find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NULL,range_from=NULL,range_to=NULL){
-
-  if(!is(ChildRecordings, "ChildRecordings")){
+  if(!methods::is(ChildRecordings, "ChildRecordings")){
     print(paste( substitute(ChildRecordings), "is not a ChildRecordings class"))
     return(NULL)
   }
@@ -96,11 +109,33 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
     return(NULL)
   }
 
+  #................................................. I don't know if this modification can replace the next double for-loop 
+  # # common.annotation <- c()
+  # ol.with <-c()
+  # 
+  # for(row in 1:nrow(tbl)){
+  # 
+  #   if ((row + 1) <= nrow(tbl)) {                # find the overlapping segments between the current row of the 'tbl' and all rows after the current row (to reduce the iterations)
+  #    
+  #     for(row2 in (row+1):nrow(tbl)) {
+  #       
+  #       # cat(row, row2, '\n')
+  #       t = DescTools::Overlap(x = c(tbl[row,]$true_onset, tbl[row,]$true_offset),
+  #                              y = c(tbl[row2,]$true_onset, tbl[row2,]$true_offset))
+  #       
+  #       if (t>0) {
+  #         ol.with <- c(ol.with, as.character(tbl[row2,]$set))
+  #       }
+  #     }
+  #   }
+  # }
+  #................................................. 
+  
   common.annotation <-c()
   for(row in 1:nrow(tbl)){
     ol.with <-c()
     for(row2 in 1:nrow(tbl)){
-
+      
       t = DescTools::Overlap(
         x=c(tbl[row,]$true_onset,tbl[row,]$true_offset),
         y=c(tbl[row2,]$true_onset,tbl[row2,]$true_offset)
@@ -121,7 +156,6 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
   }
 
   # Define time segment
-
   range_from <- max( c(min(tbl$true_onset),range_from ))
   range_to <- min( c(max(tbl$true_offset),range_to ))
   time =  seq(range_from-1000, range_to+1000, 1000)
@@ -130,6 +164,7 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
   for (row in 1:nrow(tbl)){
     time.line[time>= tbl[row,]$true_onset & time<= tbl[row,]$true_offset,]$count=  time.line[time>= tbl[row,]$true_onset & time<= tbl[row,]$true_offset,]$count +1
   }
+  
   time.line$segment <- ifelse(time.line$count==n.annotator,1,0 )
   time.line[time==range_from-1000 | time==range_to+1000,]$segment = 0 # add border
 
@@ -140,7 +175,7 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
 
   ### Format data to be returned
   rez <- data.frame()
-  for( row in 1:nrow(time.code)) {
+  for (row in 1:nrow(time.code)) {
     true_onset= time.code[row,]$true_onset
     true_offset = time.code[row,]$true_offset
     tmp <- true_time_seg_finder(true_onset,true_offset,tbl)
@@ -155,11 +190,7 @@ find.rating.segment <- function(ChildRecordings,recording_filename,annotators=NU
     tmp$true_offset <- true_offset
 
     rez <- rbind(rez,tmp)
-
   }
-
-
-  rez
-
-
+  
+  return(rez)
 }
