@@ -11,25 +11,25 @@
 #' @param threads the number of threads to run in parallel
 #'
 #' @return A class extractDataCR with a data.frame with all the aggregated data
-#' 
+#'
 #' @importFrom data.table rbindlist
 #' @importFrom methods is
-#' 
+#'
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' \dontrun{
-#' 
+#'
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/vandam-daylong-demo"
 #' CR = ChildRecordings(path)
-#' 
+#'
 #' rez = extractDataCR( "vtc", CR, verbose = T, use_data_table = T, threads = 2)
 #' head(rez$data)
-#' 
+#'
 #' # With LENA overlap method
-#' 
+#'
 #' rez = extractDataCR("vtc", CR, LENA.OL = T, verbose = T, use_data_table = T, threads = 2)
 #'
 #' }
@@ -40,7 +40,7 @@ extractDataCR <- function(set.type,
                           verbose = TRUE,
                           use_data_table = FALSE,
                           threads = 1) {
-  
+
   if (verbose) start <- proc.time()
 
   if(!methods::is(ChildRecordings, "ChildRecordings")){
@@ -68,17 +68,17 @@ extractDataCR <- function(set.type,
     tmp$age_in_day <- as.numeric(difftime(tmp$date_iso, tmp$child_dob, units = "days"))
     tmp
   }, mc.cores = threads)
-  
+
   if (use_data_table) {
     rez = data.table::rbindlist(rez)
   }
   else {
     rez <- do.call(rbind, rez)
   }
-  
+
   rez <-  list(data = rez)
   attr(rez, "class") <- "extractDataCR"
-  
+
   if (verbose) {
     end_t = proc.time()
     cat('Time to compute the all.meta object of the ChildRecordings:', round(((end_t['elapsed'] - start['elapsed']) / 60) %% 60, 4), 'minutes.\n')
@@ -99,22 +99,22 @@ extractDataCR <- function(set.type,
 #' The ICC should indicate how similar the units in the same group are.
 #' The indicators will also be analyzed in a mixed LME4 model to provide insight into the impact of age on these indicators.
 #' In this model, the indicator and age in days are scaled to provide a comparison between the indicators.
-#' 
-#' @importFrom lme4 lmer  
+#'
+#' @importFrom lme4 lmer
 #' @importFrom insight get_variance_intercept get_variance_residual
-#' @importFrom stats as.formula 
-#' @import ggplot2 
+#' @importFrom stats as.formula
+#' @import ggplot2
 #' @import magrittr
 #' @import dplyr
-#' 
+#'
 #' @export
 #'
 #' @return  A list with summary data and indicators,  ICC and regression for child speaker.
 #'
 #' @examples
-#' 
+#'
 #' \dontrun{
-#' 
+#'
 #' library(ChildRecordsR)
 #' path = "/mnt/94707AA4707A8CAC/CNRS/corpus/namibia-data/"
 #' CR = ChildRecordings(path)
@@ -132,10 +132,10 @@ summary.extractDataCR <- function(extractDataCR){
     dplyr::group_by(child_id,age_in_day,speaker_type,experiment) %>%
     dplyr::summarise(
       voc = dplyr::n(),
-      voc_ph = dplyr::n()/(max(range_offset)/3600),
+      voc_ph = dplyr::n()/(max(range_offset)/(3600*1000)),
       avg_voc_dur = mean(duration),
       voc_dur = sum(duration),
-      voc_dur_ph = sum(duration)/(max(range_offset)/3600),
+      voc_dur_ph = sum(duration)/(max(range_offset)/(3600*1000)),
 
     ) %>%
     dplyr::group_by(child_id,age_in_day,experiment) %>%
