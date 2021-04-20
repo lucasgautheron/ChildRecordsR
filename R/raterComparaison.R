@@ -223,7 +223,7 @@ setMethod("plot",signature = "raterComp",
             
              ggplots <- list.clean(ggplots, fun = is.null)
              ggplots
-             do.call("grid.arrange", c(unlist(ggplots, use.names = FALSE), ncol=1))
+             grid.arrange(ggplots$ctt)
           }
 )
 
