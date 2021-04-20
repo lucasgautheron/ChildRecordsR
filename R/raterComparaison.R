@@ -189,7 +189,7 @@ setClass("raterComp")
 setGeneric("plot")
 setMethod("plot",signature = "raterComp",
           function(x, plots){
-            _plots <- list(ctt = NULL, sdt = NULL)
+            ggplots <- list(ctt = NULL, sdt = NULL)
             # CTT
             if ('ctt' %in% plots) {
               ctt <- x$ctt
@@ -201,7 +201,7 @@ setMethod("plot",signature = "raterComp",
               names(tmp) <- c("conf.inf","conf.sup")
               ctt <- cbind(ctt,tmp)
 
-              _plots$ctt <- ggplot2::ggplot(data = ctt,ggplot2::aes(x=rater,y=`coeff.val after`,color=coeff.name))+
+              ggplots$ctt <- ggplot2::ggplot(data = ctt,ggplot2::aes(x=rater,y=`coeff.val after`,color=coeff.name))+
                 ggplot2::geom_point( position=ggplot2::position_dodge(width=0.3))+
                 ggplot2::geom_errorbar(mapping = ggplot2::aes(ymin = conf.inf , ymax = conf.sup),width=0.1,position=ggplot2::position_dodge(width=0.3))+
                 ggplot2::ylim(0,1)+
@@ -213,15 +213,15 @@ setMethod("plot",signature = "raterComp",
               # SDT
               sdt <- x$sdt
 
-              _plots$sdt <- ggplot2::ggplot(sdt,ggplot2::aes(x=rater,y=weight,color=indic))+
+              ggplots$sdt <- ggplot2::ggplot(sdt,ggplot2::aes(x=rater,y=weight,color=indic))+
                 ggplot2::geom_point( position=ggplot2::position_dodge(width=0.3))+
                 ggplot2::ylim(0,1)+ 
                 ggplot2::ggtitle("Mean Weighted Signal Detection Theory after rater retraction")
-            }
+             }
             
-            _plots <- list.clean(_plots, fun = is.null)
+             ggplots <- list.clean(ggplots, fun = is.null)
 
-             gridExtra::grid.arrange(grobs = unlist(_plots, use.names = FALSE))
+             gridExtra::grid.arrange(grobs = unlist(ggplots, use.names = FALSE))
           }
 )
 
