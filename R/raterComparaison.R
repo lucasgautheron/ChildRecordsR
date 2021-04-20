@@ -189,6 +189,7 @@ setClass("raterComp")
 setGeneric("plot")
 setMethod("plot",signature = "raterComp",
           function(x, plots){
+            print('selection')
             print(plots)
             ggplots <- list(ctt = NULL, sdt = NULL)
             # CTT
