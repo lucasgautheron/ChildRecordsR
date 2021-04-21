@@ -51,7 +51,7 @@ New.annotations <- function(row.meta,
   tmp.file$speaker_type <- ifelse(change.prob<change.cat.prob,sample(cat, nrow(tmp.file),replace = T),as.character(tmp.file$speaker_type))
 
   remove.prob <- stats::runif(nrow(tmp.file), 0, 1)
-  tmp.file$segment_onset <- ifelse(remove.seg<remove.seg.prob,tmp.file$segment_offset,tmp.file$segment_onset)
+  tmp.file$segment_onset <- ifelse(remove.prob<remove.seg.prob,tmp.file$segment_offset,tmp.file$segment_onset)
   
   N.meta <- row.meta
   N.meta$set <- new.name
