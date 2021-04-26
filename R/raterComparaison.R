@@ -240,7 +240,7 @@ setMethod("plot",signature = "raterComp",
             
              ggplots <- list.clean(ggplots, fun = is.null)
              grid.arrange(ggplots$ctt)
+             ggplots
           }
-          ggplots
 )
 
