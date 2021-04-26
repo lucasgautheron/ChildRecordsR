@@ -77,8 +77,7 @@ compare.rating <- function(raterData,
     if (is.null(reference)) {
       ctt.data<- data.frame(row.names=1:length(raterData[["rater"]][[rater]]$long_file$composit))
     } else {
-      ctt.data<- data.frame(raterData[["rater"]][[rater]]$long_file$composit))
-
+      ctt.data<- data.frame(raterData[["rater"]][[rater]]$long_file$composit)
     }
     sdt.list <- list()
 
