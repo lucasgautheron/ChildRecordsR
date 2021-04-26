@@ -68,7 +68,7 @@ compare.rating <- function(raterData,
     if (is.null(reference)) {
         comp.raters <- raters[!raters %in% rater]
     } else {
-        comp.raters <- c(reference, rater)
+        comp.raters <- c(reference)
     }
 
     ## CTT data build
@@ -108,13 +108,13 @@ compare.rating <- function(raterData,
     tmp<-cbind(coeff.name,tmp)
 
     ### after removing rater
-    if (reference != rater) {
+    #if (reference != rater) {
       tmp2 <- rater.result[[rater]][["substract.reliability"]][,c("coeff.val","conf.int")]
       names(tmp2) <- paste(names(tmp2),"after")
       ctt.rez <- cbind(rater,tmp,tmp2)
       ctt.rez$coeff.difference <- ctt.rez$"coeff.val before" - ctt.rez$"coeff.val after"
       ctt <-rbind(ctt,ctt.rez)
-    }
+    #}
   }
   
   ### SDT
