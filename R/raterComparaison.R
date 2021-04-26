@@ -60,6 +60,8 @@ compare.rating <- function(raterData,
   raters <- raterData$args$ratersID
   global.reliability <- get.reliability(raterData,summary=F, threads = threads)
   global.reliability <- global.reliability$reliability[["composit"]]
+ 
+  raters <- raters[!raters %in% reference]
 
   rater.result = parallel::mclapply(1:length(raters), function(idx_r) {
     
