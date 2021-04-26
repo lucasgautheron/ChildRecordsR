@@ -209,19 +209,19 @@ setMethod("plot",signature = "raterComp",
             # CTT
             if ('ctt' %in% plots) {
               ctt <- x$ctt
-              ctt$`conf.int after` <- as.character(ctt$`conf.int after`)
-              ctt$`conf.int after` <- stringr::str_remove(ctt$`conf.int after`,"\\(")
-              ctt$`conf.int after` <- stringr::str_remove(ctt$`conf.int after`,"\\)")
-              tmp <- as.data.frame(stringr::str_split(ctt$`conf.int after`,",", n = Inf, simplify = T),stringsAsFactors = F)
+              ctt$`conf.int after` <- as.character(ctt$`conf.int`)
+              ctt$`conf.int after` <- stringr::str_remove(ctt$`conf.int`,"\\(")
+              ctt$`conf.int after` <- stringr::str_remove(ctt$`conf.int`,"\\)")
+              tmp <- as.data.frame(stringr::str_split(ctt$`conf.int`,",", n = Inf, simplify = T),stringsAsFactors = F)
               tmp <- as.data.frame(sapply(tmp,as.numeric))
               names(tmp) <- c("conf.inf","conf.sup")
               ctt <- cbind(ctt,tmp)
 
-              ggplots$ctt <- ggplot2::ggplot(data = ctt,ggplot2::aes(x=rater,y=`coeff.val after`,color=coeff.name))+
+              ggplots$ctt <- ggplot2::ggplot(data = ctt,ggplot2::aes(x=rater,y=`coeff.val`,color=coeff.name))+
                 ggplot2::geom_point( position=ggplot2::position_dodge(width=0.3))+
                 ggplot2::geom_errorbar(mapping = ggplot2::aes(ymin = conf.inf , ymax = conf.sup),width=0.1,position=ggplot2::position_dodge(width=0.3))+
                 ggplot2::ylim(0,1)+
-                ggplot2::ggtitle("Reliability after rater retraction")
+                ggplot2::ggtitle("Reliability")
              }
             
             if ('sdt' %in% plots) {
