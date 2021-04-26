@@ -47,7 +47,8 @@
 
 compare.rating <- function(raterData, 
                            verbose = FALSE, 
-                           threads = 1){
+                           threads = 1,
+                           reference = NULL){
 
   if (verbose) start <- proc.time()
   
@@ -63,7 +64,12 @@ compare.rating <- function(raterData,
   rater.result = parallel::mclapply(1:length(raters), function(idx_r) {
     
     rater = raters[idx_r]
-    comp.raters <- raters[!raters %in% rater]
+    
+    if (reference != NULL) {
+        comp.raters <- raters[!raters %in% rater]
+    } else {
+        comp.raters <- c(reference, rater)
+    }
 
     ## CTT data build
     ctt.data<- data.frame(row.names=1:length(raterData[["rater"]][[rater]]$long_file$composit))
