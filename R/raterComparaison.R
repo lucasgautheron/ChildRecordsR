@@ -122,7 +122,11 @@ compare.rating <- function(raterData,
   ### SDT
   sdt <- data.frame()
   for (rater in raters){
-    comp.raters <- raters[!raters %in% rater]
+    if (is.null(reference)) {
+        comp.raters <- raters[!raters %in% rater]
+    } else {
+        comp.raters <- c(reference)
+    }
     rater.sdt <- matrix(0,ncol=2,nrow=3)
     # print(rater.sdt)
     for (comp.rater in comp.raters){
