@@ -172,7 +172,7 @@ setMethod("plot",signature = "SDT.rater",
               ggplot2::xlab(raters[2]) + ggplot2::ylab(raters[1]) +
               ggplot2::ggtitle("Recall")+ ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
 
-            gridExtra::grid.arrange(prec_plot,rec_plot)
+            gridExtra::grid.arrange(grobs = list(prec_plot,rec_plot), nrow = 1, ncol = 2)
           }
 )
 
